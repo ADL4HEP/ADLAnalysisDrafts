@@ -1,0 +1,242 @@
+#INFO
+Search for new phenomena in final states with photons, jets and missing transverse momentum in pp collisions at s√=13 TeV with the ATLAS detector
+
+
+
+object photons
+  take Pho
+  select pT(Pho) > 25
+  select abs(eta(Pho)) < 2.37
+  reject abs(eta(Pho)) [] 1.37 1.52
+  
+object electrons
+  take Ele
+  select pT(Ele) > 10
+  select abs(eta(Ele)) < 2.47
+
+object SRE
+  take electrons
+  select pT(electrons) > 25
+  reject abs(eta(electrons)) [] 1.37 1.52 
+  
+object muons
+  take Muo
+  select pT(Muo) > 10
+  select abs(eta(Muo)) < 2.7
+
+
+object SRM
+  take muons
+  select pT(muons) > 25
+  
+object jets
+  take Jet 
+  select pT(Jet) > 20
+  select abs(eta(Jet)) < 2.5
+  
+object SRJ
+   take Jet
+   select pT(Jet) > 30
+   select abs(eta(Jet)) < 2.5
+   
+object btagjets
+   take Jet	
+   select Btag(Jet) == 1
+   
+object SRLE : Union(SRM, SRE)
+
+
+object HT : sum(Pt(SRJ)) + Pt(photons[0]) 
+
+# This results in a large value for the variable 𝐻T , defined as the scalar
+sum of the transverse momenta of all individual signal jets and the leading photon in the final state.
+
+
+define RT4 : (Pt(SRJ[0]) + Pt(SRJ[1]) + Pt(SRJ[2]) + Pt(SRJ[3])) / sum(Pt(SRJ))
+
+# 𝑅T4 (defined as the ratio of the scalar sum of
+the 𝑝 T of the four highest-𝑝 T signal-region jets to the scalar sum of the 𝑝 T of all signal-region jets in the
+event)
+
+
+region SRL
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) == 0
+  select Size(SRJ) >= 5 
+  select min( dphi(SRJ[0:1], METLV[0]) ) > 0.4
+  select dPhi(photons[0], METLV[0]) > 0.4
+  select MET > 250
+  select HT > 2000
+  select RT4 < 0.90
+  
+region SRM
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 300
+  select Size(SRLE) == 0
+  select Size(SRJ) >= 5 
+  select min( dphi(SRJ[0:1], METLV[0]) ) > 0.4
+  select dPhi(photons[0], METLV[0]) > 0.4
+  select MET > 300
+  select HT > 1600
+  select RT4 < 0.90
+  
+region SRH
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) == 0
+  select Size(SRJ) >= 3 
+  select min( dphi(SRJ[0:1], METLV[0]) ) > 0.4
+  select dPhi(photons[0], METLV[0]) > 0.4
+  select MET > 600
+  select HT > 1600
+  
+#CONTROL
+  
+region CRQ
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) == 0
+  select Size(SRJ) >= 3 
+  select min( dphi(SRJ[0:1], METLV[0]) ) < 0.4
+  select dPhi(photons[0], METLV[0]) > 0.4
+  select MET > 100
+  select HT > 1600
+  
+region CRW
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) >= 1
+  select Size(SRJ) >= 1
+  select Size(btagjets) == 0
+  select min( dphi(SRJ[0:1], METLV[0]) ) > 0.4
+  select MET [] 100 200
+  select HT > 400
+  
+region CRT
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) >= 1
+  select Size(SRJ) >= 2
+  select Size(btagjets) >= 2
+  select min( dphi(SRJ[0:1], METLV[0]) ) > 0.4
+  select MET [] 50 200
+  select HT > 400
+ 
+# VALIDATION
+
+region VRL1
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) >= 1
+  select Size(SRJ) >= 2
+  select min( dphi(SRJ[0:1], METLV[0]) ) > 0.4
+  select MET [] 50 200
+  select HT > 800
+  
+region VRL2
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) >= 1
+  select Size(SRJ) >= 2
+  select min( dphi(SRJ[0:1], METLV[0]) ) > 0.4
+  select MET [] 50 200
+  select HT > 1300
+  
+region VRL3
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) >= 1
+  select Size(SRJ) >= 2
+  select min( dphi(SRJ[0:1], METLV[0]) ) > 0.4
+  select MET > 200
+  select HT [] 600 1600
+  
+region VRL4
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) >= 1
+  select Size(SRJ) >= 2
+  select min( dphi(SRJ[0:1], METLV[0]) ) > 0.4
+  select MET > 200
+  select HT > 1100
+  
+region VRQ
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) == 0
+  select Size(SRJ) >= 3 
+  select min( dphi(SRJ[0:1], METLV[0]) ) < 0.4
+  select dPhi(photons[0], METLV[0]) > 0.4
+  select MET [] 100 200
+  select HT > 1600
+  
+region VRM1L
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) == 0
+  select Size(SRJ) >= 3
+  select min( dphi(SRJ[0:1], METLV[0]) ) < 0.4
+  select dPhi(photons[0], METLV[0]) > 0.4
+  select MET [] 100 200
+  select HT > 1600
+  select RT4 < 0.90
+
+region VRM2L
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) == 0
+  select Size(SRJ) >= 3
+  select min( dphi(SRJ[0:1], METLV[0]) ) < 0.4
+  select dPhi(photons[0], METLV[0]) > 0.4
+  select MET [] 150 200
+  select HT > 1600
+  select RT4 < 0.90
+  
+region VRM1H
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) == 0
+  select Size(SRJ) >= 3 
+  select min( dphi(SRJ[0:1], METLV[0]) ) < 0.4
+  select dPhi(photons[0], METLV[0]) > 0.4
+  select MET [] 100 200
+  select HT > 1600
+  
+region VRM2H
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRLE) == 0
+  select Size(SRJ) >= 3 
+  select min( dphi(SRJ[0:1], METLV[0]) ) < 0.4
+  select dPhi(photons[0], METLV[0]) > 0.4
+  select MET [] 150 200
+  select HT > 1600
+  
+region VRE
+  select ALL  
+  select Size(photons) >= 1
+  select pT(photons[0]) > 145
+  select Size(SRJ) >= 1 
+  select Size(btagjets) >= 1 
+  select min( dphi(SRJ[0:1], METLV[0]) ) < 0.4
+  select dPhi(photons[0], METLV[0]) < 0.4
+  select MET > 200
+  select HT [] 100 1600
+
+  
