@@ -1,0 +1,239 @@
+#info analysis
+#  title "Search for electroweak production of supersymmetric particles in final states containing hadronic decays of WW, WZ, or WH and missing transverse momentum"
+#  experiment CMS
+#  id SUS-21-002
+#  publication Phys. Lett. B 842 (2023) 137460
+#  sqrtS 13.0
+#  lumi 137
+#  arXiv 2205.09597
+#  hepdata https://www.hepdata.net/record/ins2085373
+#  doi 10.1016/j.physletb.2022.137460 
+
+#info adl
+#  adlauthor Sezen Sekmen
+#  datatier Delphes
+
+# Efficiency tables
+table btagdeepCSVmedium
+  tabletype efficiency
+  nvars 1
+  errors true
+  # val    err-     err+     pTmin     pTmax
+  0.5790   0.0016   0.0016    -10.4     30.0
+  0.6314   0.0013   0.0013     30.0     35.0
+  0.6442   0.0011   0.0011     35.0     40.0
+  0.6596   0.0007   0.0007     40.0     50.0
+  0.6727   0.0007   0.0007     50.0     60.0
+  0.6812   0.0008   0.0008     60.0     70.0
+  0.6855   0.0008   0.0008     70.0     80.0
+  0.6873   0.0009   0.0009     80.0     90.0
+  0.6881   0.0010   0.0010     90.0    100.0
+  0.6880   0.0008   0.0008    100.0    125.0
+  0.6867   0.0011   0.0011    125.0    150.0
+  0.6826   0.0015   0.0015    150.0    175.0
+  0.6734   0.0020   0.0020    175.0    200.0
+  0.6624   0.0026   0.0026    200.0    225.0
+  0.6494   0.0034   0.0034    225.0    250.0
+  0.6419   0.0044   0.0044    250.0    275.0
+  0.6301   0.0054   0.0054    275.0    300.0
+  0.6202   0.0051   0.0051    300.0    350.0
+  0.6006   0.0073   0.0073    350.0    400.0
+  0.5889   0.0098   0.0098    400.0    450.0
+  0.5798   0.0126   0.0126    450.0    500.0
+  0.5547   0.0118   0.0118    500.0    600.0
+  0.5412   0.0172   0.0172    600.0    700.0
+  0.5197   0.0234   0.0234    700.0    800.0
+  0.4959   0.0243   0.0243    800.0   7000.0
+
+# W-tagger efficiency
+table pfDeepBoostedDiscriminatorsJetTagsWvsQCD
+  tabletype efficiency
+  nvars 1
+  errors true
+  # val    err-     err+     pTmin     pTmax ...
+  # ...
+
+# V-tagger efficiency
+table pfMassDecorrelatedDeepBoostedDiscriminatorsJetTagsWvsQCD
+  tabletype efficiency
+  nvars 1
+  errors true
+  # val    err-     err+     pTmin     pTmax ...
+  # ...
+
+# H-tagger efficiency
+table pfMassDecorrelatedDeepBoostedDiscriminatorsJetTagsbbvsLight
+  tabletype efficiency
+  nvars 1
+  errors true
+  # val    err-     err+     pTmin     pTmax ...
+  # ...
+
+
+# OBJECT SELECTION
+
+object ak4jets 
+  take Jet
+  select pT(jet) > 30
+  select abs(Eta(jet)) < 2.4
+
+object bjets
+  take ak4jets
+  select abs(flavor(ak4jets)) == 5
+  select applyHM( btagdeepCSVmedium( Pt(ak4jets) ) == 1)
+  #select DeepCSVM > 0.6321, 0.4941, 0.4184
+
+# Gen-level W/Z/V/H bosons:
+object genWs
+  take GEN
+  select abs(PID(GEN)) == 24
+
+object genZs
+  take GEN
+  select abs(PID(GEN)) == 23
+
+object genVs
+  take GEN
+  select abs(PID(GEN)) == 24 or abs(PID(GEN)) == 23
+
+object genHs
+  take GEN
+  select abs(PID(GEN)) == 25
+
+# AK8 jets and boosted object tagging
+object ak8jets 
+  take FatJet
+  select pT > 200
+  select abs(Eta) < 2
+
+object ak8jetsm50 
+  take ak8jets
+  select m > 50
+
+object Ws 
+  take ak8jets
+  select m(ak8jets) [] 65 105
+#  select pfDeepBoostedDiscriminatorsJetTagsWvsQCD == 1
+  select any(dR(ak8jets, genWs) < 0.8)
+  select applyHM(pfDeepBoostedDiscriminatorsJetTagsWvsQCD( Pt(ak8jets) ) == 1)
+  select dR(ak8jets, bjets) > 0.8
+
+object Vs 
+  take ak8jets
+  select m(ak8jets) [] 65 105
+#  select pfMassDecorrelatedDeepBoostedDiscriminatorsJetTagsWvsQCD == 1
+  select any(dR(ak8jets, genVs) < 0.8) 
+  select applyHM(pfMassDecorrelatedDeepBoostedDiscriminatorsJetTagsWvsQCD( Pt(ak8jets) ) == 1)
+  select dR(ak8jets, Ws) != 0
+
+object Hs
+  take ak8jets
+  select m(ak8jets) [] 75 140
+#  select pfMassDecorrelatedDeepBoostedDiscriminatorsJetTagsbbvsLight == 1
+  select any(dR(ak8jets, genHs) < 0.8)
+  select applyHM(pfMassDecorrelatedDeepBoostedDiscriminatorsJetTagsbbvsLight( Pt(ak8jets) ) == 1)
+  select dR(ak8jets, bjets) < 0.8
+
+# Leptons
+object vetomuons
+  take Muon # mediumID
+  select pT(Muon) > 10
+  select abs(Eta(Muon)) < 2.4
+  select miniIso(Muon) < 0.2
+
+object vetoelectrons
+  take Electron # Fall17v2CutBasedvetoID
+  select pT(Electron) > 10
+  select abs(eta(Electron)) < 2.5
+  select miniIso(Electron) < 0.1
+
+object eleisotracks
+  take Trk
+  select abs(eta(Trk)) < 2.4
+  select abs(pdgID(Trk)) == 11
+  select pt(Trk) > 5
+  select (ptcone(Trk) / pt(Trk)) < 0.2
+  select sqrt( 2*pT(Trk) *MET*(1-cos( Phi(METLV[0]) - Phi(Trk) ))) < 100
+#  select each(dz(track, PV) - dz(track, vertices) < 0) -- from AN, against PU
+
+object muisotracks
+  take Trk
+  select abs(eta(Trk)) < 2.4
+  select abs(pdgID(Trk)) == 13
+  select pt(Trk) > 5
+  select (ptcone(Trk) / pt(Trk)) < 0.2
+  select sqrt( 2*pT(Trk) *MET*(1-cos( Phi(METLV[0]) - Phi(Trk) ))) < 100
+#  select each(dz(track, PV) - dz(track, vertices) < 0) -- from AN, against PU
+
+object hadisotracks
+  take Trk
+  select abs(eta(Trk)) < 2.4
+  reject abs(pdgID(Trk)) == 11 or abs(pdgID(Trk)) == 13
+  select pt(Trk) > 10
+  select ptcone(Trk) / pt(Trk) < 0.1 # dR = 0.3
+  select sqrt( 2*pT(Trk) *MET*(1-cos( Phi(METLV[0]) - Phi(Trk) ))) < 100
+#  select each(dz(track, PV) - dz(track, vertices) < 0) -- from AN, against PU
+
+object vetophotons 
+  take Photon
+  select pT(Photon) > 100
+  select abs(eta(Photon)) < 1.4442 and abs(eta(Photon)) [] 1.566 2.4 
+  #select Fall17v2Loose == 1
+
+# EVENT VARIABLES
+define HT = sum(pT(ak4jets))
+
+# EVENT SELECTION
+
+region baseline
+  select size(vetoelectrons) == 0
+  select size(vetomuons) == 0
+  select size(eleisotracks) + size(muisotracks) + size(hadisotracks) == 0
+  select MET > 200
+  select HT > 300
+  select n(ak4jets) [] 2 6
+  select size(vetophotons) == 0
+  select dphi(ak4jets[0], METLV[0]) > 1.5
+  select dphi(ak4jets[1], METLV[0]) > 0.5
+  select n(ak4jets) > 2 ? dphi(ak4jets[2], METLV[0]) > 0.3
+  select n(ak4jets) > 2 ? dphi(ak4jets[3], METLV[0]) > 0.3
+  #trigger MET[90..140] # syntax
+  # trigger eff: MET 200-270: 0.82, MET>270: 0.98
+  select size(ak8jets) > 1
+  select size(ak8jetsm50) >= 1 # syntax: can we do anyof(m(ak8jets) > 50) 
+  select dphi(ak8jets[0], METLV[0]) > 1.5
+  select dphi(ak8jets[1], METLV[0]) > 0.5  
+
+region bveto
+  baseline
+  select size(bjets) == 0
+
+region SRbveto
+  bveto
+  select size(Ws) >= 1
+  select size(Vs) >= 1
+  select pT(Ws[0]) - pT(Vs[0]) != 0 # the W and the V should be different
+  # ideally: select anyof(pT(Ws[0]) - pT(Vs) != 0)
+  bins MET 200 250 300 350 400 450 500 600 800 
+
+region btag
+  baseline
+  select size(bjets) > 0
+  
+region SRbtagHW
+  btag
+  select size(Ws) >= 1
+  select size(Hs) >= 1
+  bins MET 200 250 300 350 400 450 500 600 
+
+region SRbtagW
+  btag 
+  select size(Ws) >= 1
+  select size(Hs) == 0
+  bins MET 200 250 300 350 400 450 500 600 800 
+
+region SRbtagH
+  btag 
+  select size(Ws) == 0
+  select size(Hs) >= 1
+  bins MET 200 250 300 350 400 450 500 600 800 
