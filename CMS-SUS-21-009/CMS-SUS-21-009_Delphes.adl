@@ -1,0 +1,187 @@
+#info analysis
+#  title "Search for new physics in multijet events with at least one photon and large missing transverse momentum in proton-proton collisions at 13 TeV"
+#  experiment CMS
+#  id SUS-21-009
+#  publication ...
+#  sqrtS 13.0
+#  lumi 137
+#  arXiv ...
+#  hepdata ...
+#  doi ...
+
+#info adl
+#  adlauthor Sezen Sekmen
+#  datatier Delphes
+
+# Efficiency tables
+table btagdeepCSVmedium
+  tabletype efficiency
+  nvars 1
+  errors true
+  # val    err-     err+     pTmin     pTmax
+  0.5790   0.0016   0.0016    -10.4     30.0
+  0.6314   0.0013   0.0013     30.0     35.0
+  0.6442   0.0011   0.0011     35.0     40.0
+  0.6596   0.0007   0.0007     40.0     50.0
+  0.6727   0.0007   0.0007     50.0     60.0
+  0.6812   0.0008   0.0008     60.0     70.0
+  0.6855   0.0008   0.0008     70.0     80.0
+  0.6873   0.0009   0.0009     80.0     90.0
+  0.6881   0.0010   0.0010     90.0    100.0
+  0.6880   0.0008   0.0008    100.0    125.0
+  0.6867   0.0011   0.0011    125.0    150.0
+  0.6826   0.0015   0.0015    150.0    175.0
+  0.6734   0.0020   0.0020    175.0    200.0
+  0.6624   0.0026   0.0026    200.0    225.0
+  0.6494   0.0034   0.0034    225.0    250.0
+  0.6419   0.0044   0.0044    250.0    275.0
+  0.6301   0.0054   0.0054    275.0    300.0
+  0.6202   0.0051   0.0051    300.0    350.0
+  0.6006   0.0073   0.0073    350.0    400.0
+  0.5889   0.0098   0.0098    400.0    450.0
+  0.5798   0.0126   0.0126    450.0    500.0
+  0.5547   0.0118   0.0118    500.0    600.0
+  0.5412   0.0172   0.0172    600.0    700.0
+  0.5197   0.0234   0.0234    700.0    800.0
+  0.4959   0.0243   0.0243    800.0   7000.0
+
+# OBJECT SELECTION
+
+object photons
+  take Photon
+#  select POGcutbasedlooseID == 1 
+# isolation: based on PF candidates
+#  select chargedhadsumdR03 < 1.694, 2.089 # (barrel, endcap)
+#  select photonsumdR03, neutralhadsumdR03 < func of photon pT
+  select pT(Photon) > 100
+  select abs(Eta(Photon)) < 2.4
+  reject abs(Eta(Photon)) [] 1.44 1.56 
+
+# Jets
+object AK4jets
+  take Jet
+  select pT(Jet) > 30
+  select abs(eta(Jet)) < 2.4
+#  select loosejetID == 1
+  reject dR(Jet, photons) < 0.3
+
+object bjets
+  take AK4jets
+  select abs(flavor(ak4jets)) == 5
+  select applyHM( btagdeepCSVmedium( Pt(ak4jets) ) == 1)
+
+object AK8jets
+  take FatJet
+  select pT(FatJet) > 200
+  select abs(eta(FatJet)) < 2.4
+#  select loosejetID == 1
+
+# Leptons
+object vetomuons
+  take Muon 
+  select pT(Muon) > 10
+  select abs(Eta(Muon)) < 2.4
+  select miniIso(Muon) < 0.2
+#  select POGmediummuonID == 1
+  select miniiso(Muon) < 0.2 # R = 0.2 for pT < 10, 10/pT for pT [] 50, 200, 0.05 for pT > 200.
+  select dxy(Muon) < 0.2 # cm, wrt PV
+  select dz(Muon) < 0.5 # cm, wrt PV
+
+object vetoelectrons
+  take Electron 
+  select pT(Electron) > 10
+  select abs(eta(Electron)) < 2.5
+  #select POGcutbasedVetoID == 1
+  select miniiso(Electron) < 0.15 # !!! says 0.1 in the AN !!!
+  # no dxy or dz cuts?
+
+object eleisotracks
+  take Trk
+  select abs(eta(Trk)) < 2.4
+  select abs(pdgID(Trk)) == 11
+  select pt(Trk) > 5
+  select (ptcone(Trk) / pt(Trk)) < 0.2
+  select sqrt( 2*pT(Trk) *MET*(1-cos( Phi(METLV[0]) - Phi(Trk) ))) < 100
+#  select all(dz(track, PV) - dz(track, vertices) < 0) -- from AN, against PU
+
+object muisotracks
+  take Trk
+  select abs(eta(Trk)) < 2.4
+  select abs(pdgID(Trk)) == 13
+  select pt(Trk) > 5
+  select (ptcone(Trk) / pt(Trk)) < 0.2
+  select sqrt( 2*pT(Trk) *MET*(1-cos( Phi(METLV[0]) - Phi(Trk) ))) < 100
+#  select all(dz(track, PV) - dz(track, vertices) < 0) -- from AN, against PU
+
+object hadisotracks
+  take Trk
+  select abs(eta(Trk)) < 2.4
+  reject abs(pdgID(Trk)) == 11 or abs(pdgID(Trk)) == 13
+  select pt(Trk) > 10
+  select ptcone(Trk) / pt(Trk) < 0.1 # dR = 0.3
+  select sqrt( 2*pT(Trk) *MET*(1-cos( Phi(METLV[0]) - Phi(Trk) ))) < 100
+#  select all(dz(track, PV) - dz(track, vertices) < 0) -- from AN, against PU
+
+# EVENT VARIABLES
+define ST = pT(photons[0]) + sum(pT(AK4jets)) 
+
+# EVENT SELECTION
+
+region baseline
+  select size(photons) >= 1
+  select MET > 300
+  select size(AK4jets) >= 2
+  select ST > 300
+#  trigger HLTMETHT
+  select size(vetoelectrons) + size(vetomuons) == 0
+  select size(eleisotracks) + size(muisotracks) + size(hadisotracks) == 0
+# cutflow tables 14/15 mention a cut gamma / jet ratio.  What is it?
+  select dR(AK4jets[0:1], METLV[0]) > 0.3
+
+region EWSRs # electroweak production -- V/H tagging via mass cuts
+  baseline
+  select size(AK4jets) [] 2 6
+  select size(AK8jets) >= 1
+  select m(AK8jets[0]) [] 65 140 
+  bin "35" m(AK8jets[0]) [] 65 105 and MET [] 300 370
+  bin "36" m(AK8jets[0]) [] 65 105 and MET [] 370 450
+  bin "37" m(AK8jets[0]) [] 65 105 and MET [] 450 600
+  bin "38" m(AK8jets[0]) [] 65 105 and MET [] 600 750
+  bin "39" m(AK8jets[0]) [] 65 105 and MET > 750
+  bin "41" m(AK8jets[0]) [] 105 140 and MET [] 300 370
+  bin "42" m(AK8jets[0]) [] 105 140 and MET [] 370 450
+  bin "43" m(AK8jets[0]) [] 105 140 and MET [] 450 600
+  bin "44" m(AK8jets[0]) [] 105 140 and MET [] 600 750
+  bin "45" m(AK8jets[0]) [] 105 140 and MET > 750
+
+region SPSRs # strong production
+  presel
+  reject size(AK4jets) [] 2 6 and size(AK8jets) >= 1 and m(AK8jets[0]) [] 65 140 
+  bin "2" size(AK4jets) [] 2 4 and size(bjets) == 0 and MET [] 300 370 
+  bin "3" size(AK4jets) [] 2 4 and size(bjets) == 0 and MET [] 370 450 
+  bin "4" size(AK4jets) [] 2 4 and size(bjets) == 0 and MET [] 450 600 
+  bin "5" size(AK4jets) [] 2 4 and size(bjets) == 0 and MET [] 600 750 
+  bin "6" size(AK4jets) [] 2 4 and size(bjets) == 0 and MET [] 750 900 
+  bin "7" size(AK4jets) [] 2 4 and size(bjets) == 0 and MET > 900 
+  bin "9" size(AK4jets) [] 5 6 and size(bjets) == 0 and MET [] 300 370 
+  bin "10" size(AK4jets) [] 5 6 and size(bjets) == 0 and MET [] 370 450 
+  bin "11" size(AK4jets) [] 5 6 and size(bjets) == 0 and MET [] 450 600 
+  bin "12" size(AK4jets) [] 5 6 and size(bjets) == 0 and MET [] 600 750 
+  bin "13" size(AK4jets) [] 5 6 and size(bjets) == 0 and MET > 750
+  bin "15" size(AK4jets) >= 7 and size(bjets) == 0 and MET [] 300 370 
+  bin "16" size(AK4jets) >= 7 and size(bjets) == 0 and MET [] 370 450 
+  bin "17" size(AK4jets) >= 7 and size(bjets) == 0 and MET [] 450 600 
+  bin "18" size(AK4jets) >= 7 and size(bjets) == 0 and MET > 600
+  bin "20" size(AK4jets) [] 2 4 and size(bjets) > 0 and MET [] 300 370 
+  bin "21" size(AK4jets) [] 2 4 and size(bjets) > 0 and MET [] 370 450 
+  bin "22" size(AK4jets) [] 2 4 and size(bjets) > 0 and MET [] 450 600 
+  bin "23" size(AK4jets) [] 2 4 and size(bjets) > 0 and MET > 600 
+  bin "25" size(AK4jets) [] 5 6 and size(bjets) > 0 and MET [] 300 370 
+  bin "26" size(AK4jets) [] 5 6 and size(bjets) > 0 and MET [] 370 450 
+  bin "27" size(AK4jets) [] 5 6 and size(bjets) > 0 and MET [] 450 600 
+  bin "28" size(AK4jets) [] 5 6 and size(bjets) > 0 and MET > 600
+  bin "30" size(AK4jets) >= 7 and size(bjets) > 0 and MET [] 300 370 
+  bin "31" size(AK4jets) >= 7 and size(bjets) > 0 and MET [] 370 450 
+  bin "32" size(AK4jets) >= 7 and size(bjets) > 0 and MET [] 450 600 
+  bin "33" size(AK4jets) >= 7 and size(bjets) > 0 and MET > 600
+
