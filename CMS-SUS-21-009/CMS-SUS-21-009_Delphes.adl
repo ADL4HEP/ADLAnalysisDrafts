@@ -92,7 +92,7 @@ object vetoelectrons
   select pT(Electron) > 10
   select abs(eta(Electron)) < 2.5
   #select POGcutbasedVetoID == 1
-  select miniiso(Electron) < 0.15 # !!! says 0.1 in the AN !!!
+  select miniiso(Electron) < 0.1 
   select abs(eta(Electron)) < 1.479 ? dxy(Electrons) < 0.05 : dxy(Electrons) < 0.1 
   select abs(eta(Electron)) < 1.479 ? dz(Electrons) < 0.1 : dz(Electrons) < 0.2 
 
