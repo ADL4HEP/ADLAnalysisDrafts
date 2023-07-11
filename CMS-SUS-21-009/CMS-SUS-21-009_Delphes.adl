@@ -67,14 +67,18 @@ object AK4jets
 
 object bjets
   take AK4jets
-  select abs(flavor(ak4jets)) == 5
-  select applyHM( btagdeepCSVmedium( Pt(ak4jets) ) == 1)
+  select abs(flavor(AK4jets)) == 5
+  select applyHM( btagdeepCSVmedium( Pt(AK4jets) ) == 1)
 
 object AK8jets
-  take FatJet
-  select pT(FatJet) > 200
-  select abs(eta(FatJet)) < 2.4
+  take Jet
+  select pT(Jet) > 200
+  select abs(eta(Jet)) < 2.4
 #  select loosejetID == 1
+
+object heavyAK8jets
+  take AK8jets
+  select m(AK8jets) [] 65 140
 
 # Leptons
 object vetomuons
@@ -83,7 +87,7 @@ object vetomuons
   select abs(Eta(Muon)) < 2.4
   select miniIso(Muon) < 0.2
 #  select POGmediummuonID == 1
-  select miniiso(Muon) < 0.2 # R = 0.2 for pT < 10, 10/pT for pT [] 50, 200, 0.05 for pT > 200.
+#  select miniiso(Muon) < 0.2 # R = 0.2 for pT < 10, 10/pT for pT [] 50, 200, 0.05 for pT > 200.
   select dxy(Muon) < 0.2 # cm, wrt PV
   select dz(Muon) < 0.5 # cm, wrt PV
 
@@ -91,10 +95,10 @@ object vetoelectrons
   take Electron 
   select pT(Electron) > 10
   select abs(eta(Electron)) < 2.5
-  #select POGcutbasedVetoID == 1
-  select miniiso(Electron) < 0.1 
-  select abs(eta(Electron)) < 1.479 ? dxy(Electrons) < 0.05 : dxy(Electrons) < 0.1 
-  select abs(eta(Electron)) < 1.479 ? dz(Electrons) < 0.1 : dz(Electrons) < 0.2 
+#  select POGcutbasedVetoID == 1
+  select miniIso(Electron) < 0.1 
+  select abs(eta(Electron)) < 1.479 ? dxy(Electron) < 0.05 : dxy(Electron) < 0.1 
+  select abs(eta(Electron)) < 1.479 ? dz(Electron) < 0.1 : dz(Electron) < 0.2 
 
 object eleisotracks
   take Trk
@@ -136,7 +140,6 @@ region baseline
 #  trigger HLTMETHT
   select size(vetoelectrons) + size(vetomuons) == 0
   select size(eleisotracks) + size(muisotracks) + size(hadisotracks) == 0
-# cutflow tables 14/15 mention a cut gamma / jet ratio.  What is it?
   select dR(AK4jets[-1], photons[0]) ~= 0
   reject pT(AK4jets[-1]) / pT(photons[0]) < 1
   select dR(AK4jets[0:1], METLV[0]) > 0.3
@@ -158,8 +161,8 @@ region EWSRs # electroweak production -- V/H tagging via mass cuts
   bin "45" m(AK8jets[0]) [] 105 140 and MET > 750
 
 region SPSRs # strong production
-  presel
-  reject size(AK4jets) [] 2 6 and size(AK8jets) >= 1 and m(AK8jets[0]) [] 65 140 
+  baseline
+  reject size(AK4jets) [] 2 6 and size(heavyAK8jets) >= 1 
   bin "2" size(AK4jets) [] 2 4 and size(bjets) == 0 and MET [] 300 370 
   bin "3" size(AK4jets) [] 2 4 and size(bjets) == 0 and MET [] 370 450 
   bin "4" size(AK4jets) [] 2 4 and size(bjets) == 0 and MET [] 450 600 
