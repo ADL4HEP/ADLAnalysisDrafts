@@ -1,0 +1,75 @@
+## ========================================
+# ADL file for CMS Open Data workshop 2023, reinterpretation exercise
+# Link: https://cms-opendata-workshop.github.io/workshop2023-lesson-reinterpretation/
+# Runs on CMS open data POET ntuples
+# Many ntuples under: /eos/opendata/cms/derived-data/POET/23-Jul-22/
+
+info analysis
+  title "Optimization of the CMS ttbar cross section analysis to search for vector-like T quarks"
+  experiment CMS
+  sqrtS 13.0
+  lumi 2.26 # fb-1
+
+## ========================================
+## Object definitions
+
+object muons # output object
+  take muon # input object (from the ntuple)
+  select pT(muon) > 30
+  select abs(eta(muon)) < 2.1
+  select isTight(muon) == 1 
+  select sip3d(muon) < 4
+  select pfreliso04DBCorr(muon) < 0.15
+
+object electrons
+  take electron
+  select pT(electron) > 30
+  select abs(eta(electron)) < 2.1
+  select isTight(electron) == 1 
+  select sip3d(electron) < 4
+
+# Put selected electrons and muons into a single collection
+object leptons : Union(electrons, muons)
+
+object jets
+  take jet
+  select corrpT(jet) > 30
+  select abs(eta(jet)) < 2.4
+
+object bjets
+  take jets
+  select btagger(jets) > 0.8 
+
+# Find all possible top candidates by listing all 3-jet combinations 
+# where one of the jets is b-tagged. 
+# Negative indices mean that initial indices are not known and
+# will be assigned as a result of some optimization, sorting, etc.
+# "alias" is just a short way of referring to the combination object
+# i.e. tpc = jets[-1] jets[-2] jets[-3]
+# For example, if we wanted to select only the candidates with mass > 150,
+# we could have added a line like
+#  select m(tpc) > 150
+object topcands : comb( jets[-1] jets[-2] jets[-3]) alias tpc
+  select btagger(jets[-1]) > 0.8 or btagger(jets[-2]) > 0.8 or btagger(jets[-3]) > 0.8
+
+## ========================================
+## Event selections
+
+# The 1 b-jet selection region used in the ttbar analysis:
+region fourjetoneb 
+  select size(leptons) == 1
+  select size(jets) >= 4
+  select size(bjets) >= 1
+  select size(topcands) > 0
+  sort pt(topcands) descend
+  # Fixed bin histogram for the highest pT top candidate mass:
+  histo hmtop1b , "top cand. mass (GeV)", 20, 50, 1050, m(topcands[0])
+  # Variable bin histogram for the highest pT top candidate mass:
+  histo h2mtop1b , "top cand. mass (GeV)", 50 100 150 200 300 500 700 1000 2000, m(topcands[0])
+
+# The 2 b-jet selection region used in the ttbar analysis:
+region fourjettwob 
+  take fourjetoneb # inherit everything from the "fourjetoneb" region
+  select size(bjets) >= 2
+  histo hmtop , "top cand. mass (GeV)", 20, 50, 1050, m(topcands[0])
+  histo h2mtop , "top cand. mass (GeV)", 50 100 150 200 300 500 700 1000 2000, m(topcands[0])
