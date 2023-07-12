@@ -98,7 +98,7 @@ region fourjettwob
   histo hnak8, "number of AK8 jets", 8, 0, 8, size(AK8jets)
 
 # The region with cuts to enhance the vector-like T signal
-region optforbsmreint
+region optforvlqreint
   take fourjettwob
   select size(AK8jets) >= 1
   histo hak8j1pT , "AK8 jet 1 pT (GeV)", 20, 200, 1200, pT(AK8jets[0])
