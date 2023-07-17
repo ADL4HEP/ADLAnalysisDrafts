@@ -1,0 +1,220 @@
+info analysis
+	title "Search for dark matter produced in association with a Standard Model Higgs boson decaying into b-quarks using the full Run 2 dataset from the ATLAS detector"
+	experiment ATLAS
+	sqrtS 13.0
+	lumi 139
+	arXiv "2108.13391"
+
+
+object central-small-radius-jets
+	take jet
+	select abseta(jet) < 2.5
+	select pT(jet) > 20
+
+object forward-small-radius-jets
+	take jet
+	select abseta(jet) [] 2.5 4.5
+	select pT(jet) > 30
+
+object large-jets
+	take fjet
+	select ALL
+
+object signal-electrons
+	take ele 
+	select pT(ele) < 200 ? ALL : ALL ###########the total energy of clusters within delta R = 0.2 of the electron, excluding the electron cluster, must be less than 20% of the pT of the electron : ALL
+	select pT(ele) > 200 ? ALL : ALL ###########the total energy of clusters within delta R = 0.2 of the electron is required to be less than the smaller of 0.015*pT and 3.5 GeV : ALL
+	select abseta(ele)<2.47
+	select pT(ele) > 27
+
+object baseline-electrons
+	take ele
+	select abseta(ele)<2.47
+	select pT(ele) > 7
+
+
+object signal-muons
+	take muo
+	select medium(muo) == 1
+ 	select abseta(muo) < 2.5
+ 	select pT(muo) > 25
+
+object baseline-muons
+	take muo
+	select loose(muo) == 1
+ 	select abseta(muo) < 2.5
+ 	select pT(muo) > 7
+
+object t-leptons
+	take tau
+ 	select loose(tau) == 1 
+ 	select abseta(tau) < 2.5
+ 	select pT(tau) > 20
+
+###overlap removal ###according to the paper ordering is important here
+
+object t-leps
+	take t-leptons
+	select dR(t-leptons,baseline-electrons) > 0.2
+	select dR(t-leptons,baseline-muons) > 0.2
+
+object small-jets-radius-jetss
+	take central-small-radius-jets
+	select dR(central-small-radius-jets,baseline-electrons) > 0.2
+
+object forward-small-radius-jetss
+	take forward-small-radius-jets
+	select dR(forward-small-radius-jets,baseline-electrons) > 0.2
+
+object small-jets-radius-jetsss
+	take central-small-radius-jets
+	select dR(central-small-radius-jets,baseline-electrons) > 0.2
+
+object forward-small-radius-jetsss
+	take forward-small-radius-jetss
+	select dR(forward-small-radius-jetss,baseline-muons) > 0.2
+
+object small-jets-radius-jetsf
+	take central-small-radius-jets
+	select dR(central-small-radius-jets,baseline-electrons) > 0.2
+
+object forward-small-radius-jetsf
+	take forward-small-radius-jetsss
+	select dR(forward-small-radius-jetsss,t-leps) > 0.2
+
+object large-jetsf
+	take large-jets
+	select dR(large-jets,baseline-electrons) > 1.0
+
+#################missing transverse momentum definition is not implemented
+
+
+
+object smalljets: Union(small-jets-radius-jetsf,forward-small-radius-jetsf)
+
+object btaggedsmalljets
+	take smalljets
+	select BTag(smalljets) == 1
+
+object blargejetsf
+	take large-jetsf
+	select BTag(large-jetsf) == 1
+
+object bjets: Union(smalljets,blargejetsf)
+
+define bmin = bjets[-1]
+define bmax = bjets[-2]
+define mtbmin = sqrt(2*pT(bmin)*MET*(1-cos(dPhi(bmin,METLV_0))))
+define mtbmax = sqrt(2*pT(bmax)*MET*(1-cos(dPhi(bmax,METLV_0))))
+
+region common
+	select ALL
+	select size(baseline-electrons) >= 0
+	select size(baseline-muons) >= 0
+	reject size(t-leps) > 0
+	select size(small-jets-radius-jetsf) >= 0
+	select size(forward-small-radius-jetsf) >= 0
+	select Size(blargejetsf) >= 0
+	select MET > 150
+	reject dphi(smalljets[:],METLV_0) < 0.392699082
+	select size(smalljets) > 3 ? dphi(smalljets[:2],METLV_0) > 0.34906585 : dphi(smalljets[:],METLV_0) > 0.34906585
+
+region signal
+	common
+ 	reject size(baseline-muons) > 0
+ 	reject size(baseline-electrons) > 0
+
+ region resolved
+ 	signal
+ 	select MET < 500
+ 	select size(btaggedsmalljets) >= 2 
+ 	select MET < 350 ? pt(btaggedsmalljets[0] + btaggedsmalljets[1]) > 100 : pt(btaggedsmalljets[0] + btaggedsmalljets[1]) > 300
+ 	select dPhi(bmin,METLV_0) ~= 0
+ 	select dPhi(bmax,METLV_0) != 0
+ 	select mtbmin > 170
+  	select mtbmax > 200
+   select METSig > 12
+   select size(bjets) == 2 ? size(small-jets-radius-jetsf) <= 4 : size(smalljets) <=5
+   select m(btaggedsmalljets[0] + btaggedsmalljets[1]) > 50 AND m(btaggedsmalljets[0] + btaggedsmalljets[1]) < 280
+
+  region merged
+  	signal
+  	select MET > 500
+  	select ALL ### for us be able to compare our histograms
+  	select size(large-jetsf) > 0
+  	select m(large-jetsf[0]) [] 50 270
+
+  region merged2b-tag1
+   merged
+   select MET [] 500 750
+
+  region merged2b-tag2
+   merged
+   select MET > 750
+
+  region mergedmorethan2b-tag
+  	merged
+
+region resolved-150-200-2b
+	select ALL
+	select size(baseline-electrons) >= 0
+	select size(baseline-muons) >= 0
+	select size(t-leps) >= 0
+	select size(small-jets-radius-jetsf) >= 0
+	select size(forward-small-radius-jetsf) >= 0
+	select Size(smalljets) >= 0
+	select Size(blargejetsf) >= 0  #those dummy selections are due to CutLang's error
+	
+  select dPhi(bmin,METLV_0) ~= 0
+ 	select dPhi(bmax,METLV_0) != 0
+  select mtbmin > 170
+  select mtbmax > 200  	 	
+ 	reject size(baseline-muons) > 0
+ 	reject size(baseline-electrons) > 0
+ 	select ALL ####################MET Trigger??
+ 	select size(btaggedsmalljets) >= 2 ? m(btaggedsmalljets[0] + btaggedsmalljets[1]) > 50 : ALL
+ 	select size(btaggedsmalljets) >= 2 ? m(btaggedsmalljets[0] + btaggedsmalljets[1]) < 280 : ALL
+  select MET [] 150 500 
+  select size(t-leps) == 0	######As there is no dedicated tau control region, no signal tau selection is defined.
+  select size(t-leps) == 0
+  select size(smalljets) >= 2 	  	
+  select size(btaggedsmalljets) >= 2 	
+  select size(bjets) == 2 ? size(smalljets) <= 4 : ALL
+	select size(smalljets) > 3 ? dphi(smalljets[:2],METLV_0) > 0.34906585 : dphi(smalljets[:],METLV_0) > 0.34906585
+  select METSig > 12
+ 	select MET >= 350 ? pt(btaggedsmalljets[0])+pt(btaggedsmalljets[1]) > 300 : ALL
+	select MET >= 150
+	select MET < 200
+  select size(btaggedsmalljets) == 2
+
+region resolved-200-350-2b
+	select ALL
+	select size(baseline-electrons) >= 0
+	select size(baseline-muons) >= 0
+	select size(t-leps) >= 0
+	select size(small-jets-radius-jetsf) >= 0
+	select size(forward-small-radius-jetsf) >= 0
+	select Size(smalljets) >= 0
+	select Size(blargejetsf) >= 0 #those dummy selections are due to CutLang's error
+
+  select dPhi(bmin,METLV_0) ~= 0
+ 	select dPhi(bmax,METLV_0) != 0
+  select mtbmin > 170
+  select mtbmax > 200  	 	
+ 	reject size(baseline-muons) > 0
+ 	reject size(baseline-electrons) > 0
+ 	select ALL ####################MET Trigger??
+ 	select size(btaggedsmalljets) >= 2 ? m(btaggedsmalljets[0] + btaggedsmalljets[1]) > 50 : ALL
+ 	select size(btaggedsmalljets) >= 2 ? m(btaggedsmalljets[0] + btaggedsmalljets[1]) < 280 : ALL
+  select MET [] 150 500 
+  select size(t-leps) == 0	######As there is no dedicated tau control region, no signal tau selection is defined.
+  select size(t-leps) == 0
+  select size(smalljets) >= 2 	  	
+  select size(btaggedsmalljets) >= 2 	
+  select size(bjets) == 2 ? size(smalljets) <= 4 : ALL
+	select size(smalljets) > 3 ? dphi(smalljets[:2],METLV_0) > 0.34906585 : dphi(smalljets[:],METLV_0) > 0.34906585
+  select METSig > 12
+ 	select MET >= 350 ? pt(btaggedsmalljets[0])+pt(btaggedsmalljets[1]) > 100 : ALL
+	select MET >= 200
+	select MET < 350
+  select size(btaggedsmalljets) == 2  	
