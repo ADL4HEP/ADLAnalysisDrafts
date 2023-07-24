@@ -75,9 +75,9 @@ object bjets
   select applyHM( btagdeepCSVmedium( Pt(AK4jets) ) == 1)
 
 object AK8jets
-  take Jet
-  select pT(Jet) > 200
-  select abs(eta(Jet)) < 2.4
+  take FJet
+  select pT(FJet) > 200
+  select abs(eta(FJet)) < 2.4
 #  select loosejetID == 1
 
 object heavyAK8jets
