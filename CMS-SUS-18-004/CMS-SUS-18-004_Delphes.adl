@@ -1,0 +1,280 @@
+#info analysis
+#  title "Search for supersymmetry in final states with two or three soft leptons and missing transverse momentum in proton-proton collisions at sqrt(s) = 13 TeV "
+#  experiment CMS
+#  id SUS-18-004
+#  publication JHEP. 04 (2022) 091
+#  sqrtS 13.0
+#  lumi 137.1
+#  arXiv 2111.06296
+#  hepdata https://www.hepdata.net/record/ins1966342
+#  doi 10.1007/JHEP04(2022)091
+
+#info adl
+#  adlauthor Sezen Sekmen, Changgi Huh
+#  datatier Delphes
+
+# Efficiency tables
+table btagdeepCSVmedium
+  tabletype efficiency
+  nvars 1
+  errors true
+  # val    err-     err+     xmin     xmax
+  0.5790   0.0016   0.0016    -10.4     30.0
+  0.6314   0.0013   0.0013     30.0     35.0
+  0.6442   0.0011   0.0011     35.0     40.0
+  0.6596   0.0007   0.0007     40.0     50.0
+  0.6727   0.0007   0.0007     50.0     60.0
+  0.6812   0.0008   0.0008     60.0     70.0
+  0.6855   0.0008   0.0008     70.0     80.0
+  0.6873   0.0009   0.0009     80.0     90.0
+  0.6881   0.0010   0.0010     90.0    100.0
+  0.6880   0.0008   0.0008    100.0    125.0
+  0.6867   0.0011   0.0011    125.0    150.0
+  0.6826   0.0015   0.0015    150.0    175.0
+  0.6734   0.0020   0.0020    175.0    200.0
+  0.6624   0.0026   0.0026    200.0    225.0
+  0.6494   0.0034   0.0034    225.0    250.0
+  0.6419   0.0044   0.0044    250.0    275.0
+  0.6301   0.0054   0.0054    275.0    300.0
+  0.6202   0.0051   0.0051    300.0    350.0
+  0.6006   0.0073   0.0073    350.0    400.0
+  0.5889   0.0098   0.0098    400.0    450.0
+  0.5798   0.0126   0.0126    450.0    500.0
+  0.5547   0.0118   0.0118    500.0    600.0
+  0.5412   0.0172   0.0172    600.0    700.0
+  0.5197   0.0234   0.0234    700.0    800.0
+  0.4959   0.0243   0.0243    800.0   7000.0
+
+# OBJECT DEFINITIONS
+object muons 
+  take Muon 
+  select Pt(Muon) [] 3.5 30
+  select abs(Eta(Muon)) < 2.4
+  select absIso(Muon) < 5 # charged PF candidates in R = 0.3
+  select absIso(Muon) / pT(Muon) < 0.5
+
+object muonswz # for the WZ region
+  take Muon
+  select Pt(Muon) > 3.5 
+  select abs(Eta(Muon)) < 2.4
+  select absIso(Muon) < 5 # charged PF candidates in R = 0.3
+  select absIso(Muon) / pT(Muon) < 0.5
+
+object electrons
+  take Electron 
+  select Pt(Electron) [] 5 30
+  select abs(Eta(Electron)) < 2.5
+  select absIso(Electron) < 5
+  select absIso(Electron) / pT(Electron) < 0.5
+  # eff: .3 for 5 GeV, .7 for 30 GeV 
+
+object electronswz # for the WZ region
+  take Electron
+  select Pt(Electron) > 5 
+  select abs(Eta(Electron)) < 2.5
+  select absIso(Electron) < 5
+  select absIso(Electron) / pT(Electron) < 0.5
+
+object leptons : Union(electrons, muons)
+
+object leptonswz : Union(electronswz, muonswz) # for the WZ region
+
+object jets
+  take Jet
+  select Pt(Jet) > 25
+  select abs(Eta(Jet)) < 2.4
+
+object bjets
+  take jets
+  select abs(flavor(jets)) == 5
+  select applyHM( btagdeepCSVmedium( Pt(jets) ) == 1) # medium DeepCSV WP
+
+# Same flavor opposite sign lepton pairs
+object sfosll : COMB( leptons[-1] leptons[-2] ) alias ll
+  select pdgId(leptons[-1]) + pdgId(leptons[-2]) == 0
+
+object sfosllwz : COMB( leptonswz[-1] leptonswz[-2] ) alias ll
+  select pdgId(leptonswz[-1]) + pdgId(leptonswz[-2]) == 0
+
+# Same flavor any sign lepton pairs
+object sfasll : COMB( leptons[-1] leptons[-2] ) alias ll
+  select abs(pdgId(leptons[-1])) - abs(pdgId(leptons[-2])) == 0
+
+# EVENT VARIABLES
+
+define dilepton = leptons[0] leptons[1]
+define MTl1 = sqrt( 2*Pt(leptons[0]) * MET*(1-cos( Phi(METLV[0]) - Phi(leptons[0]) )))
+define MTl2 = sqrt( 2*Pt(leptons[1]) * MET*(1-cos( Phi(METLV[0]) - Phi(leptons[1]) )))
+define HT = fHT(jets)
+#define METcorr = pT(METLV[0] + muons[0] + muons[1])
+
+# EVENT SELECTION
+# Signal regions for 2 leptons EWK gaugino search
+region twolEwkLowMet
+  select ALL
+  select Size(leptons) == 2
+  select Size(muons) == 2
+  select pT(leptons[0]) [] 5 30
+  select pT(leptons[1]) [] 5 30
+  select q(leptons[0]) * q(leptons[1]) == -1
+  select Size(electrons) == 2 or Size(muons) == 2
+  select m(dilepton) [] 4 50
+  select pT(dilepton) > 3
+  select Size(jets) >= 1 # ?
+  select MTl1 < 70 and MTl2 < 70  
+  select MET / HT [] 2/3 1.4
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  #weight trigger 0.65
+  # Table 4 in paper:
+  bin "1" MET [] 125 200 and m(dilepton) [] 4 10
+  bin "2" MET [] 125 200 and m(dilepton) [] 10 20
+  bin "3" MET [] 125 200 and m(dilepton) [] 20 30
+  bin "4" MET [] 125 200 and m(dilepton) [] 30 50
+
+region twolEwkHigherMet
+  select Size(leptons) == 2
+  select Size(electrons) == 2 or Size(muons) == 2
+  select q(leptons[0]) * q(leptons[1]) == -1
+  select dR(leptons[0], leptons[1]) > 0.3
+  select m(dilepton) [] 1 50
+  select pT(dilepton) > 3
+  select Size(jets) >= 1 
+  select MTl1 < 70 and MTl2 < 70  
+  select MET / HT [] 2/3 1.4
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  #weight trigger 0.65
+  # Table 4 in paper:
+  bin "5" MET [] 200 240 and m(dilepton) [] 1 4
+  bin "6" MET [] 200 240 and m(dilepton) [] 4 10
+  bin "7" MET [] 200 240 and m(dilepton) [] 10 20
+  bin "8" MET [] 200 240 and m(dilepton) [] 20 30
+  bin "9" MET [] 200 240 and m(dilepton) [] 30 50
+  bin "10" MET [] 240 290 and m(dilepton) [] 1 4
+  bin "11" MET [] 240 290 and m(dilepton) [] 4 10
+  bin "12" MET [] 240 290 and m(dilepton) [] 10 20
+  bin "13" MET [] 240 290 and m(dilepton) [] 20 30
+  bin "14" MET [] 240 290 and m(dilepton) [] 30 50
+  bin "15" MET > 290 and m(dilepton) [] 1 4
+  bin "16" MET > 290 and m(dilepton) [] 4 10
+  bin "17" MET > 290 and m(dilepton) [] 10 20
+  bin "18" MET > 290 and m(dilepton) [] 20 30
+  bin "19" MET > 290 and m(dilepton) [] 30 50
+
+# Signal regions for 3l EWK 
+region threelEwkLowMet
+  select Size(leptons) == 3
+  select Size(muons) >= 2
+  select pT(leptons[0]) > 5
+  select pT(leptons[1]) > 5
+  select pT(leptons[2]) > 5
+  select Size(sfosll) >= 1
+  sort m(sfosll) ascend
+  select m(sfosll[0]) [] 4 50
+  select Size(sfasll) >= 1
+  sort m(sfasll) descend
+  select m(sfasll[0]) < 60
+  # Table 5 in paper:
+  bin "20" MET [] 125 200 and m(sfosll[0]) [] 4 10
+  bin "21" MET [] 125 200 and m(sfosll[0]) [] 10 20
+  bin "22" MET [] 125 200 and m(sfosll[0]) [] 20 30
+  bin "23" MET [] 125 200 and m(sfosll[0]) [] 30 50
+  
+region threelEwkHigherMet
+  select Size(leptons) == 3
+  select Size(sfosll) >= 1
+  select dR(leptons[0], leptons[1]) > 0.3 and dR(leptons[0], leptons[2]) > 0.3 and dR(leptons[1], leptons[2]) > 0.3
+  sort m(sfosll) ascend
+  select m(sfosll[0]) [] 1 50
+  # Table 5 in paper:
+  bin "24" MET > 200 and m(sfosll[0]) [] 1 4
+  bin "25" MET > 200 and m(sfosll[0]) [] 4 10
+  bin "26" MET > 200 and m(sfosll[0]) [] 10 20
+  bin "27" MET > 200 and m(sfosll[0]) [] 20 30
+  bin "28" MET > 200 and m(sfosll[0]) [] 30 50
+
+# Signal regions for WZ 
+region WZLowMet
+  select Size(leptonswz) == 3
+  sort pT(leptonswz) descend
+  select Size(muonswz) >= 2
+  select pT(leptonswz[0]) > 30
+  select pT(leptonswz[1]) > 10
+  select pT(leptonswz[2]) > 10
+  select pT(muonswz[0]) > 20
+  select Size(sfosllwz) >= 1
+  sort m(sfosllwz) ascend
+  # Table 6 in paper:
+  bin "29" MET [] 125 200 and m(sfosllwz[0]) [] 4 10
+  bin "30" MET [] 125 200 and m(sfosllwz[0]) [] 10 20
+  bin "31" MET [] 125 200 and m(sfosllwz[0]) [] 20 30
+  
+region WZHigherMet
+  select Size(leptonswz) == 3
+  sort pT(leptonswz) descend
+  select Size(sfosllwz) >= 1
+  select dR(leptonswz[0], leptonswz[1]) > 0.3 and dR(leptonswz[0], leptonswz[2]) > 0.3 and dR(leptonswz[1], leptonswz[2]) > 0.3
+  sort m(sfosllwz) ascend
+  # Table 6 in paper:
+  bin "32" MET > 200 and m(sfosllwz[0]) [] 1 4
+  bin "33" MET > 200 and m(sfosllwz[0]) [] 4 10
+  bin "34" MET > 200 and m(sfosllwz[0]) [] 10 20
+  bin "35" MET > 200 and m(sfosllwz[0]) [] 20 30
+
+# Signal regions for 2 leptons stop search
+region twolStopLowMet
+  select Size(leptons) == 2
+  select Size(muons) == 2
+  select pT(leptons[0]) [] 5 30
+  select pT(leptons[1]) [] 5 30
+  select q(leptons[0]) * q(leptons[1]) == -1
+  select Size(electrons) == 2 or Size(muons) == 2
+  select m(dilepton) [] 4 50
+  select m(dilepton) ][ 9 10.5
+  select m(dilepton) ][ 3 3.2
+  select pT(dilepton) > 3
+  select Size(jets) >= 1 # ?
+  select HT > 100
+  select MET / HT [] 2/3 1.4
+  select Size(bjets) == 0
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  #weight trigger 0.65
+  # Table 7 in paper:
+  bin "36" MET [] 125 200 and Pt(leptons[0]) [] 3.5 8
+  bin "37" MET [] 125 200 and Pt(leptons[0]) [] 8 12
+  bin "38" MET [] 125 200 and Pt(leptons[0]) [] 12 16
+  bin "39" MET [] 125 200 and Pt(leptons[0]) [] 16 20
+  bin "40" MET [] 125 200 and Pt(leptons[0]) [] 20 25
+  bin "41" MET [] 125 200 and Pt(leptons[0]) [] 25 30
+
+region twolStopHigherMet
+  select Size(leptons) == 2
+  select q(leptons[0]) * q(leptons[1]) == -1
+  select dR(leptons[0], leptons[1]) > 0.3
+  select m(dilepton) [] 1 50
+  select m(dilepton) ][ 9 10.5
+  select m(dilepton) ][ 3 3.2
+  select pT(dilepton) > 3
+  select Size(jets) >= 1 # ?
+  select HT > 100
+  select MET / HT [] 2/3 1.4
+  select Size(bjets) == 0
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  # Table 7 in paper:
+  bin "42" MET [] 200 290 and Pt(leptons[0]) [] 3.5 8
+  bin "43" MET [] 200 290 and Pt(leptons[0]) [] 8 12
+  bin "44" MET [] 200 290 and Pt(leptons[0]) [] 12 16
+  bin "45" MET [] 200 290 and Pt(leptons[0]) [] 16 20
+  bin "46" MET [] 200 290 and Pt(leptons[0]) [] 20 25
+  bin "47" MET [] 200 290 and Pt(leptons[0]) [] 25 30
+  bin "48" MET [] 290 340 and Pt(leptons[0]) [] 3.5 8
+  bin "49" MET [] 290 340 and Pt(leptons[0]) [] 8 12
+  bin "50" MET [] 290 340 and Pt(leptons[0]) [] 12 16
+  bin "51" MET [] 290 340 and Pt(leptons[0]) [] 16 20
+  bin "52" MET [] 290 340 and Pt(leptons[0]) [] 20 25
+  bin "53" MET [] 290 340 and Pt(leptons[0]) [] 25 30
+  bin "54" MET > 340 and Pt(leptons[0]) [] 3.5 8
+  bin "55" MET > 340 and Pt(leptons[0]) [] 8 12
+  bin "56" MET > 340 and Pt(leptons[0]) [] 12 16
+  bin "57" MET > 340 and Pt(leptons[0]) [] 16 20
+  bin "58" MET > 340 and Pt(leptons[0]) [] 20 25
+  bin "59" MET > 340 and Pt(leptons[0]) [] 25 30
