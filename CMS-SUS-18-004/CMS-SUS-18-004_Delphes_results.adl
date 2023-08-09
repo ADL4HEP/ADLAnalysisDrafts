@@ -13,6 +13,11 @@
 #  adlauthor Sezen Sekmen, Changgi Huh
 #  datatier Delphes
 
+# Format for presenting event counts from the paper
+countsformat results
+  process est, "Total estimated BG", syst
+  process obs, "Observed data"
+
 # Efficiency tables
 table btagdeepCSVmedium
   tabletype efficiency
