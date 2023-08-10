@@ -252,7 +252,7 @@ region WZHigherMet
   sort m(sfosllwz) ascend
   # Table 6 in paper:
   bin "32" MET > 200 and m(sfosllwz[0]) [] 1 4
-  counts results 0.78^{+0.97}_{-0.77} , 0
+  counts results 0.78 + 0.97 - 0.77 , 0
   bin "33" MET > 200 and m(sfosllwz[0]) [] 4 10
   counts results 3.1 +- 1.6          , 3
   bin "34" MET > 200 and m(sfosllwz[0]) [] 10 20
