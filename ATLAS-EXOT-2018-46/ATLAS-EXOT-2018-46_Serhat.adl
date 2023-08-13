@@ -1,0 +1,114 @@
+#info analysis
+#  title "Search for Dark Matter produced in association with a Standard Model Higgs boson decaying to b-quarks using the full Run 2 collision data with the  ATLAS detector"
+#  experiment ATLAS
+#  id EXOT-2018-46
+#  arXiv 2108.13391
+#  lumi 139 fb-1
+#  sqrtS 13.0
+#  energy unit GeV
+
+
+# OBJECT DEFINITIONS
+   
+object srcjet
+   take Jet
+   select abs(eta(Jet)) < 2.4
+   select pT(Jet) [] 20 60
+    
+object srfjet
+   take Jet
+   select abs(eta(Jet)) [] 2.5 4.5
+   select pT(Jet) > 30
+   
+object srjet : Union(srcjet, srfjet)
+
+object sele
+   take Ele
+   select abs(eta(Ele)) < 2.47
+   select pT(Ele) > 27
+   
+object bele
+   take Ele
+   select abs(eta(Ele)) < 2.47
+   select pT(Ele) > 7
+   
+object smuo
+   take Muo
+   select abs(eta(Muo)) < 2.5
+   select pT(Muo) > 25
+   
+object bmuo
+   take Muo
+   select abs(eta(Muo)) < 2.5
+   select pT(Muo) > 7
+   
+object BTjet
+   take srjet
+   select bTag(srjet) == 1
+   
+object BTCjet
+   take srcjet
+   select bTag(srcjet) == 1
+   
+object JetLarge
+   take FatJet
+   select ALL
+   
+object BTLjet
+   select bTag(JetLarge) == 1
+   
+   
+define Higgs : bjet[0] bjet[1]
+
+# EVENT SELECTION
+
+region COMMON
+  select ALL
+  select MET > 150
+  select Size(TAU) == 0
+  select Size(srjet) [] 1 4 ? min(dPhi(srcjet[:3], METLV[0])) > 22.5 : ALL
+  select Size(srjet) [] 0 3 ? min(dPhi(srcjet[:2], METLV[0])) > 20 : ALL
+ 
+region RESOLVED
+   select ALL
+   select MET [] 150 500
+   select srjet >= 2
+   select Size(BTjet) >= 2
+   select Size(BTCjet) == 2 ? Size(srcjet) >= 4 : ALL
+   select Size(BTjet) >= 3 ? Size(srjet) >= 5 : ALL
+   select Size(BTjet) == 2 ? Size(srjet)  <=4 : ALL 
+   select MET < 350 ? pT(Higgs) > 100 : ALL
+   select MET > 350 ? pT(Higgs) > 300 : ALL
+   METSig > 12
+   select m(Higgs) [] 50 280
+   select Size(BTjet) == 2 ? Size(srjet) <= 4 : ALL
+   bin size(srjet) == 2 and MET [] 150 200 
+   bin size(srjet) == 2 and MET [] 200 350
+   bin size(srjet) == 2 and MET [] 350 500 
+   select Size(BTjet) >= 3 ? Size(srjet) <= 5 : ALL
+   bin size(srjet) == 2 and MET [] 150 200 
+   bin size(srjet) == 2 and MET [] 200 350
+   bin size(srjet) == 2 and MET [] 350 500
+    
+region MERGED
+  select ALL
+  select MET > 500
+  select JetLarge >= 1 
+  select BTLJet >= 1
+  select m(Higgs) [] 50 270
+  select Size(BTLJet) == 2 
+  bin size(BTLJet) == 2 and MET [] 500 750
+  bin size(BTLJet) == 2 and MET > 750
+  select Size(BTLJet) >= 3
+  
+  
+  
+  
+  
+
+  
+   
+   
+  
+  
+  
