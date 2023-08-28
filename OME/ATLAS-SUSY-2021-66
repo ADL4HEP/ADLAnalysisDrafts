@@ -1,0 +1,75 @@
+# ADL REINTERPRETATION  
+# Search for R-parity-violating supersymmetry in a final state containing leptons and many jets with the ATLAS experiment using √𝒔 = 13 TeV proton–proton collision data
+# Eur. Phys. J. C 81 (2021) 1023
+# DOI : 10.1140/epjc/s10052-021-09761-x
+
+# EWK Analysis Signal Region 
+# Based on the analysis : https://www.hepdata.net/record/resource/2677519?landing_page=true
+
+#OBJECT DEFINITIONS 
+
+object jets: JET 
+	select pT(JET) > 20
+
+object bjets: jets
+	select bTag(jets) == 1 
+
+object lepton: Union(ELE,MUO,TAU)
+
+
+#Parameters for NN Analysis Implementation 
+
+define bjetCategory      =  Size(bjets) - 1   # This variable was not used in the NN variable list, and instead the integer 3 was put in directly, since the number of BJets in the EWK Analysis Region are bigger than 4, in which this function was suppose to return 3 in this case. 
+define MaxPtThreeJetMass =  m(jets[0] jets[1] jets[2])
+define dRJetLepPair      =  Min(dR(jets[-1] , lepton[-1])) 
+
+
+#Uncertain Implementations
+
+define MaxPtThreeJetandMetLepMass = MaxPtThreeJetMass + pT(lepton[0]) + MET     # Not sure if I interpreted this function right, since it sums the pT of lepton in a for loop in the .cxx document. 
+define minmaxmass                 = m(jets[ -1]) + m(jets[-2]) + m(jets[-3])    # Interpreting that calc_minmax_mass function in the original SUSY-2019-04.cxx document sums a group of random jets.  
+
+
+# NN Variables for OME Implementation 
+define NNnBJ4  = { Size(jets)  3  Size(bjets)  MaxPtThreeJetMass  fHT(jets)  fHT(bjets)  MaxPtThreeJetandMetLepMass  dRJetLepPair  minmaxmass  MET  Phi(METLV[0]) pT(jets[0]) pT(jets[1]) pT(jets[2]) pT(jets[3]) pT(jets[4]) pT(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 Eta(jets[0]) Eta(jets[1]) Eta(jets[2]) Eta(jets[3]) Eta(jets[4]) Eta(jets[5]) -5.0 -5.0 -5.0 -5.0 Phi(jets[0]) Phi(jets[1]) Phi(jets[2]) Phi(jets[3]) Phi(jets[4]) Phi(jets[5]) -5.0 -5.0 -5.0 -5.0  E(jets[0]) E(jets[1]) E(jets[2]) E(jets[3]) E(jets[4]) E(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 bTag(jets[0]) bTag(jets[1]) bTag(jets[2]) bTag(jets[3]) bTag(jets[4]) 0             0             0             0             0               pT(lepton[0]) Eta(lepton[0]) Phi(lepton[0]) E(lepton[0])}
+define NNnBJ5  = { Size(jets)  3  Size(bjets)  MaxPtThreeJetMass  fHT(jets)  fHT(bjets)  MaxPtThreeJetandMetLepMass  dRJetLepPair  minmaxmass  MET  Phi(METLV[0]) pT(jets[0]) pT(jets[1]) pT(jets[2]) pT(jets[3]) pT(jets[4]) pT(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 Eta(jets[0]) Eta(jets[1]) Eta(jets[2]) Eta(jets[3]) Eta(jets[4]) Eta(jets[5]) -5.0 -5.0 -5.0 -5.0 Phi(jets[0]) Phi(jets[1]) Phi(jets[2]) Phi(jets[3]) Phi(jets[4]) Phi(jets[5]) -5.0 -5.0 -5.0 -5.0  E(jets[0]) E(jets[1]) E(jets[2]) E(jets[3]) E(jets[4]) E(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 bTag(jets[0]) bTag(jets[1]) bTag(jets[2]) bTag(jets[3]) bTag(jets[4]) bTag(jets[5]) 0             0             0             0               pT(lepton[0]) Eta(lepton[0]) Phi(lepton[0]) E(lepton[0])}
+define NNnBJ6  = { Size(jets)  3  Size(bjets)  MaxPtThreeJetMass  fHT(jets)  fHT(bjets)  MaxPtThreeJetandMetLepMass  dRJetLepPair  minmaxmass  MET  Phi(METLV[0]) pT(jets[0]) pT(jets[1]) pT(jets[2]) pT(jets[3]) pT(jets[4]) pT(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 Eta(jets[0]) Eta(jets[1]) Eta(jets[2]) Eta(jets[3]) Eta(jets[4]) Eta(jets[5]) -5.0 -5.0 -5.0 -5.0 Phi(jets[0]) Phi(jets[1]) Phi(jets[2]) Phi(jets[3]) Phi(jets[4]) Phi(jets[5]) -5.0 -5.0 -5.0 -5.0  E(jets[0]) E(jets[1]) E(jets[2]) E(jets[3]) E(jets[4]) E(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 bTag(jets[0]) bTag(jets[1]) bTag(jets[2]) bTag(jets[3]) bTag(jets[4]) bTag(jets[5]) bTag(jets[6]) 0             0             0               pT(lepton[0]) Eta(lepton[0]) Phi(lepton[0]) E(lepton[0])}
+define NNnBJ7  = { Size(jets)  3  Size(bjets)  MaxPtThreeJetMass  fHT(jets)  fHT(bjets)  MaxPtThreeJetandMetLepMass  dRJetLepPair  minmaxmass  MET  Phi(METLV[0]) pT(jets[0]) pT(jets[1]) pT(jets[2]) pT(jets[3]) pT(jets[4]) pT(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 Eta(jets[0]) Eta(jets[1]) Eta(jets[2]) Eta(jets[3]) Eta(jets[4]) Eta(jets[5]) -5.0 -5.0 -5.0 -5.0 Phi(jets[0]) Phi(jets[1]) Phi(jets[2]) Phi(jets[3]) Phi(jets[4]) Phi(jets[5]) -5.0 -5.0 -5.0 -5.0  E(jets[0]) E(jets[1]) E(jets[2]) E(jets[3]) E(jets[4]) E(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 bTag(jets[0]) bTag(jets[1]) bTag(jets[2]) bTag(jets[3]) bTag(jets[4]) bTag(jets[5]) bTag(jets[6]) bTag(jets[7]) 0             0               pT(lepton[0]) Eta(lepton[0]) Phi(lepton[0]) E(lepton[0])}
+define NNnBJ8  = { Size(jets)  3  Size(bjets)  MaxPtThreeJetMass  fHT(jets)  fHT(bjets)  MaxPtThreeJetandMetLepMass  dRJetLepPair  minmaxmass  MET  Phi(METLV[0]) pT(jets[0]) pT(jets[1]) pT(jets[2]) pT(jets[3]) pT(jets[4]) pT(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 Eta(jets[0]) Eta(jets[1]) Eta(jets[2]) Eta(jets[3]) Eta(jets[4]) Eta(jets[5]) -5.0 -5.0 -5.0 -5.0 Phi(jets[0]) Phi(jets[1]) Phi(jets[2]) Phi(jets[3]) Phi(jets[4]) Phi(jets[5]) -5.0 -5.0 -5.0 -5.0  E(jets[0]) E(jets[1]) E(jets[2]) E(jets[3]) E(jets[4]) E(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 bTag(jets[0]) bTag(jets[1]) bTag(jets[2]) bTag(jets[3]) bTag(jets[4]) bTag(jets[5]) bTag(jets[6]) bTag(jets[7]) bTag(jets[8]) 0               pT(lepton[0]) Eta(lepton[0]) Phi(lepton[0]) E(lepton[0])}
+define NNnBJ9  = { Size(jets)  3  Size(bjets)  MaxPtThreeJetMass  fHT(jets)  fHT(bjets)  MaxPtThreeJetandMetLepMass  dRJetLepPair  minmaxmass  MET  Phi(METLV[0]) pT(jets[0]) pT(jets[1]) pT(jets[2]) pT(jets[3]) pT(jets[4]) pT(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 Eta(jets[0]) Eta(jets[1]) Eta(jets[2]) Eta(jets[3]) Eta(jets[4]) Eta(jets[5]) -5.0 -5.0 -5.0 -5.0 Phi(jets[0]) Phi(jets[1]) Phi(jets[2]) Phi(jets[3]) Phi(jets[4]) Phi(jets[5]) -5.0 -5.0 -5.0 -5.0  E(jets[0]) E(jets[1]) E(jets[2]) E(jets[3]) E(jets[4]) E(jets[5]) 0.0000001 0.0000001 0.0000001 0.0000001 bTag(jets[0]) bTag(jets[1]) bTag(jets[2]) bTag(jets[3]) bTag(jets[4]) bTag(jets[5]) bTag(jets[6]) bTag(jets[7]) bTag(jets[8]) bTag(jets[9])   pT(lepton[0]) Eta(lepton[0]) Phi(lepton[0]) E(lepton[0])}
+
+# OME Implementation Variables for Region with 6 Jets 
+
+define NNdisc6J4BJ = OME ( "/Users/Hazal/Desktop/OME_Implement/SUSY-2019-04_6jets.onnx" , NNnBJ4)
+define NNdisc6J5BJ = OME ( "/Users/Hazal/Desktop/OME_Implement/SUSY-2019-04_6jets.onnx" , NNnBJ5)
+define NNdisc6J6BJ = OME ( "/Users/Hazal/Desktop/OME_Implement/SUSY-2019-04_6jets.onnx" , NNnBJ6)
+define NNdisc6J7BJ = OME ( "/Users/Hazal/Desktop/OME_Implement/SUSY-2019-04_6jets.onnx" , NNnBJ7)
+define NNdisc6J8BJ = OME ( "/Users/Hazal/Desktop/OME_Implement/SUSY-2019-04_6jets.onnx" , NNnBJ8)
+define NNdisc6J9BJ = OME ( "/Users/Hazal/Desktop/OME_Implement/SUSY-2019-04_6jets.onnx" , NNnBJ9)
+
+
+# EWK REGIONS : ONE LEPTON 
+
+region OneLepton4BJ
+    select ALL
+	select Size(jets) == 6
+    select Size(bjets) >= 4
+    select Size(lepton) == 1
+    select Size(bjets) == 4 ? NNdisc6J4BJ > 1 : ALL
+    select Size(bjets) == 5 ? NNdisc6J5BJ > 0 : ALL 
+    select Size(bjets) == 6 ? NNdisc6J6BJ > 0 : ALL
+    select Size(bjets) == 7 ? NNdisc6J7BJ > 0 : ALL
+    select Size(bjets) == 8 ? NNdisc6J8BJ > 0 : ALL
+    select Size(bjets) == 9 ? NNdisc6J9BJ > 0 : ALL 
+
+
+#region TwoLepton3BJ
+#    select ALL
+
+
+
+
+    
+
+
+
