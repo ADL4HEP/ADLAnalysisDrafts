@@ -1,0 +1,590 @@
+info analysis
+	title "Search for chargino–neutralino pair production in final states with three leptons and missing transverse momentum in sqrt(s) = 13 TeV p p collisions with the ATLAS detector"
+	experiment ATLAS
+	sqrtS 13.0
+	lumi 139
+	arXiv "2106.01676"
+
+object BaselineElectrons
+	take ELE
+	select pT(ELE) > 4.5
+	select abseta(ELE) < 2.47
+	#select LooseAndBLayerLikelihood(ELE) == 1 ##########
+	#select abs(z0*sin(theta)) < 0.5
+
+object BaselineMuons
+	take MUO
+	select pT(MUO) > 3
+	select abseta(MUO) < 2.5
+	select medium(MUO) == 1
+	#select abs(z0*sin(theta)) < 0.5
+
+object BaselineJets
+	take JET
+	select pT(JET) > 20
+	select abseta(JET) < 4.5
+	select pT(JET) < 120 AND abseta(JET) < 2.5 ? medium(JET) == 1 : ALL
+
+object BaselinePhotons
+	take PHO
+	select pT(PHO) > 25
+	select abseta(PHO) < 2.37
+	reject abseta(PHO) [] 1.37 1.57
+	#select tight(PHO) == 1
+
+object SignalJets
+	take BaselineJets
+	select abseta(BaselineJets) < 2.8
+	select loose(BaselineJets) == 1
+	select abseta(BaselineJets) < 2.5 ? bTag(BaselineJets) == 1 : ALL
+
+object SignalElectrons
+	take BaselineElectrons
+	select medium(BaselineElectrons) == 1
+
+object SignalMuons
+	take BaselineMuons
+	select ALL
+
+object ExceptionallyIncludedMuons
+	take MUO
+	select pT(MUO) > 3
+	select abseta(MUO) < 2.7
+	select medium(MUO) == 1
+	#select abs(z0*sin(theta)) < 0.5
+
+object HTCandidates
+	take SignalJets
+	select pT(SignalJets) > 20
+
+object BaselineLeptons: Union(BaselineElectrons, ExceptionallyIncludedMuons)
+object SignalLeptons: Union(SignalElectrons, SignalMuons)
+
+object SFOS : COMB( SignalLeptons[-1] SignalLeptons[-2] ) alias ll
+  select pdgId(SignalLeptons[-1]) + pdgId(SignalLeptons[-2]) == 0
+
+object SFSS : COMB( SignalLeptons[-1] SignalLeptons[-2] ) alias ll
+  select pdgId(SignalLeptons[-1]) - pdgId(SignalLeptons[-2]) == 0
+
+object DFOSlepton: SignalLeptons[-3] alias ll
+	reject abs(pdgId(SignalLeptons[-1])) - abs(pdgId(SignalLeptons[-3])) == 0
+	select q(SignalLeptons[-1]) + q(SignalLeptons[-3]) == 0
+
+
+define mll: m(SFOS[0]) #this is to choose the SFOS pair nearest to Z boson.
+define mllZ: mll
+define mllmin: m(SFOS[0]) #this is to choose the SFOS pair that has the lowest mass.
+define WLepton: SignalLeptons[-3]
+define mT: sqrt(2 * pT(WLepton) * MET * (1 - cos(dPhi(METLV[0] , WLepton))))
+define ZBozonMass: 91.1876
+define FNPLeptonsCandidate: SignalLeptons[-3]
+define HT: sum(pT(HTCandidates))
+define HTlep: sum(pT(SignalLeptons))
+define m3l: m(SignalLeptons[1], SignalLeptons[2], SignalLeptons[3])
+
+define deltaphi: dPhi(SignalLeptons[-1], SignalLeptons[-3]) #to choose the nearest SFOS lepton to the third lepton in phi
+define dR-OS-NEAR: dR(SignalLeptons[-1], SignalLeptons[-3]) #to put a cut on the dR of the nearest lepton and the third lepton
+
+
+
+region common
+	select ALL
+	select size(BaselineLeptons) == 3
+	select size(SignalLeptons) == 3
+
+
+
+
+
+region SRoffWZ
+	common 
+#######bir SFOS çifti seçip ona Z diyeceğiz ötekine de W, eğer birden fazla SFOS çifti varsa kütlesi az olan çift seçilecek.
+	select size(SFOS) >= 1
+	sort m(SFOS) ascend
+	select mllmin < 75
+	#####trigger dilepton ne demek?
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select MET > 50
+	reject size(BJET) > 0
+	reject mllmin < 12
+	select abs(m3l - ZBozonMass) > 15
+
+
+
+
+
+region SRWZ
+	common
+#bir SFOS çifti seçip ona Z diyeceğiz ötekine de W, eğer birden fazla SFOS çifti varsa kütlesi Z ye en yakın olan çift seçilecek.
+	select size(SFOS) >= 1
+	#sort m(SFOS) ~= ZBozonMass ######
+	select mllZ [] 75 105
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select MET > 50
+	reject size(BJET) > 0
+	reject mllZ < 12
+	select abs(m3l - ZBozonMass) > 15
+
+region SRWZ-0
+	SRWZ
+	select mT < 100
+
+region SRWZ-1
+	SRWZ
+	select size(SignalJets) == 0
+	select mT [] 100 160
+	select MET [] 50 100
+
+region SRWZ-2
+	SRWZ
+	select size(SignalJets) == 0
+	select mT [] 100 160
+	select MET [] 100 150
+
+region SRWZ-3
+	SRWZ
+	select size(SignalJets) == 0
+	select mT [] 100 160
+	select MET [] 150 200
+
+region SRWZ-4
+	SRWZ
+	select size(SignalJets) == 0
+	select mT [] 100 160
+	select MET > 200
+
+region SRWZ-5
+	SRWZ
+	select size(SignalJets) == 0
+	select mT > 160
+	select MET [] 50 150
+
+
+region SRWZ-6
+	SRWZ
+	select size(SignalJets) == 0
+	select mT > 160
+	select MET [] 150 200
+
+region SRWZ-7
+	SRWZ
+	select size(SignalJets) == 0
+	select mT > 160
+	select MET [] 200 350
+
+region SRWZ-8
+	SRWZ
+	select size(SignalJets) == 0
+	select mT > 160
+	select MET > 350
+
+region SRWZ-9
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 100 160
+	select MET [] 100 150
+
+region SRWZ-10
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 100 160
+	select MET [] 150 250
+
+region SRWZ-11
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 100 160
+	select MET [] 250 300
+
+region SRWZ-12
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 100 160
+	select MET > 300
+
+region SRWZ-13
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT > 160
+	select mT [] 50 150
+
+region SRWZ-14
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT > 160
+	select mT [] 150 200
+
+region SRWZ-15
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT > 160
+	select mT [] 250 450
+
+region SRWZ-16
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT > 160
+	select mT > 400
+
+region SRWZ-17
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT > 160
+	select HTlep < 350
+	select mT > 100
+	select MET [] 150 200
+
+region SRWZ-18
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT > 160
+	select HTlep < 350
+	select mT > 100
+	select MET [] 200 300
+
+region SRWZ-19
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT > 160
+	select HTlep < 350
+	select mT > 100
+	select MET [] 300 400
+
+region SRWZ-20
+	SRWZ
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT > 160
+	select HTlep < 350
+	select mT > 100
+	select MET > 400 
+
+
+
+
+
+region SRWhSFOS
+	common
+#En az bir SFOS çifti olacak, birden fazlaysa kütlesi Z ye en yakın olan seçilecek
+	select mllZ ][ 75 105
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select MET > 50
+	reject size(BJET) > 0
+	reject mllZ < 12
+	select abs(m3l - ZBozonMass) > 15
+
+
+region SRWhSFOS-1
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) == 0
+	select mT [] 0 100
+	select MET [] 50 100
+
+region SRWhSFOS-2
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) == 0
+	select mT [] 0 100
+	select MET [] 100 150
+
+region SRWhSFOS-3
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) == 0
+	select mT [] 0 100
+	select MET > 150
+
+region SRWhSFOS-4
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) == 0
+	select mT [] 100 160
+	select MET [] 50 100
+
+region SRWhSFOS-5
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) == 0
+	select mT [] 100 160
+	select MET > 100
+
+region SRWhSFOS-6
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) == 0
+	select mT > 160
+	select MET [] 50 100 
+
+region SRWhSFOS-7
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) == 0
+	select mT > 160
+	select MET > 100 
+
+region SRWhSFOS-8
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 0 50
+	select MET [] 50 100
+
+region SRWhSFOS-9
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 50 100
+	select MET [] 50 100
+
+region SRWhSFOS-10
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 0 100
+	select MET [] 100 150
+
+region SRWhSFOS-11
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 0 100
+	select MET > 150
+
+region SRWhSFOS-12
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 100 160
+	select MET [] 50 100
+
+region SRWhSFOS-13
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 100 160
+	select MET [] 100 150
+
+region SRWhSFOS-14
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT [] 100 160
+	select MET > 150
+
+region SRWhSFOS-15
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT > 160
+	select MET [] 50 150
+
+region SRWhSFOS-16
+	SRWhSFOS
+	select mll <= 75
+	select size(SignalJets) > 0
+	select HT < 200
+	select mT > 160
+	select MET > 150
+
+region SRWhSFOS-17
+	SRWhSFOS
+	select mll >= 105
+	select size(SignalJets) == 0
+	select mT > 100
+	select MET [] 50 100
+
+region SRWhSFOS-18
+	SRWhSFOS
+	select mll >= 105
+	select size(SignalJets) == 0
+	select mT > 100
+	select MET [] 100 200
+
+region SRWhSFOS-19
+	SRWhSFOS
+	select mll >= 105
+	select size(SignalJets) == 0
+	select mT > 100
+	select MET > 200
+
+
+
+
+region SRWhDFOS
+	common
+#events are required to have one same-flavour same-charge-sign (SFSS) lepton pair 
+#as well as a third lepton which has a different flavour and opposite sign to the SFSS pair, and is referred to as the DFOS lepton
+	select size(SFSS) == 1
+	select size(DFOS) == 1
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select MET > 50
+	reject size(BJET) > 0	
+
+region SRWhDFOS-1
+	SRWhDFOS
+	select size(SignalJets) == 0
+	METSig > 8
+	select pT(DFOSlepton) > 15 
+	select deltaphi ~= 0
+	select dR-OS-NEAR < 1.2
+
+region SRWhDFOS-2
+	SRWhDFOS
+	select size(SignalJets) [] 1 2
+	METSig > 8
+	select pT(DFOSlepton) > 20
+	select deltaphi ~= 0
+	select dR-OS-NEAR < 1.0
+
+
+#region SRFF ##burayı neden yazdığımı hatırlamıyorum. sonradan makaleye bakınca böyle bir şey göremedim
+#	select ALL
+#	select size(BaselineLeptons) == 3
+##En az bir SFOS çifti içerecek ve kütlesi Z ye en yakın olana SFOS çifti diyeceğiz
+
+
+
+region CRWZWZ
+	select ALL
+	select size(BaselineLeptons) == 3
+	select size(SignalLeptons) == 3	
+	####trigger dilepton ne demek?
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select size(BJET) == 0	
+	select size(SFOS) >= 1
+	select mT [] 20 100
+	select mll [] 75 105
+	select abs(m3l - ZBozonMass) > 15
+	select MET [] 50 100
+
+region CRWZWZ0j
+	CRWZWZ
+	select size(SignalJets) == 0
+
+
+region CRWZWZlow-HT
+	CRWZWZ
+	select size(SignalJets) >= 1
+	select HT < 200
+
+region CRWZWZhigh-HT
+	CRWZWZ
+	select size(SignalJets) >= 1
+	select HT > 200
+
+
+
+region VRWZWZ
+	select ALL
+	select size(BaselineLeptons) == 3
+	select size(SignalLeptons) == 3	
+	####trigger dilepton ne demek?
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select size(BJET) == 0	
+	select size(SFOS) >= 1
+	select mT [] 20 100
+	select mll [] 75 105
+	select abs(m3l - ZBozonMass) > 15
+	select MET > 100
+
+region VRWZWZ0j
+	CRWZWZ
+	select size(SignalJets) == 0
+
+region VRWZWZlow-HT
+	VRWZWZ
+	select size(SignalJets) >= 1
+	select HT < 200
+
+region VRWZWZhigh-HT
+	VRWZWZ
+	select size(SignalJets) >= 1
+	select HT > 200
+
+
+
+
+
+region VRttWZ
+	select ALL
+	select size(BaselineLeptons) == 3
+	select size(SignalLeptons) == 3	
+	select size(SFOS) == 0
+	####trigger dilepton ne demek?
+	select size(BJET) [] 1 2
+	select MET > 50
+
+region VRttWZincl
+	select ALL
+	select size(BaselineLeptons) == 3
+	select size(SignalLeptons) == 3	
+	select size(SFOS) == 0
+	####trigger dilepton ne demek?
+	select MET > 50
+	select METSig < 8
+
+
+
+
+region CRFFWZ
+	select ALL
+	select size(BaselineLeptons) == 3
+	select size(SignalLeptons) == 3	
+	####dilepton trigger
+	select size(SFOS) >= 1
+	select size(BJET) == 0
+	select abs(mll - ZBozonMass) < 15
+	select pT(SignalLeptons[-1]) > 25 #############table 7'deki cut
+	select pT(SignalLeptons[-2]) > 20
+	select MET [] 20 50
+	select mT < 20
+
+
+
+
+region VRFFWZ
+	select ALL
+	select size(BaselineLeptons) == 3
+	select size(SignalLeptons) == 3	
+	select size(SFOS) >= 1
+	####dilepton trigger
+	select size(BJET) == 0
+	select abs(mll - ZBozonMass) < 15
+	select MET [] 50 100
+	select mT < 20
+	select m3l [] 105 160
+
+
+
