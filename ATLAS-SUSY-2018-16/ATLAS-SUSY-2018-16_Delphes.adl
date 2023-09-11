@@ -1,0 +1,247 @@
+#info analysis
+# title "Searches for electroweak production of supersymmetric particles with compressed mass spectra in sqrt(s) = 13 TeV pp collisions with the ATLAS detector"
+# experiment ATLAS
+# id SUSY-2018-16
+# sqrtS 13.0
+# lumi 139
+# arXiv 1911.12606
+# hepdata
+# doi 10.1103/PhysRevD.101.052005
+
+#info adl
+# adlauthor Ahmetcan Sansar
+# datatier Delphes
+
+  # OBJECT DEFINITIONS
+object electrons
+   take ELE
+   select Pt(ELE) > 4.5 
+   select absEta(ELE) < 2.47
+  
+object PreselectedElectrons
+  take electrons
+  select ALL
+  #Veryloose(electrons) == 1
+  #select |z0sintheta| < 0.5 mm
+
+object SignalElectrons
+  take PreselectedElectrons
+  select Pt(PreselectedElectrons) > 4.5
+  #select isMedium(electrons) == 1
+  #select d0/sigmad0 < 5 
+  #select Gradient isolation?
+
+object muons
+  take MUO
+  select Pt(MUO) > 3 
+  select absEta(MUO) < 2.5
+
+object PreselectedMuons
+  take muons
+  #select lowPt criterion
+  reject Pt(muons) < 10
+  #select |z0sintheta| < 0.5 mm
+  #select d0/sigmad0 < 5
+
+object SignalMuons
+  take PreselectedMuons
+  select Pt(PreselectedMuons) >= 10
+  #select FCTightTrackOnly isolation
+ 
+object leptons : Union(SignalElectrons, SignalMuons)
+
+object PreselectedJets
+  take JET
+  select absEta(JET) < 4.5
+  select Pt(JET) > 20
+  #select Pt(JET) < 120 && absEta(JET) < 2.5 ? isMedium(JET) : all
+  #select Pt(JET) < 50 && absEta(JET) < 2.5 ? isLoose(JET) : all
+
+object SignalJets
+  take PreselectedJets
+  select Pt(PreselectedJets) > 30
+  select absEta(PreselectedJets) < 2.8
+
+object VBFjets 
+  take SignalJets
+  select Pt(SignalJets) > 30
+  select absEta(SignalJets) < 4.5
+
+object btagjets
+  take PreselectedJets
+  select absEta(PreselectedJets) < 2.5
+  select Pt(PreselectedJets) > 20
+
+
+define dilepton : leptons[0] leptons[1]
+define dimu : SignalMuons[0] SignalMuons[1]
+define die : SignalElectrons[0] SignalMuons[1]
+define ditau : TAU[0] TAU[1]
+define HT : fHT(leptons)  
+define MTl1 : sqrt(2*Pt(leptons[0])*MET*(1-cos(Phi(METLV[0]) - Phi(leptons[0]))))
+define MTl2 : sqrt(2*Pt(leptons[1])*MET*(1-cos(Phi(METLV[0]) - Phi(leptons[1]))))
+
+define M100T2 : fMT2(leptons[0], leptons[1], METLV[0])
+
+define RISR : MET/Pt(JET[0])
+define RVBF : MET/Pt(VBFjets[0] VBFjets[1])
+
+region Preselection2L
+  select ALL
+  select Size(leptons) >= 2
+  select Size(leptons) == 2
+  select q(leptons[0]) * q(leptons[1]) < 0
+  select PDGID(leptons[0]) + PDGID(leptons[1]) == 0 
+  select Pt(leptons[0]) > 5
+  select abs(PDGID(leptons[0])) == 11 ? dR(SignalElectrons[0],SignalElectrons[1]) > 0.3 : dR(SignalMuons[0],SignalMuons[1]) > 0.05
+  #select abs(PDGID(leptons[0])) == 11 ? m(dilepton) [] 3 60 : m(dilepton) [] 1 60 ###
+  select m(dilepton) [] 1 60
+  reject m(dilepton) [] 3 3.2
+  reject fMTauTau(leptons[0], leptons[1], METLV[0]) [] 0 160
+  select MET > 120
+  select Size(JET) >= 1
+  select Size(btagjets) == 0
+  select Pt(JET[0]) >= 100
+  select min(dPhi(JET,METLV[0])) > 0.4
+  select dPhi(JET[0], METLV[0]) >= 2.0
+   
+region SRElow
+  Preselection2L
+  select MET [] 120 200
+  select MET/HT < 10
+  select Pt(leptons[1]) > 5 + m(dilepton)/4
+  select MTl1 [] 10 60
+  select RISR [] 0.8 1.0 
+  bin "1" m(dilepton) [] 1 2 
+  bin "2" m(dilepton) [] 2 3 
+  bin "3" m(dilepton) [] 3 5 
+  bin "4" m(dilepton) [] 5 10 
+  bin "5" m(dilepton) [] 10 20  
+  bin "6" m(dilepton) [] 20 30 
+  bin "7" m(dilepton) [] 30 40 
+  bin "8" m(dilepton) [] 40 60 
+
+region SREmed
+  Preselection2L
+  select MET [] 120 200
+  select MET/HT > 10
+  #select MTS < 50
+  bin "9" m(dilepton) [] 1 2 
+  bin "10" m(dilepton) [] 2 3 
+  bin "11" m(dilepton) [] 3 5 
+  bin "12" m(dilepton) [] 5 10 
+  bin "13" m(dilepton) [] 10 20  
+  bin "14" m(dilepton) [] 20 30 
+  bin "15" m(dilepton) [] 30 40 
+  bin "16" m(dilepton) [] 40 60 
+
+region SREhigh
+  Preselection2L
+  select MET > 200
+  select Pt(leptons[1]) > min(10,2+m(dilepton)/3)
+  select MTl1 < 60
+  select RISR [] max(0.85,0.98 - 0.02*m(dilepton)) 1.0
+  bin "17" m(dilepton) [] 1 2 
+  bin "18" m(dilepton) [] 2 3 
+  bin "19" m(dilepton) [] 3 5 
+  bin "20" m(dilepton) [] 5 10 
+  bin "21" m(dilepton) [] 10 20  
+  bin "22" m(dilepton) [] 20 30 
+  bin "23" m(dilepton) [] 30 40 
+  bin "24" m(dilepton) [] 40 60 
+
+region Preselection1L1T
+  select ALL
+  select Size(leptons) == 1 
+  #select Size(track) >= 1
+  select Pt(leptons) < 10
+  #select dR(leptons, track) [] 0.05 1.5
+  select q(leptons[0]) * q(leptons[1]) < 0 # tracks ?
+  select PDGID(leptons[0]) + PDGID(leptons[1]) == 0
+  #select m(leptons track) [] 0.5 5
+  #reject m(leptons track) [] 3 3.2
+  select MET > 120
+  select Size(PreselectedJets) >= 1
+  select Pt(PreselectedJets[0]) >= 100
+  select min(dPhi(PreselectedJets, METLV[0])) > 0.4
+  select dPhi(PreselectedJets[0],METLV[0]) >= 2.0
+  
+region SRE1l1T
+  Preselection1L1T
+  select MET > 200
+  select MET/HT > 30
+  select dPhi(leptons, METLV[0]) < 1.0
+  #select Pt(track) < 5
+ #bin "25" m(leptons track) [] 0.5 1
+ #bin "26" m(leptons track) [] 1 1.5
+ #bin "27" m(leptons track) [] 1.5 2
+ #bin "28" m(leptons track) [] 2 3
+ #bin "29" m(leptons track) [] 3 4 
+ #bin "30" m(leptons track) [] 4 5
+  
+region VBFSR
+  Preselection2L
+  select m(dilepton) < 40
+  select Size(VBFjets) >= 2
+  select Pt(VBFjets[1]) > 40
+  select MET > 150
+  select MET/HT > 2
+  select Pt(leptons[1]) > min(10,2+m(dilepton)/3)
+  select m(leptons[1]) < 60
+  select RVBF [] max(0.6,0.92 - m(dilepton)/60) 1
+  select m(VBFjets[0] VBFjets[1]) > 400
+  select abs(Eta(VBFjets[0]) - Eta(VBFjets[1])) > 2
+
+region SRVBFlow
+  VBFSR
+  select abs(Eta(VBFjets[0]) - Eta(VBFjets[1])) < 4
+  bin "31" m(dilepton) [] 1 2 
+  bin "32" m(dilepton) [] 2 3 
+  bin "33" m(dilepton) [] 3 5 
+  bin "34" m(dilepton) [] 5 10 
+  bin "35" m(dilepton) [] 10 20  
+  bin "36" m(dilepton) [] 20 30 
+  bin "37" m(dilepton) [] 30 40 
+  bin "38" m(dilepton) [] 40 60 
+
+region SRVBFhigh
+  VBFSR
+  select abs(Eta(VBFjets[0]) - Eta(VBFjets[1])) > 4
+  bin "39" m(dilepton) [] 1 2 
+  bin "40" m(dilepton) [] 2 3 
+  bin "41" m(dilepton) [] 3 5 
+  bin "42" m(dilepton) [] 5 10 
+  bin "43" m(dilepton) [] 10 20  
+  bin "44" m(dilepton) [] 20 30 
+  bin "45" m(dilepton) [] 30 40 
+  bin "46" m(dilepton) [] 40 60 
+
+region SRSlow
+  Preselection2L
+  select MET [] 150 200
+  select M100T2 < 140
+  select Pt(leptons[2]) > min(15,7.5 + 0.75 * (M100T2 - 100))
+  select RISR [] 0.8 1.0
+  bin "47" M100T2 [] 100 100.5
+  bin "48" M100T2 [] 100.5 101
+  bin "49" M100T2 [] 101 102
+  bin "50" M100T2 [] 102 105
+  bin "51" M100T2 [] 105 110
+  bin "52" M100T2 [] 110 120
+  bin "53" M100T2 [] 120 130
+  bin "54" M100T2 [] 130 140
+  
+region SRShigh
+  Preselection2L
+  select MET > 200
+  select M100T2 < 140
+  select Pt(leptons[1]) > min(20,2.5+2.5 * (M100T2 - 100))
+  select RISR [] max(0.85,0.98 - 0.02*(M100T2 - 100)) 1.0
+  bin "55" M100T2 [] 100 100.5
+  bin "56" M100T2 [] 100.5 101
+  bin "57" M100T2 [] 101 102
+  bin "58" M100T2 [] 102 105
+  bin "59" M100T2 [] 105 110
+  bin "60" M100T2 [] 110 120
+  bin "61" M100T2 [] 120 130
+  bin "62" M100T2 [] 130 140
