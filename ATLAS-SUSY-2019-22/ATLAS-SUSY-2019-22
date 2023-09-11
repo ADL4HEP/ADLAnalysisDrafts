@@ -1,0 +1,133 @@
+#info analysis
+#  title "Search for direct production of winos and higgsinos in events with two same-charge leptons or #three leptons in p p collision #         data at 13 TeV with the ATLAS detector"
+#  experiment ATLAS
+#  id "CERN-EP-2023-063"
+#  publication 
+#  sqrtS 13
+#  lumi 139
+#  arXiv 2305.09322
+#  hepdata 
+#  doi https://doi.org/10.48550/arXiv.2305.09322
+
+#info adl
+#  adlauthor Feyza Baspehlivan
+
+
+object baselineELE
+  take Ele
+  select pt(ele) > 10
+  select abs(eta(ele)) < 2.47
+  reject abs(eta(ele)) [] 1.37 1.52
+  #select abs(d0/sig(d0)) < 5 d0 is transverse impact parameter of the electron track, sig is uncertainty
+  #select abs(z0sin(tetha)) < 0.5 z0 is longitudinal imp. par., its sine refers to the z-distance from the primary vertex to the point where d0 is measured 
+
+object sigELE
+  take baselineELE
+  #select medium(baselineELE) 
+  
+object baselineMUO
+  take Muo
+  select abs(eta(muo)) < 2.5
+  select pt(muo) > 10   
+  #select abs(z0sin(tetha)) < 0.5
+
+object sigMUO
+ take baselineMUO
+ #select abs(d0/sig(d0)) < 3
+ 
+object baselineJETS
+  take Jet
+  select pt(Jet) > 20
+  select abs(eta(Jet)) < 4.5
+  
+object sigJETS
+  take Jet
+  select pt(Jet) > 20
+  select abs(eta(Jet)) < 2.8
+  
+object bjet
+  take sigJETS
+  select abs(eta(sigJETS)) < 2.5
+  
+  
+object leptons : Union(ELE,MUO)
+object sigLEP : Union(sigELE,sigMUO)
+object BLLEP : Union(baselineELE,baselineMUO)
+ 
+
+define SMET : 
+define MTmin :
+  
+  
+region preselection1
+  take ALL
+  select size(leptons) >= 2
+  select pt(leptons[0]) > 20
+  select q(leptons[0]) = q(leptons[1])
+  select size(Jet) > 0 ? m(Jet[0] + Jet[1]) <= 350 : m(Jet) == 0 # hangi jet olduğunu belirtmediği için böyle yazdım, sorunsuz çalışır mı?
+  select size(BLLEP) == 2
+  select size(sigLEP) == 2
+  select pt(LEP) >= 25 #?? taranan eventlerde 1 tane leptonun 25 ten büyük olmasını mı sağlar, bütün leptonlarınki mi 25 ten büyük olur? 
+  select size(bjet) == 0
+  
+region SRWHhigh
+  preselection1
+  select fMT2() >= 80  
+  select MTmin == 0
+  select MET >= 75
+  
+region SRWHlow
+  preselection1
+  select fMT2() < 80
+  select MTmin >= 100
+  select MET >= 50
+  
+region SRWZhigh
+  preselection1
+  select fMT2() >= 100
+  select MTmin >= 100
+  select MET >= 100
+  
+region SRWZlow
+  preselection1
+  select fMT2() >= 100
+  select MTmin >= 100
+  select MET >= 100
+  
+region preselection2
+  take ALL
+  select size(leptons) >= 2
+  select size(sigLEP) == 2
+  select pt(leptons[0]) >= 25
+  select q(leptons[0]) = q(leptons[1])
+  select size(bjet) == 0
+  select MET >= 50
+  
+object SFOS : COMB (leptons[-1] leptons[-2]) 
+  select PDGID(leptons[-1]) + PDGID(leptons[-2]) == 0
+
+region CRWZWh 
+  preselection2
+  select size(BLLEP) == 3
+  select size(Jet) >= 1
+  select SMET < 6
+  select m(SFOS) [] 75 105 
+  
+region VRWZWh 
+  preselection2
+  select size(BLLEP) == 3
+  select size(Jet) >= 1
+  select SMET >= 6
+  select m(SFOS) [] 75 105 
+  
+region CR3Wh
+  preselection2
+  select size(BLLEP) == 2
+  select size(Jet) >= 2
+  select SMET < 6
+  
+region VR3Wh
+  preselection2
+  select size(BLLEP) == 2
+  select size(Jet) >= 2
+  select SMET >= 6
