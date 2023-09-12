@@ -12,6 +12,8 @@
 #info adl
 #  adlauthor Feyza Baspehlivan
 
+###Object Definitions
+
 object baselineELE
   take Ele
   select pt(ele) > 10
@@ -47,10 +49,17 @@ object sigJETS
 object bjet
   take sigJETS
   select abs(eta(sigJETS)) < 2.5
+
+object bRPVjets
+  take sigJETS
+  select pt(sigJETS) > 40
   
 object leptons : Union(ELE,MUO)
 object sigLEP : Union(sigELE,sigMUO)
 object BLLEP : Union(baselineELE,baselineMUO)
+
+object SFOS : COMB (leptons[-1] leptons[-2]) alias sfos
+  select PDGID(leptons[-1]) + PDGID(leptons[-2]) == 0
 
 define MT(leptons[0]) : sqrt( 2*pT(leptons[0]) * MET*(1-cos(Phi(METLV[0]) - Phi(leptons[0]) )))
 define MT(leptons[1]) : sqrt( 2*pT(leptons[1]) * MET*(1-cos(Phi(METLV[0]) - Phi(leptons[1]) )))
@@ -59,6 +68,8 @@ define MTmin : min(MT(leptons[0]),MT(leptons[1]))
 define MT2(leptons[0],leptons[1],METLV[0]) : min(max(MT(leptons[0],MT(leptons[1])))
 
 define Meff = sum(pT(leptons)) + sum(pT(Jet)) + MET  
+
+###Signal Regions
 
 region preselection1
   take ALL
@@ -72,43 +83,61 @@ region preselection1
   select size(sigJETS) >= 1
   select size(bjet) == 0
   
-region SRWHhigh
+region WHhigh
   preselection1
   select MT2(sigLEP[0], sigLEP[1], METLV[0]) >= 80  
   select MTmin == 0
   select MET >= 75
   
-region SRWHlow
+region WHlow
   preselection1
   select MT2(sigLEP[0], sigLEP[1], METLV[0]) < 80
   select MTmin >= 100
   select MET >= 50
   
-region SRWZhigh
+region WZhigh
   preselection1
   select MT2(sigLEP[0], sigLEP[1], METLV[0]) >= 100
   select MTmin >= 100
   select MET >= 100
 
-region SRWZlow
+region WZlow
   preselection1
   select MT2(sigLEP[0], sigLEP[1], METLV[0]) <= 100
   select MTmin >= 130
   select MET >= 140
-  select Meff <= 600
+  select Meff <= 600             ###<<<<<<<<<<<<<<<<<<<<<<<<<<
   select dR(sigLEP[0], sigLEP[1]) <= 3 
+
+region bRPVll
+  select size(sigLEP) == 2
+  select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25 
+  select size(sigJETS) >= 1
+  select q(sigLEP[0])*q(sigLEP[1]) == 1
+  select MT2(sigLEP[0],sigLEP[1],METLV) >= 60
+  select MET >= 100
+  select size(bjet) == 0
+  select bRPVjets >= 4
+
+region bRPVlll
+  select size(sigLEP) == 3
+  select select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25 and pt(sigLEP[2]) >= 25
+  select size(sigJETS) >= 1
+  select MT2(sigLEP[0],sigLEP[1],METLV) >= 80
+  select MET >= 120
+  select Meff >= 350   #<<<<<<<<<<<<<<<  is Meff enough when it is defined as an object?
+  reject m(sigELE[0] sigELE[1]) [] 81 101 and m(sigMUO[0] sigMUO[1]) [] 81 101  #<<<<<   
+
+###Control Regions
 
 region preselection2
   take ALL
   select size(leptons) >= 2
   select size(sigLEP) == 2
-  select pt(leptons[0]) >= 25
-  select q(leptons[0]) = q(leptons[1])
+  select pt(leptons[0]) >= 25 and pt(leptons[1]) >= 25
+  select q(leptons[0]) * q(leptons[1]) == 1     ###which leptons will be same sign?
   select size(bjet) == 0
   select MET >= 50
-  
-object SFOS : COMB (leptons[-1] leptons[-2]) alias sfos
-  select PDGID(leptons[-1]) + PDGID(leptons[-2]) == 0
 
 region CRWZWh 
   preselection2
@@ -116,22 +145,29 @@ region CRWZWh
   select size(Jet) >= 1
  # select SMET < 6  ##### MET Significance
   select m(SFOS) [] 75 105 
-  
-region VRWZWh 
-  preselection2
-  select size(BLLEP) == 3
-  select size(Jet) >= 1
-#  select SMET >= 6   ##### MET Significance
-  select m(SFOS) [] 75 105 
-  
+  reject m(BLLEP[0] BLLEP[1] BLLEP[2]) [] 80 100   ### which lepton?
+
 region CR3Wh
   preselection2
   select size(BLLEP) == 2
   select size(Jet) >= 2
 #  select SMET < 6   ##### MET Significance
-  
+  select m(Jet[0] Jet[1]) >= 350   
+  reject m(ELE[0] ELE[1]) [] 75 105
+
+###Validation Regions
+region VRWZWh 
+  preselection2
+  select size(BLLEP) == 3
+  select size(Jet) >= 1
+#  select SMET >= 6   ##### MET Significance
+  select m(SFOS) [] 75 105  
+  reject m(BLLEP[0] BLLEP[1] BLLEP[2]) [] 80 100   ### row 148 same problem
+
 region VR3Wh
   preselection2
   select size(BLLEP) == 2
   select size(Jet) >= 2
 #  select SMET >= 6   ##### MET Significance
+  select m(Jet[0] Jet[1]) >= 350
+  reject m(ELE[0] ELE[1]) [] 75 105
