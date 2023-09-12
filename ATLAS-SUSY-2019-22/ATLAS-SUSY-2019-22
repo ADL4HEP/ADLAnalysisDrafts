@@ -58,6 +58,8 @@ define MTmin : min(MT(leptons[0]),MT(leptons[1]))
   
 define MT2(leptons[0],leptons[1],METLV[0]) : min(max(MT(leptons[0],MT(leptons[1])))
 
+define Meff = sum(pT(leptons)) + sum(pT(jets)) + MET
+
 region preselection1
   take ALL
   select size(leptons) >= 2
@@ -87,13 +89,15 @@ region SRWZhigh
   select MT2(sigLEP[0], sigLEP[1], METLV[0]) >= 100
   select MTmin >= 100
   select MET >= 100
-  
+
 region SRWZlow
   preselection1
-  select MT2(sigLEP[0], sigLEP[1], METLV[0]) >= 100
-  select MTmin >= 100
-  select MET >= 100
-  
+  select MT2(sigLEP[0], sigLEP[1], METLV[0]) <= 100
+  select MTmin >= 130
+  select MET >= 140
+  select Meff <= 600
+  select dR(sigLEP[0], sigLEP[1]) <= 3 
+
 region preselection2
   take ALL
   select size(leptons) >= 2
