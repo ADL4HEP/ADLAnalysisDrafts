@@ -58,7 +58,7 @@ define MTmin : min(MT(leptons[0]),MT(leptons[1]))
   
 define MT2(leptons[0],leptons[1],METLV[0]) : min(max(MT(leptons[0],MT(leptons[1])))
 
-define Meff = sum(pT(leptons)) + sum(pT(jets)) + MET
+define Meff = sum(pT(leptons)) + sum(pT(Jet)) + MET  
 
 region preselection1
   take ALL
