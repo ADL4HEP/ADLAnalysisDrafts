@@ -73,16 +73,18 @@ define Meff = sum(pT(leptons)) + sum(pT(Jet)) + MET
 
 region preselection1
   take ALL
+  select size(sigJETS) >= 1
   select size(leptons) >= 2
-  select pt(leptons[0]) > 20
+  select pt(leptons[0]) > 20 # not written in ATL note cutflow, included in trigger selection?
+  select size(BLLEP) >= 2 and size(sigLEP) >= 2
   select q(leptons[0]) * q(leptons[1]) == 1
-  select size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL 
-  select size(BLLEP) == 2
+    select size(BLLEP) == 2
   select size(sigLEP) == 2
   select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25  
-  select size(sigJETS) >= 1
-  select size(bjet) == 0
   
+  select size(bjet) == 0
+  select size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL 
+
 region WHhigh
   preselection1
   select MT2(sigLEP[0], sigLEP[1], METLV[0]) >= 80  
@@ -109,24 +111,29 @@ region WZlow
   select Meff <= 600             ###<<<<<<<<<<<<<<<<<<<<<<<<<<
   select dR(sigLEP[0], sigLEP[1]) <= 3 
 
-region bRPVll
-  select size(sigLEP) == 2
-  select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25 
+region bRPV2l
+  #trigger selection according to ATLAS NOTE
   select size(sigJETS) >= 1
+  select size(sigLEP) >= 2 and size(BLLEP) >= 2
   select q(sigLEP[0])*q(sigLEP[1]) == 1
+  select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25 # 20 according to ATLAS note 
+  select size(sigLEP) == 2
   select MT2(sigLEP[0],sigLEP[1],METLV) >= 60
   select MET >= 100
   select size(bjet) == 0
   select bRPVjets >= 4
 
-region bRPVlll
-  select size(sigLEP) == 3
-  select select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25 and pt(sigLEP[2]) >= 25
+region bRPV3l
   select size(sigJETS) >= 1
+  select size(sigLEP) >= 2 and size(BLLEP) >= 2 # according to the ATL note
+  select q(sigLEP[0])*q(sigLEP[1]) == 1
+  
+  select select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25 and pt(sigLEP[2]) >= 25 #different in ATL note
+  select size(sigLEP) == 3 
   select MT2(sigLEP[0],sigLEP[1],METLV) >= 80
   select MET >= 120
   select Meff >= 350   #<<<<<<<<<<<<<<<  is Meff enough when it is defined as an object?
-  reject m(sigELE[0] sigELE[1]) [] 81 101 and m(sigMUO[0] sigMUO[1]) [] 81 101  #<<<<<   
+  reject m(sigELE[0] sigELE[1]) [] 81 101 and m(sigMUO[0] sigMUO[1]) [] 81 101   
 
 ###Control Regions
 
@@ -154,6 +161,9 @@ region CR3Wh
 #  select SMET < 6   ##### MET Significance
   select m(Jet[0] Jet[1]) >= 350   
   reject m(ELE[0] ELE[1]) [] 75 105
+
+region CRWZWZbRPV2j
+  
 
 ###Validation Regions
 region VRWZWh 
