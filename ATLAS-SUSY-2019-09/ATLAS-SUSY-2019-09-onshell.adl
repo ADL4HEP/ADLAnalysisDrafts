@@ -108,8 +108,12 @@ region common
 	select ALL
 	select size(BaselineLeptons) == 3
 	select size(SignalLeptons) == 3
-
-
+	#####trigger dilepton ne demek?	
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select MET > 50
+	select size(BJET) == 0
 
 
 region SRoffWZ
@@ -118,15 +122,8 @@ region SRoffWZ
 	select chi_sfos_min_mass < 10000 #guarantees that the best candidate satisfies the sfos condition
 	sort m(SFOS) ascend
 	select mllmin < 75
-	#####trigger dilepton ne demek?
-	select pT(SignalLeptons[0]) > 25
-	select pT(SignalLeptons[1]) > 20
-	select pT(SignalLeptons[2]) > 10
-	select MET > 50
-	reject size(BJET) > 0
 	reject mllmin < 12
 	select abs(m3l - ZBozonMass) > 15
-
 
 
 
@@ -137,13 +134,8 @@ region SRWZ
 	select chi_sfos_Z_mass < 10000
 	######sort m(SFOS) ~= ZBozonMass şöyle bir syntax bence olmalı
 	sort (m(SFOS) - ZBozonMass) ascend
+	select mllZ > 12	
 	select mllZ [] 75 105
-	select pT(SignalLeptons[0]) > 25
-	select pT(SignalLeptons[1]) > 20
-	select pT(SignalLeptons[2]) > 10
-	select MET > 50
-	reject size(BJET) > 0
-	reject mllZ < 12
 	select abs(m3l - ZBozonMass) > 15
 
 region SRWZ0
@@ -300,13 +292,8 @@ region SRWhSFOS
 	select chi_sfos_Z_mass ~= 0
 	select chi_sfos_Z_mass < 10000
 	sort (m(SFOS) - ZBozonMass) ascend
+	select mllZ > 12
 	select mllZ ][ 75 105
-	select pT(SignalLeptons[0]) > 25
-	select pT(SignalLeptons[1]) > 20
-	select pT(SignalLeptons[2]) > 10
-	select MET > 50
-	reject size(BJET) > 0
-	reject mllZ < 12
 	select abs(m3l - ZBozonMass) > 15
 
 
@@ -461,11 +448,7 @@ region SRWhDFOS
 	select chi_sfss < 10000
 	select chi_dfos ~= 0
 	select chi_dfos < 10000
-	select pT(SignalLeptons[0]) > 25
-	select pT(SignalLeptons[1]) > 20
-	select pT(SignalLeptons[2]) > 10
-	select MET > 50
-	reject size(BJET) > 0	
+
 
 region SRWhDFOS1
 	SRWhDFOS
