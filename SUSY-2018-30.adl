@@ -48,8 +48,6 @@ object signalmuon : muons
 
 object leptons : Union(electrons , muons) 
 
-
-
 # Discriminating Variables  
 
 define meff    = sum(pT(jets[0:])) + sum(pT(leptons[0:])) + MET 
@@ -61,36 +59,36 @@ define phi4j   = min(abs( Phi(jets[0:3]) - Phi(METLV[0])))
 # NN Variable List 
 
 
-define NNVar = {
+#define NNVar = {
 
-pT(jets[0]) , abs(eta(jets[0])) , phi(jets[0]) , m(jets[0]),
-pT(jets[1]) , abs(eta(jets[1])) , phi(jets[1]) , m(jets[1]),
-pT(jets[2]) , abs(eta(jets[2])) , phi(jets[2]) , m(jets[2]),
-pT(jets[3]) , abs(eta(jets[3])) , phi(jets[3]) , m(jets[3]),
-pT(jets[4]) , abs(eta(jets[4])) , phi(jets[4]) , m(jets[4]),
-pT(jets[5]) , abs(eta(jets[5])) , phi(jets[5]) , m(jets[5]),
-pT(jets[6]) , abs(eta(jets[6])) , phi(jets[6]) , m(jets[6]),
-pT(jets[7]) , abs(eta(jets[7])) , phi(jets[7]) , m(jets[7]),
-pT(jets[8]) , abs(eta(jets[8])) , phi(jets[8]) , m(jets[8]),
-pT(jets[9]) , abs(eta(jets[9])) , phi(jets[9]) , m(jets[9]), 
+# pT(jets[0]) , abs(eta(jets[0])) , phi(jets[0]) , m(jets[0]),
+# pT(jets[1]) , abs(eta(jets[1])) , phi(jets[1]) , m(jets[1]),
+# pT(jets[2]) , abs(eta(jets[2])) , phi(jets[2]) , m(jets[2]),
+# pT(jets[3]) , abs(eta(jets[3])) , phi(jets[3]) , m(jets[3]),
+# pT(jets[4]) , abs(eta(jets[4])) , phi(jets[4]) , m(jets[4]),
+# pT(jets[5]) , abs(eta(jets[5])) , phi(jets[5]) , m(jets[5]),
+# pT(jets[6]) , abs(eta(jets[6])) , phi(jets[6]) , m(jets[6]),
+# pT(jets[7]) , abs(eta(jets[7])) , phi(jets[7]) , m(jets[7]),
+# pT(jets[8]) , abs(eta(jets[8])) , phi(jets[8]) , m(jets[8]),
+# pT(jets[9]) , abs(eta(jets[9])) , phi(jets[9]) , m(jets[9]), 
  
-# + a set of BINARY variables indicating which jets are b-tagged (not known yet)
+# bTag(jets[0]) , bTag(jets[1]), bTag(jets[2]),bTag(jets[3]),bTag(jets[4]),bTag(jets[5]),bTag(jets[6]),bTag(jets[7]),bTag(jets[8]),bTag(jets[9])
 
-pT(largejets[0]) , abs(eta(largejets[0])) , phi(largejets[0]) , m(largejets[0]),
-pT(largejets[1]) , abs(eta(largejets[1])) , phi(largejets[1]) , m(largejets[1]),
-pT(largejets[2]) , abs(eta(largejets[2])) , phi(largejets[2]) , m(largejets[2]),
-pT(largejets[3]) , abs(eta(largejets[3])) , phi(largejets[3]) , m(largejets[3]),
-pT(largejets[4]) , abs(eta(largejets[4])) , phi(largejets[4]) , m(largejets[4]),
+# pT(largejets[0]) , abs(eta(largejets[0])) , phi(largejets[0]) , m(largejets[0]),
+# pT(largejets[1]) , abs(eta(largejets[1])) , phi(largejets[1]) , m(largejets[1]),
+# pT(largejets[2]) , abs(eta(largejets[2])) , phi(largejets[2]) , m(largejets[2]),
+# pT(largejets[3]) , abs(eta(largejets[3])) , phi(largejets[3]) , m(largejets[3]),
+# pT(largejets[4]) , abs(eta(largejets[4])) , phi(largejets[4]) , m(largejets[4]),
 
-pT(leptons[0]) , abs(eta(leptons[0])) , phi(leptons[0]) , m(leptons[0]),
-pT(leptons[1]) , abs(eta(leptons[1])) , phi(leptons[1]) , m(leptons[1]),
-pT(leptons[2]) , abs(eta(leptons[2])) , phi(leptons[2]) , m(leptons[2]),
-pT(leptons[3]) , abs(eta(leptons[3])) , phi(leptons[3]) , m(leptons[3]),
-pT(leptons[4]) , abs(eta(leptons[4])) , phi(leptons[4]) , m(leptons[4]),
+# pT(leptons[0]) , abs(eta(leptons[0])) , phi(leptons[0]) , m(leptons[0]),
+# pT(leptons[1]) , abs(eta(leptons[1])) , phi(leptons[1]) , m(leptons[1]),
+# pT(leptons[2]) , abs(eta(leptons[2])) , phi(leptons[2]) , m(leptons[2]),
+# pT(leptons[3]) , abs(eta(leptons[3])) , phi(leptons[3]) , m(leptons[3]),
+# pT(leptons[4]) , abs(eta(leptons[4])) , phi(leptons[4]) , m(leptons[4])
 
+# }
 
-
-}
+# define OMECut = { "/path/to/onnx" , NNVar }
 
 
 # EVENT SELECTIONS  
