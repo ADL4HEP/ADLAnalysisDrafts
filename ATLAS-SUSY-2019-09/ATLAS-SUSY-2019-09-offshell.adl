@@ -111,14 +111,17 @@ define mindR3l: min(dR(SignalLeptons[0:2], SignalLeptons[2]), dR(SignalLeptons[0
 define abs_pdgID_ele: 11
 
 define mmllminT: sqrt(2 * pT(WLepton) * MET * (1 - cos(dPhi(METLV[0] , WLepton))))
+define l1l2: SignalLeptons[0] SignalLeptons[1]
 
-region common
+
+#The off shell regions are divided into 4 according to MET (low high) and jet multiplicity (0j nj).
+#Every region again further divided as a b c d e f1 f2 g1 g2
+
+
+region SRoffWZprecelectioncommon
 	select ALL
 	select size(BaselineLeptons) == 3
 	select size(SignalLeptons) == 3
-
-region SRoffWZprecelection
-	common 
 	select chi_sfos_min_mass ~= 0
 	select chi_sfos_min_mass < 10000
 	sort m(SFOS) descend ####sfos'u dizmek ne anlama geliyor?
@@ -128,8 +131,8 @@ region SRoffWZprecelection
 	select size(BJET) == 0
 	select mindR3l > 0.4
 
-region SRoffWZlowMET0j
-	SRoffWZprecelection
+region SRoffWZlowMET0jprecelection
+	SRoffWZprecelectioncommon
 	reject mllmin [] 3 3.2 OR mllmin [] 9 12
 	###trigger multilepton
 	select size(pT30gevjets) == 0
@@ -137,14 +140,14 @@ region SRoffWZlowMET0j
 	#select METsig > 1.5
 	select min(pT(SignalLeptons[:])) > 10
 	select abs(pdgID(WLepton)) == abs_pdgID_ele ? abs(m3l - ZBozonMass) > 20 : ALL
-	select abs(pdgID(WLepton)) == abs_pdgID_ele ? #####min ΔR SFOS [] 0.6 2.4: ALL
+	#select abs(pdgID(WLepton)) == abs_pdgID_ele ? #####min ΔR SFOS [] 0.6 2.4: ALL
 #####with min ΔR SFOS defined as min[ΔR(l_i , l_j ); for all SFOS lepton pairs (l_i , l_j ) ] 
 
 
 
 
-region SRoffWZlowMETnj
-	SRoffWZprecelection
+region SRoffWZlowMETnjprecelection
+	SRoffWZprecelectioncommon
 	reject mllmin [] 3 3.2 OR mllmin [] 9 12
 	###trigger multilepton
 	select size(pT30gevjets) >= 0
@@ -152,13 +155,13 @@ region SRoffWZlowMETnj
 	#select METsig > 3.0
 	select min(pT(SignalLeptons[:])) > 10
 	select abs(pdgID(WLepton)) == abs_pdgID_ele ? abs(m3l - ZBozonMass) > 20 : ALL
-	select abs(pdgID(WLepton)) == abs_pdgID_ele ? #####min ΔR SFOS [] 0.6 2.4: ALL
+	#select abs(pdgID(WLepton)) == abs_pdgID_ele ? #####min ΔR SFOS [] 0.6 2.4: ALL
 #####with min ΔR SFOS defined as min[ΔR(l_i , l_j ); for all SFOS lepton pairs (l_i , l_j ) ] 
 
 
 
-region SRoffWZhighMET0j
-	SRoffWZprecelection
+region SRoffWZhighMET0jprecelection
+	SRoffWZprecelectioncommon
 	reject mllmin [] 3 3.2 OR mllmin [] 9 12
 	###trigger multilepton or MET
 	select size(pT30gevjets) == 0
@@ -168,13 +171,291 @@ region SRoffWZhighMET0j
 
 
 
-region SRoffWZlowMETnj
-	SRoffWZprecelection
+region SRoffWZhighMETnjprecelection
+	SRoffWZprecelectioncommon
 	reject mllmin [] 3 3.2 OR mllmin [] 9 12
 	###trigger multilepton or MET
-	select size(pT30gevjets) >= 0
+	select size(pT30gevjets) >= 1
 	select MET > 200
 	#select METsig > 3.0
-	select abs(SignalLeptons[0]) == abs_pdgID_ele ? pT(SignalLeptons[0]) > 4.5 : pT(SignalLeptons[0]) > 3.0
-	select abs(SignalLeptons[1]) == abs_pdgID_ele ? pT(SignalLeptons[1]) > 4.5 : pT(SignalLeptons[1]) > 3.0
-	select abs(SignalLeptons[2]) == abs_pdgID_ele ? pT(SignalLeptons[2]) > 4.5 : pT(SignalLeptons[2]) > 3.0
+	select abs(pdgID(SignalLeptons[0])) == abs_pdgID_ele ? pT(SignalLeptons[0]) > 4.5 : pT(SignalLeptons[0]) > 3.0
+	select abs(pdgID(SignalLeptons[1])) == abs_pdgID_ele ? pT(SignalLeptons[1]) > 4.5 : pT(SignalLeptons[1]) > 3.0
+	select abs(pdgID(SignalLeptons[2])) == abs_pdgID_ele ? pT(SignalLeptons[2]) > 4.5 : pT(SignalLeptons[2]) > 3.0
+
+
+
+
+region SRoffWZlowMET0jb
+	SRoffWZlowMET0jprecelection
+	select mllmin [] 12 15
+	sort m(SFOS) descend
+	select mllmax < 60
+	select mmllminT < 50
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 115
+	#select min ΔR SFOS < 1.6
+	select min(pT(SignalLeptons[:])) > 10
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.1
+
+region SRoffWZlowMET0jc
+	SRoffWZlowMET0jprecelection
+	select mllmin [] 15 20
+	sort m(SFOS) descend
+	select mllmax < 60
+	select mmllminT < 50
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 120
+	#select min ΔR SFOS < 1.6
+	select min(pT(SignalLeptons[:])) > 10
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.1
+
+region SRoffWZlowMET0jd
+	SRoffWZlowMET0jprecelection
+	select mllmin [] 20 30
+	sort m(SFOS) descend
+	select mllmax < 60
+	select mmllminT < 50
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) <  130
+	#select min ΔR SFOS < 1.6
+	select min(pT(SignalLeptons[:])) > 10
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.1
+
+region SRoffWZlowMET0je
+	SRoffWZlowMET0jprecelection
+	select mllmin [] 30 40
+	sort m(SFOS) descend
+	select mllmax < 60
+	select mmllminT < 60
+	select min(pT(SignalLeptons[:])) > 10
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.3
+
+region SRoffWZlowMET0jf1
+	SRoffWZlowMET0jprecelection
+	select mllmin [] 40 60
+	select mmllminT < 60
+	select min(pT(SignalLeptons[:])) > 15
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.4
+	select m3l > 100
+
+region SRoffWZlowMET0jf2
+	SRoffWZlowMET0jprecelection
+	select mllmin [] 40 60
+	select mmllminT > 90
+	select min(pT(SignalLeptons[:])) > 15
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.4
+	select m3l > 100
+
+region SRoffWZlowMET0jg1
+	SRoffWZlowMET0jprecelection
+	select mllmin [] 60 75
+	select mmllminT < 60
+	select min(pT(SignalLeptons[:])) > 15
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.4
+	select m3l > 100
+
+region SRoffWZlowMET0jg2
+	SRoffWZlowMET0jprecelection
+	select mllmin [] 60 75
+	select mmllminT > 90
+	select min(pT(SignalLeptons[:])) > 15
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.4
+	select m3l > 100
+
+
+
+
+
+region SRoffWZlowMETnjb
+	SRoffWZlowMETnjprecelection
+	select mllmin [] 12 15
+	sort m(SFOS) descend
+	select mllmax < 60
+	select mmllminT < 50
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 115
+	#select min ΔR SFOS < 1.6
+	select min(pT(SignalLeptons[:])) > 10
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.0
+
+region SRoffWZlowMETnjc
+	SRoffWZlowMETnjprecelection
+	select mllmin [] 15 20
+	sort m(SFOS) descend
+	select mllmax < 60
+	select mmllminT < 50
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 120
+	#select min ΔR SFOS < 1.6
+	select min(pT(SignalLeptons[:])) > 10
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.0
+
+region SRoffWZlowMETnjd
+	SRoffWZlowMETnjprecelection
+	select mllmin [] 20 30
+	sort m(SFOS) descend
+	select mllmax < 60
+	select mmllminT < 50
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) <  130
+	#select min ΔR SFOS < 1.6
+	select min(pT(SignalLeptons[:])) > 10
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.0
+
+region SRoffWZlowMETnje
+	SRoffWZlowMETnjprecelection
+	select mllmin [] 30 40
+	sort m(SFOS) descend
+	select mllmax < 60
+	select mmllminT < 60
+	select min(pT(SignalLeptons[:])) > 10
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.0
+
+region SRoffWZlowMETnjf1
+	SRoffWZlowMETnjprecelection
+	select mllmin [] 40 60
+	select mmllminT < 60
+	select min(pT(SignalLeptons[:])) > 15
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.2
+
+region SRoffWZlowMETnjf2
+	SRoffWZlowMETnjprecelection
+	select mllmin [] 40 60
+	select mmllminT > 90
+	select min(pT(SignalLeptons[:])) > 15
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.2
+
+region SRoffWZlowMETnjg1
+	SRoffWZlowMETnjprecelection
+	select mllmin [] 60 75
+	select mmllminT < 60
+	select min(pT(SignalLeptons[:])) > 15
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.2
+
+region SRoffWZlowMETnjg2
+	SRoffWZlowMETnjprecelection
+	select mllmin [] 60 75
+	select mmllminT > 90
+	select min(pT(SignalLeptons[:])) > 15
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.2
+
+
+
+
+region SRoffWZhighMET0ja
+	SRoffWZhighMET0jprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 112
+
+region SRoffWZhighMET0jb
+	SRoffWZhighMET0jprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 115
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select mmllminT < 50
+
+region SRoffWZhighMET0jc
+	SRoffWZhighMET0jprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 120
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select mmllminT < 50
+
+region SRoffWZhighMET0jd
+	SRoffWZhighMET0jprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 130
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select mmllminT < 60
+
+region SRoffWZhighMET0je
+	SRoffWZhighMET0jprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 140
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select mmllminT < 60
+
+region SRoffWZhighMET0jf1
+	SRoffWZhighMET0jprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 160
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select mmllminT < 70
+
+region SRoffWZhighMET0jf2
+	SRoffWZhighMET0jprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 160
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select mmllminT > 90
+
+region SRoffWZhighMET0jg1
+	SRoffWZhighMET0jprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 175
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select mmllminT < 70
+
+region SRoffWZhighMET0jg2
+	SRoffWZhighMET0jprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 175
+	select pT(SignalLeptons[0]) > 25
+	select pT(SignalLeptons[1]) > 20
+	select pT(SignalLeptons[2]) > 10
+	select mmllminT > 90
+
+
+
+
+region SRoffWZhighMETnja
+	SRoffWZhighMETnjprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 112
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 0.2
+
+region SRoffWZhighMETnjb
+	SRoffWZhighMETnjprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 115
+	select abs(pdgID(SignalLeptons[0])) == abs_pdgID_ele ? pT(SignalLeptons[0]) > 4.5 : pT(SignalLeptons[0]) > 3.0
+	select abs(pdgID(SignalLeptons[1])) == abs_pdgID_ele ? pT(SignalLeptons[1]) > 4.5 : pT(SignalLeptons[1]) > 3.0
+	select abs(pdgID(SignalLeptons[2])) == abs_pdgID_ele ? pT(SignalLeptons[2]) > 4.5 : pT(SignalLeptons[2]) > 3.0
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 0.2
+
+region SRoffWZhighMETnjc
+	SRoffWZhighMETnjprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 120
+	select abs(pdgID(SignalLeptons[0])) == abs_pdgID_ele ? pT(SignalLeptons[0]) > 4.5 : pT(SignalLeptons[0]) > 3.0
+	select abs(pdgID(SignalLeptons[1])) == abs_pdgID_ele ? pT(SignalLeptons[1]) > 4.5 : pT(SignalLeptons[1]) > 3.0
+	select abs(pdgID(SignalLeptons[2])) == abs_pdgID_ele ? pT(SignalLeptons[2]) > 4.5 : pT(SignalLeptons[2]) > 3.0
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 0.3
+
+region SRoffWZhighMETnjd
+	SRoffWZhighMETnjprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 130
+	select abs(pdgID(SignalLeptons[0])) == abs_pdgID_ele ? pT(SignalLeptons[0]) > 4.5 : pT(SignalLeptons[0]) > 3.0
+	select abs(pdgID(SignalLeptons[1])) == abs_pdgID_ele ? pT(SignalLeptons[1]) > 4.5 : pT(SignalLeptons[1]) > 3.0
+	select abs(pdgID(SignalLeptons[2])) == abs_pdgID_ele ? pT(SignalLeptons[2]) > 4.5 : pT(SignalLeptons[2]) > 3.0
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 0.3
+
+region SRoffWZhighMETnje
+	SRoffWZhighMETnjprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 140
+	select abs(pdgID(SignalLeptons[0])) == abs_pdgID_ele ? pT(SignalLeptons[0]) > 4.5 : pT(SignalLeptons[0]) > 3.0
+	select abs(pdgID(SignalLeptons[1])) == abs_pdgID_ele ? pT(SignalLeptons[1]) > 4.5 : pT(SignalLeptons[1]) > 3.0
+	select abs(pdgID(SignalLeptons[2])) == abs_pdgID_ele ? pT(SignalLeptons[2]) > 4.5 : pT(SignalLeptons[2]) > 3.0
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 0.3
+
+region SRoffWZhighMETnjf
+	SRoffWZhighMETnjprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 160
+	select abs(pdgID(SignalLeptons[0])) == abs_pdgID_ele ? pT(SignalLeptons[0]) > 4.5 : pT(SignalLeptons[0]) > 3.0
+	select abs(pdgID(SignalLeptons[1])) == abs_pdgID_ele ? pT(SignalLeptons[1]) > 4.5 : pT(SignalLeptons[1]) > 3.0
+	select abs(pdgID(SignalLeptons[2])) == abs_pdgID_ele ? pT(SignalLeptons[2]) > 4.5 : pT(SignalLeptons[2]) > 3.0
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.0
+
+region SRoffWZhighMETnjg
+	SRoffWZhighMETnjprecelection
+	select fMT2(l1l2, SignalLeptons[2], METLV[0]) < 175
+	select abs(pdgID(SignalLeptons[0])) == abs_pdgID_ele ? pT(SignalLeptons[0]) > 4.5 : pT(SignalLeptons[0]) > 3.0
+	select abs(pdgID(SignalLeptons[1])) == abs_pdgID_ele ? pT(SignalLeptons[1]) > 4.5 : pT(SignalLeptons[1]) > 3.0
+	select abs(pdgID(SignalLeptons[2])) == abs_pdgID_ele ? pT(SignalLeptons[2]) > 4.5 : pT(SignalLeptons[2]) > 3.0
+	select pT(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])/MET < 1.0
