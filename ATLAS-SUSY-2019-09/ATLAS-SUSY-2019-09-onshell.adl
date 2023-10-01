@@ -116,14 +116,15 @@ region common
 	select size(BJET) == 0
 
 
-region SRoffWZ
-	common 
-	select chi_sfos_min_mass ~= 0 #gives the best candidate for sfos pair
-	select chi_sfos_min_mass < 10000 #guarantees that the best candidate satisfies the sfos condition
-	sort m(SFOS) ascend
-	select mllmin < 75
-	reject mllmin < 12
-	select abs(m3l - ZBozonMass) > 15
+#Probably I added this while reading the text but this region is not in any table given in the paper.
+#region SRoffWZ
+#	common 
+#	select chi_sfos_min_mass ~= 0 #gives the best candidate for sfos pair
+#	select chi_sfos_min_mass < 10000 #guarantees that the best candidate satisfies the sfos condition
+#	sort m(SFOS) ascend
+#	select mllmin < 75
+#	reject mllmin < 12
+#	select abs(m3l - ZBozonMass) > 15
 
 
 
