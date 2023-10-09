@@ -60,9 +60,7 @@ object SFOS : COMB (leptons[-1] leptons[-2]) alias sfos
 define MT(leptons[0]) : sqrt( 2*pT(leptons[0]) * MET*(1-cos(Phi(METLV[0]) - Phi(leptons[0]) )))
 define MT(leptons[1]) : sqrt( 2*pT(leptons[1]) * MET*(1-cos(Phi(METLV[0]) - Phi(leptons[1]) )))
 define MTmin : min(MT(leptons[0]),MT(leptons[1]))
-  
-define MT2(leptons[0],leptons[1],METLV[0]) : min(max(MT(leptons[0],MT(leptons[1])))
-
+define MT2 = fMT2(leptons[0],leptons[1],METLV[0])
 define Meff = sum(pT(leptons)) + sum(pT(Jet)) + MET  
 
 ###Signal Regions
@@ -112,7 +110,7 @@ region bRPV2l
   select q(sigLEP[0])*q(sigLEP[1]) == 1
   select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25  
   select size(sigLEP) == 2
-  select MT2(sigLEP[0],sigLEP[1],METLV) >= 60
+  select MT2(sigLEP[0],sigLEP[1],METLV[0]) >= 60
   select MET >= 100
   select size(bjet) == 0
   select size(sigJETS) >= 4
@@ -124,7 +122,7 @@ region bRPV3l
   select q(sigLEP[0])*q(sigLEP[1]) == 1
   select select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25 and pt(sigLEP[2]) >= 25 
   select size(sigLEP) == 3 
-  select MT2(sigLEP[0],sigLEP[1],METLV) >= 80
+  select MT2(sigLEP[0],sigLEP[1],METLV[0]) >= 80
   select MET >= 120
   select Meff >= 350   
   reject m(sigELE[0] sigELE[1]) [] 81 101 and m(sigMUO[0] sigMUO[1]) [] 81 101   
@@ -135,7 +133,7 @@ region preselection2
   take ALL
   select size(leptons) >= 2
   select size(sigLEP) == 2
-  select pt(leptons[0]) >= 25 and pt(leptons[1]) >= 25
+  select pt(leptons[1]) >= 25
   select q(leptons[0]) * q(leptons[1]) == 1    
   select size(bjet) == 0
   select MET >= 50
@@ -144,7 +142,7 @@ region CRWZWh
   preselection2
   select size(BLLEP) == 3
   select size(sigJETS) >= 1   ## in this case which jets will be chosen is not clear. signal jets and baseline jets have different abs(eta) intervals
- # select SMET < 6  ##### MET Significance
+ # select METSig < 6  ##### MET Significance
   select m(SFOS) [] 75 105 
   reject m(BLLEP[0] BLLEP[1] BLLEP[2]) [] 80 100   
 
@@ -152,16 +150,22 @@ region CR3Wh
   preselection2
   select size(BLLEP) == 2
   select size(sigJETS) >= 2
-#  select SMET < 6   ##### MET Significance
+#  select METSig < 6   ##### MET Significance
   select m(Jet[0] Jet[1]) >= 350   
   select pt(sigJETS[1]) >= 75
-  reject m(ELE[0] ELE[1]) [] 75 105   # (m_ee - m_Z) >= 15  ,  Z boson mass 90 GeV
+  reject m(ELE[0] ELE[1]) [] 76.1876 106.1876   # |m_ee - m_Z| >= 15  ,  Z boson mass 91.1876 GeV
 
 region preselection3
   select size(BLLEP) == 3
   select size(sigLEP) == 3
   select pt(sigLEP[2]) > 20 
   select size(bjet) == 0
+  
+  #select size(bjet) >= 3
+  #select size(bjet) >= 1 and size(sigJETS)>= 4 ? pt(sigJETS[3]) > 50 and MET > 130 # in the paper page 17 last row from the bottom in table
+  #select size(bjet) >= 1 and size(sigJETS)>= 4 ? pt(sigJETS[3]) > 50 and MET > 130
+  #select size(bjet) > 0 and size(sigJETS) >=5 
+  #select pt(sigJETS) > 50
 
 region CRWZ2jbRPV
   preselection3
@@ -170,14 +174,17 @@ region CRWZ2jbRPV
   select MET [] 50 150
   select Meff < 1000
   select m(SFOS) [] 81 101
-  select size(bjet) >= 3
-  
+
+region CRFFe
+  select size(BLLEP) == 2 
+  select q(sigLEP[0])*q(sigLEP[1]) == 1
+
 ###Validation Regions
 region VRWZWh 
   preselection2
   select size(BLLEP) == 3
   select size(Jet) >= 1
-#  select SMET >= 6   ##### MET Significance
+#  select METSig >= 6   ##### MET Significance
   select m(SFOS) [] 75 105  
   reject m(BLLEP[0] BLLEP[1] BLLEP[2]) [] 80 100   
 
@@ -185,7 +192,7 @@ region VR3Wh
   preselection2
   select size(BLLEP) == 2
   select size(Jet) >= 2
-#  select SMET >= 6   ##### MET Significance
+#  select METSig>= 6   ##### MET Significance
   select m(Jet[0] Jet[1]) >= 350
   reject m(ELE[0] ELE[1]) [] 75 105
 
@@ -195,4 +202,24 @@ region VRWZ4jbRPV
   select MET [] 50 250
   select Meff < 1500
   select m(SFOS) [] 81 101
-  select size(bjet) >= 3
+
+region VRWZ5jbRPV
+  preselection3
+  select size(sigJETS) >= 5
+  select MET [] 50 250
+  select Meff < 1500
+  select m(SFOS) [] 81 101
+
+region VRttVWZbPRV
+  select size(BLLEP) >= 2
+  select size(sigLEP) >= 2
+  select q(leptons[0]) * q(leptons[1]) == 1
+  select pt(sigLEP[2]) > 30 
+  select size(bjet) >= 1
+  select size(sigJETS) >= 3
+  select pt(sigJETS[2]) >=40
+  select min(dR(SigLEP[0], SigJETS) > 1.1
+  select 
+  select MET/Meff > 0.1
+  
+  
