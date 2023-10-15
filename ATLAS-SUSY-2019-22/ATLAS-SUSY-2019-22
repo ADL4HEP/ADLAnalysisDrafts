@@ -60,8 +60,11 @@ object SFOS : COMB (leptons[-1] leptons[-2]) alias sfos
 define MT(leptons[0]) : sqrt( 2*pT(leptons[0]) * MET*(1-cos(Phi(METLV[0]) - Phi(leptons[0]) )))
 define MT(leptons[1]) : sqrt( 2*pT(leptons[1]) * MET*(1-cos(Phi(METLV[0]) - Phi(leptons[1]) )))
 define MTmin : min(MT(leptons[0]),MT(leptons[1]))
-define MT2 = fMT2(leptons[0],leptons[1],METLV[0])
-define Meff = sum(pT(leptons)) + sum(pT(Jet)) + MET  
+define MT2 : fMT2(leptons[0],leptons[1],METLV[0])
+define Meff : sum(pT(leptons)) + sum(pT(Jet)) + MET  
+define SUMPTR : sum(pt(bjet[0:])) / sum(pt(sigJETS[0:]))
+define SUMPTjet : sum(pt(sigJETS[0:]))
+
 
 ###Signal Regions
 
@@ -69,7 +72,7 @@ region preselection1
   take ALL
   select size(sigJETS) >= 1
   select size(leptons) >= 2
-  select pt(leptons[0]) > 20 # not written in ATL note cutflow, included in trigger selection?
+  select pt(leptons[0]) > 20                       # not written in ATL note cutflow, included in trigger selection?
   select size(BLLEP) >= 2 and size(sigLEP) >= 2
   select q(leptons[0]) * q(leptons[1]) == 1
   select size(BLLEP) == 2
@@ -127,6 +130,91 @@ region bRPV3l
   select Meff >= 350   
   reject m(sigELE[0] sigELE[1]) [] 81 101 and m(sigMUO[0] sigMUO[1]) [] 81 101   
 
+region RPV
+  select size(BLLEP) == 2
+  select size(sigLEP) == 2 
+  select q(sigLEP[0])*q(sigLEP[1]) == 1
+  select pt(sigLEP[1]) > 25
+  select size(sigJETS) >= 1
+  
+region RPV2l1bLow
+  RPV
+  select size(bjet) == 1
+  select sum(pt(sigLEP[0:])) >= 100
+  select MET >= 100
+  select size(sigJETS) <= 2
+  select SUMPTR >= 0.7
+  select SUMPTjet >= 120
+  select min(dR(sigLEP[0] sigJETS) ) <= 1.2
+  select dR(sigLEP[0] sigLEP[1]) >= 2.0
+
+region RPV2l1bMed
+  RPV
+  select size(bjet) == 1
+  select sum(pt(sigLEP[0:])) >= 100
+  select MET >= 50
+  select size(sigJETS) == 2 OR size(sigJETS) == 3
+  select SUMPTR >= 0.45
+  select SUMPTjet >= 400
+  select min(dR(sigLEP[0] sigJETS) ) <= 1.0
+  select dR(sigLEP[0] sigLEP[1]) >= 2.5
+
+region RPV2l2bLow
+  RPV
+  select size(bjet) == 2
+  select MET >= 80
+  select size(sigJETS) <= 3
+  select SUMPTR >= 0.9
+  select SUMPTjet >= 300
+  select min(dR(sigLEP[0] sigJETS) ) <= 1.0
+  select dR(sigLEP[0] sigLEP[1]) >= 2.5
+
+region RPV2l2bMed
+  RPV
+  select size(bjet) == 2
+  select MET >= 80
+  select size(sigJETS) == 3 OR size(sigJETS) == 4
+  select SUMPTR >= 0.75
+  select SUMPTjet >= 420
+  select min(dR(sigLEP[0] sigJETS) ) <= 1.0
+  select dR(sigLEP[0] sigLEP[1]) >= 2.5
+
+region RPV2l2bHigh
+  RPV
+  select size(bjet) == 2
+  select MET >= 80
+  select size(sigJETS) >= 5 AND size(sigJETS) <= 6
+  select SUMPTjet >= 420
+  select min(dR(sigLEP[0] sigJETS) ) <= 1.0
+  select dR(sigLEP[0] sigLEP[1]) >= 2.0
+
+region RPV2l3bLow
+  RPV
+  select size(bjet) >= 3
+  select MET >= 20
+  select size(sigJETS) <= 3
+  select SUMPTR >= 0.8
+  select min(dR(sigLEP[0] sigJETS) ) <= 1.5
+  select dR(sigLEP[0] sigLEP[1]) >= 2.0
+
+region RPV2l3bLow
+  RPV
+  select size(bjet) >= 3
+  select MET >= 20
+  select size(sigJETS) <= 3
+  select SUMPTR >= 0.8
+
+region RPV2l3bLow
+  RPV
+  select size(bjet) >= 3
+  select MET >= 20
+  select size(sigJETS) <= 6
+  select SUMPTR >= 0.5
+  select SUMPTjet >= 350
+  select min(dR(sigLEP[0] sigJETS) ) <= 1.0
+  select dR(sigLEP[0] sigLEP[1]) >= 2.0
+
+
 ###Control Regions
 
 region preselection2
@@ -162,9 +250,9 @@ region preselection3
   select size(bjet) == 0
   
   #select size(bjet) >= 3
-  #select size(bjet) >= 1 and size(sigJETS)>= 4 ? pt(sigJETS[3]) > 50 and MET > 130 # in the paper page 17 last row from the bottom in table
-  #select size(bjet) >= 1 and size(sigJETS)>= 4 ? pt(sigJETS[3]) > 50 and MET > 130
-  #select size(bjet) > 0 and size(sigJETS) >=5 
+  #select size(bjet) >= 1 AND size(sigJETS)>= 4 ? pt(sigJETS[3]) > 50 and MET > 130 # in the paper page 17 last row from the bottom in table
+  #select size(bjet) >= 1 AND size(sigJETS)>= 4 ? pt(sigJETS[3]) > 50 and MET > 130
+  #select size(bjet) > 0 AND size(sigJETS) >=5 
   #select pt(sigJETS) > 50
 
 region CRWZ2jbRPV
@@ -176,8 +264,23 @@ region CRWZ2jbRPV
   select m(SFOS) [] 81 101
 
 region CRFFe
-  select size(BLLEP) == 2 
-  select q(sigLEP[0])*q(sigLEP[1]) == 1
+  select size(baselineELE) == 2 
+  select q(baselineELE[0])*q(baselineELE[1]) == 1
+  select size(sigLEP) == 1                                   #there is only one signal lepton, so baseline leptons are used here.
+  select pt(baselineELE[1]) >= 25 
+  select size(sigJETS) >= 1
+  select MET [) 30 50 
+  reject m(baselineELE[0] baselineELE[1]) [] 76.1876 106.1876
+
+region CRFFmu
+  select size(baselineMUO) == 2 
+  select q(baselineMUO[0])*q(baselineMUO[1]) == 1
+  select size(sigLEP) == 1 
+  select pt(baselineMUO[1]) >= 25 
+  select size(sigJETS) >= 1
+  select size(bjet) == 1 
+  select MET < 50 
+
 
 ###Validation Regions
 region VRWZWh 
@@ -218,8 +321,27 @@ region VRttVWZbPRV
   select size(bjet) >= 1
   select size(sigJETS) >= 3
   select pt(sigJETS[2]) >=40
-  select min(dR(SigLEP[0], SigJETS) > 1.1
-  select 
+  select min(dR(sigLEP[0], sigJETS) > 1.1
+  select SUMPTR > 0.4  
   select MET/Meff > 0.1
+
+region VRFNP
+  select size(BLLEP) == 2 
+  select q(baselineMUO[0])*q(baselineMUO[1]) == 1
+  select size(sigLEP) == 2 
+  select pt(baselineMUO[1]) >= 25 
+  select size(sigJETS) >= 1
+  select size(bjet) == 0 
+  select MET >= 50 
+  select m(sigJETS[0] sigJETS[1]) < 350
+  select MT2 < 80
+  select MTmin < 100
+  #select METSig < 5
   
-  
+region VRFNPWhee
+  VRFNP
+  reject m(baselineELE[0] baselineELE[1]) [] 76.1876 106.1876
+
+region VRCFWh
+  VRFNP
+  select m(baselineELE[0] baselineELE[1]) [] 76.1876 106.1876
