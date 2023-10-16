@@ -57,6 +57,9 @@ object BLLEP : Union(baselineELE,baselineMUO)
 object SFOS : COMB (leptons[-1] leptons[-2]) alias sfos
   select PDGID(leptons[-1]) + PDGID(leptons[-2]) == 0
 
+object SFOS : COMB (leptons[0] leptons[1]) alias sfos
+  select PDGID(leptons[0]) + PDGID(leptons[1]) == 0
+
 define MT(leptons[0]) : sqrt( 2*pT(leptons[0]) * MET*(1-cos(Phi(METLV[0]) - Phi(leptons[0]) )))
 define MT(leptons[1]) : sqrt( 2*pT(leptons[1]) * MET*(1-cos(Phi(METLV[0]) - Phi(leptons[1]) )))
 define MTmin : min(MT(leptons[0]),MT(leptons[1]))
@@ -71,10 +74,19 @@ define SUMPTjet : sum(pt(sigJETS[0:]))
 region preselection1
   take ALL
   select size(sigJETS) >= 1
-  select size(leptons) >= 2
-  select pt(leptons[0]) > 20                       # not written in ATL note cutflow, included in trigger selection?
+  select size(sigLEP) >= 2 
+  select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25
+  select size(sigLEP) == 2
+  select q(sigLEP[0]) * q(sigLEP[1]) == 1
+  select size(bjet) == 0
+  select MET >= 50
+  select size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL
+
+region preselection2
+  take ALL
+  select size(sigJETS) >= 1
   select size(BLLEP) >= 2 and size(sigLEP) >= 2
-  select q(leptons[0]) * q(leptons[1]) == 1
+  select q(sigLEP[0]) * q(sigLEP[1]) == 1
   select size(BLLEP) == 2
   select size(sigLEP) == 2
   select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25  
@@ -83,25 +95,27 @@ region preselection1
 
 region WHhigh
   preselection1
-  select MT2(sigLEP[0], sigLEP[1], METLV[0]) >= 80  
-  select MTmin == 0
+  select MT2 >= 80  
+  #select METSig >= 7
+  #select MTmin == 0
   select MET >= 75
   
 region WHlow
   preselection1
-  select MT2(sigLEP[0], sigLEP[1], METLV[0]) < 80
+  select MT2 < 80
   select MTmin >= 100
-  select MET >= 50
+  #select METSig >= 6
+  #select MET >= 50
   
 region WZhigh
-  preselection1
-  select MT2(sigLEP[0], sigLEP[1], METLV[0]) >= 100
+  preselection2
+  select MT2 >= 100
   select MTmin >= 100
   select MET >= 100
 
 region WZlow
-  preselection1
-  select MT2(sigLEP[0], sigLEP[1], METLV[0]) <= 100
+  preselection2
+  select MT2 <= 100
   select MTmin >= 130
   select MET >= 140
   select Meff <= 600            
@@ -111,9 +125,9 @@ region bRPV2l
   select size(sigJETS) >= 1
   select size(sigLEP) >= 2 and size(BLLEP) >= 2
   select q(sigLEP[0])*q(sigLEP[1]) == 1
-  select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25  
+  select pt(sigLEP[0]) >= 20 and pt(sigLEP[1]) >= 20  
   select size(sigLEP) == 2
-  select MT2(sigLEP[0],sigLEP[1],METLV[0]) >= 60
+  select MT2 >= 60
   select MET >= 100
   select size(bjet) == 0
   select size(sigJETS) >= 4
@@ -121,11 +135,11 @@ region bRPV2l
 
 region bRPV3l
   select size(sigJETS) >= 1
-  select size(sigLEP) >= 2 and size(BLLEP) >= 2 # according to the ATL note
+  select size(sigLEP) >= 2 AND size(BLLEP) >= 2 # according to the ATL note
   select q(sigLEP[0])*q(sigLEP[1]) == 1
-  select select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25 and pt(sigLEP[2]) >= 25 
+  select select pt(sigLEP[0]) >= 20 AND pt(sigLEP[1]) >= 20 and pt(sigLEP[2]) >= 10 
   select size(sigLEP) == 3 
-  select MT2(sigLEP[0],sigLEP[1],METLV[0]) >= 80
+  select MT2 >= 80
   select MET >= 120
   select Meff >= 350   
   reject m(sigELE[0] sigELE[1]) [] 81 101 and m(sigMUO[0] sigMUO[1]) [] 81 101   
