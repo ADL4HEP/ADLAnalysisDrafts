@@ -75,7 +75,7 @@ region preselection1
   take ALL
   select size(sigJETS) >= 1
   select size(sigLEP) >= 2 
-  select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25
+  select pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25
   select size(sigLEP) == 2
   select q(sigLEP[0]) * q(sigLEP[1]) == 1
   select size(bjet) == 0
@@ -85,11 +85,11 @@ region preselection1
 region preselection2
   take ALL
   select size(sigJETS) >= 1
-  select size(BLLEP) >= 2 and size(sigLEP) >= 2
+  select size(BLLEP) >= 2 AND size(sigLEP) >= 2
   select q(sigLEP[0]) * q(sigLEP[1]) == 1
   select size(BLLEP) == 2
   select size(sigLEP) == 2
-  select pt(sigLEP[0]) >= 25 and pt(sigLEP[1]) >= 25  
+  select pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25  #after this cut there is a cut of size of jets with pt>25 but because it is the same cut with line 87 it is not written
   select size(bjet) == 0
   select size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL 
 
@@ -97,7 +97,6 @@ region WHhigh
   preselection1
   select MT2 >= 80  
   #select METSig >= 7
-  #select MTmin == 0
   select MET >= 75
   
 region WHlow
@@ -105,7 +104,6 @@ region WHlow
   select MT2 < 80
   select MTmin >= 100
   #select METSig >= 6
-  #select MET >= 50
   
 region WZhigh
   preselection2
@@ -123,9 +121,9 @@ region WZlow
 
 region bRPV2l
   select size(sigJETS) >= 1
-  select size(sigLEP) >= 2 and size(BLLEP) >= 2
+  select size(sigLEP) >= 2 AND size(BLLEP) >= 2
   select q(sigLEP[0])*q(sigLEP[1]) == 1
-  select pt(sigLEP[0]) >= 20 and pt(sigLEP[1]) >= 20  
+  select pt(sigLEP[0]) >= 20 AND pt(sigLEP[1]) >= 20  
   select size(sigLEP) == 2
   select MT2 >= 60
   select MET >= 100
@@ -137,20 +135,20 @@ region bRPV3l
   select size(sigJETS) >= 1
   select size(sigLEP) >= 2 AND size(BLLEP) >= 2 # according to the ATL note
   select q(sigLEP[0])*q(sigLEP[1]) == 1
-  select select pt(sigLEP[0]) >= 20 AND pt(sigLEP[1]) >= 20 and pt(sigLEP[2]) >= 10 
+  select select pt(sigLEP[0]) >= 20 AND pt(sigLEP[1]) >= 20 AND pt(sigLEP[2]) >= 10 
   select size(sigLEP) == 3 
   select MT2 >= 80
   select MET >= 120
   select Meff >= 350   
-  reject m(sigELE[0] sigELE[1]) [] 81 101 and m(sigMUO[0] sigMUO[1]) [] 81 101   
+  reject m(sigELE[0] sigELE[1]) [] 81 101 AND m(sigMUO[0] sigMUO[1]) [] 81 101   
 
 region RPV
-  select size(BLLEP) == 2
-  select size(sigLEP) == 2 
-  select q(sigLEP[0])*q(sigLEP[1]) == 1
-  select pt(sigLEP[1]) > 25
   select size(sigJETS) >= 1
-  
+  select size(BLLEP) >= 2 AND size(sigLEP) >= 2
+  select q(sigLEP[0])*q(sigLEP[1]) == 1
+  select size(BLLEP) == 2 AND size(sigLEP) == 2 
+  select pt(sigLEP[1]) > 25
+
 region RPV2l1bLow
   RPV
   select size(bjet) == 1
@@ -166,7 +164,7 @@ region RPV2l1bMed
   RPV
   select size(bjet) == 1
   select sum(pt(sigLEP[0:])) >= 100
-  select MET >= 50
+  select MET >= 100
   select size(sigJETS) == 2 OR size(sigJETS) == 3
   select SUMPTR >= 0.45
   select SUMPTjet >= 400
@@ -211,14 +209,14 @@ region RPV2l3bLow
   select min(dR(sigLEP[0] sigJETS) ) <= 1.5
   select dR(sigLEP[0] sigLEP[1]) >= 2.0
 
-region RPV2l3bLow
+region RPV2l3bMed
   RPV
   select size(bjet) >= 3
   select MET >= 20
   select size(sigJETS) <= 3
   select SUMPTR >= 0.8
 
-region RPV2l3bLow
+region RPV2l3bHigh
   RPV
   select size(bjet) >= 3
   select MET >= 20
@@ -264,8 +262,8 @@ region preselection3
   select size(bjet) == 0
   
   #select size(bjet) >= 3
-  #select size(bjet) >= 1 AND size(sigJETS)>= 4 ? pt(sigJETS[3]) > 50 and MET > 130 # in the paper page 17 last row from the bottom in table
-  #select size(bjet) >= 1 AND size(sigJETS)>= 4 ? pt(sigJETS[3]) > 50 and MET > 130
+  #select size(bjet) >= 1 AND size(sigJETS)>= 4 ? pt(sigJETS[3]) > 50 AND MET > 130 # in the paper page 17 last row from the bottom in table
+  #select size(bjet) >= 1 AND size(sigJETS)>= 4 ? pt(sigJETS[3]) > 50 AND MET > 130
   #select size(bjet) > 0 AND size(sigJETS) >=5 
   #select pt(sigJETS) > 50
 
