@@ -5,7 +5,7 @@
 # Author: Hazal Candan Kacar 
 
 
-# ./CLA.sh /Users/Hazal/Desktop/CLA_DEV/DATA/OpenSource_13TeV/4lep/MC/mc_363490.llll.4lep.root ATLASODR2 -i /Users/Hazal/Desktop/deneme.adl -j 4
+# ./CLA.sh /Users/Hazal/Desktop/CutLang/DATA/OpenSource_13TeV/4lep/MC/mc_363490.llll.4lep.root ATLASODR2 -i /Users/Hazal/Desktop/CutLang/OME/SUSY-2018-30/ADL/ATLAS-CERN-EP-2022-213.adl -j 4
 
 
 # OBJECT DEFINITIONS 
@@ -58,38 +58,34 @@ define phi4j   = min(abs( Phi(jets[0:3]) - Phi(METLV[0])))
 
 # NN Variable List 
 
+define NNVar = {
 
-#define NNVar = {
+ pT(jets[0])  abs(eta(jets[0]))  phi(jets[0])  m(jets[0])
+ pT(jets[1])  abs(eta(jets[1]))  phi(jets[1])  m(jets[1])
+ pT(jets[2])  abs(eta(jets[2]))  phi(jets[2])  m(jets[2])
+ pT(jets[3])  abs(eta(jets[3]))  phi(jets[3])  m(jets[3])
+ pT(jets[4])  abs(eta(jets[4]))  phi(jets[4])  m(jets[4])
+ pT(jets[5])  abs(eta(jets[5]))  phi(jets[5])  m(jets[5])
+ pT(jets[6])  abs(eta(jets[6]))  phi(jets[6])  m(jets[6])
+ pT(jets[7])  abs(eta(jets[7]))  phi(jets[7])  m(jets[7])
+ pT(jets[8])  abs(eta(jets[8]))  phi(jets[8])  m(jets[8])
+ pT(jets[9])  abs(eta(jets[9]))  phi(jets[9])  m(jets[9])
+ bTag(jets[0])  bTag(jets[1]) bTag(jets[2])bTag(jets[3])bTag(jets[4])bTag(jets[5])bTag(jets[6])bTag(jets[7])bTag(jets[8])bTag(jets[9])
+ pT(largejets[0])  abs(eta(largejets[0]))  phi(largejets[0])  m(largejets[0])
+ pT(largejets[1])  abs(eta(largejets[1]))  phi(largejets[1])  m(largejets[1])
+ pT(largejets[2])  abs(eta(largejets[2]))  phi(largejets[2])  m(largejets[2])
+ pT(largejets[3])  abs(eta(largejets[3]))  phi(largejets[3])  m(largejets[3])
+ pT(largejets[4])  abs(eta(largejets[4]))  phi(largejets[4])  m(largejets[4])
 
-# pT(jets[0]) , abs(eta(jets[0])) , phi(jets[0]) , m(jets[0]),
-# pT(jets[1]) , abs(eta(jets[1])) , phi(jets[1]) , m(jets[1]),
-# pT(jets[2]) , abs(eta(jets[2])) , phi(jets[2]) , m(jets[2]),
-# pT(jets[3]) , abs(eta(jets[3])) , phi(jets[3]) , m(jets[3]),
-# pT(jets[4]) , abs(eta(jets[4])) , phi(jets[4]) , m(jets[4]),
-# pT(jets[5]) , abs(eta(jets[5])) , phi(jets[5]) , m(jets[5]),
-# pT(jets[6]) , abs(eta(jets[6])) , phi(jets[6]) , m(jets[6]),
-# pT(jets[7]) , abs(eta(jets[7])) , phi(jets[7]) , m(jets[7]),
-# pT(jets[8]) , abs(eta(jets[8])) , phi(jets[8]) , m(jets[8]),
-# pT(jets[9]) , abs(eta(jets[9])) , phi(jets[9]) , m(jets[9]), 
- 
-# bTag(jets[0]) , bTag(jets[1]), bTag(jets[2]),bTag(jets[3]),bTag(jets[4]),bTag(jets[5]),bTag(jets[6]),bTag(jets[7]),bTag(jets[8]),bTag(jets[9])
+ pT(leptons[0])  abs(eta(leptons[0]))  phi(leptons[0])  m(leptons[0])
+ pT(leptons[1])  abs(eta(leptons[1]))  phi(leptons[1])  m(leptons[1])
+ pT(leptons[2])  abs(eta(leptons[2]))  phi(leptons[2])  m(leptons[2])
+ pT(leptons[3])  abs(eta(leptons[3]))  phi(leptons[3])  m(leptons[3])
+ pT(leptons[4])  abs(eta(leptons[4]))  phi(leptons[4])  m(leptons[4])
 
-# pT(largejets[0]) , abs(eta(largejets[0])) , phi(largejets[0]) , m(largejets[0]),
-# pT(largejets[1]) , abs(eta(largejets[1])) , phi(largejets[1]) , m(largejets[1]),
-# pT(largejets[2]) , abs(eta(largejets[2])) , phi(largejets[2]) , m(largejets[2]),
-# pT(largejets[3]) , abs(eta(largejets[3])) , phi(largejets[3]) , m(largejets[3]),
-# pT(largejets[4]) , abs(eta(largejets[4])) , phi(largejets[4]) , m(largejets[4]),
+}
 
-# pT(leptons[0]) , abs(eta(leptons[0])) , phi(leptons[0]) , m(leptons[0]),
-# pT(leptons[1]) , abs(eta(leptons[1])) , phi(leptons[1]) , m(leptons[1]),
-# pT(leptons[2]) , abs(eta(leptons[2])) , phi(leptons[2]) , m(leptons[2]),
-# pT(leptons[3]) , abs(eta(leptons[3])) , phi(leptons[3]) , m(leptons[3]),
-# pT(leptons[4]) , abs(eta(leptons[4])) , phi(leptons[4]) , m(leptons[4])
-
-# }
-
-# define OMECut = { "/path/to/onnx" , NNVar }
-
+define NNCut = OME("/Users/Hazal/Desktop/CutLang/OME/SUSY-2018-30/ANA-SUSY-2018-30_model.onnx" , NNVar )
 
 # EVENT SELECTIONS  
 
@@ -103,7 +99,7 @@ region preselection
 
 # Region B (Boosted, Large dm)
 
-region GTTL0BSR 
+region TABLE3REGIONB 
    preselection
    select Size(leptons) == 0 
    select Size(jets) >= 5 
@@ -114,29 +110,9 @@ region GTTL0BSR
    select mtbjets >= 120
    select bigm >= 300 
 
-region GTTL0BCR 
-   preselection
-   select Size(leptons) == 1 
-   select Size(jets) >= 4 
-   select Size(bjets) >= 3 
-   select MET >= 200 
-   select meff >= 2000 
-   select mt < 150
-   select bigm >= 150 
-
-region GTTL0BVR 
-   preselection
-   select Size(leptons) == 0 
-   select Size(jets) >= 5 
-   select Size(bjets) >= 3 
-   select MET >= 250 
-   select phi4j >= 0.4 
-   select meff >= 2000 
-   select bigm < 300 
-
 # Region M1 (Moderate dm)
 
-region GTTL0M1SR 
+region TABLE3REGION1M 
    preselection
    select Size(leptons) == 0 
    select Size(jets) >= 9 
@@ -147,29 +123,9 @@ region GTTL0M1SR
    select mtbjets >= 120
    select bigm >= 300 
 
-region GTTL0M1CR 
-   preselection
-   select Size(leptons) == 1 
-   select Size(jets) >= 8 
-   select Size(bjets) >= 3 
-   select MET >= 200 
-   select meff >= 1100 
-   select mt < 150
-   select bigm >= 150 
-
-region GTTL0M1VR 
-   preselection
-   select Size(leptons) == 0 
-   select Size(jets) >= 9 
-   select Size(bjets) >= 3 
-   select MET >= 300 
-   select phi4j >= 0.4 
-   select meff >= 1400 
-   select bigm < 300 
-
 # Region M2 (Moderate dm)
 
-region GTTL0M2SR
+region TABLE3REGION2M
    preselection 
    select Size(leptons) == 0 
    select Size(jets) >= 10 
@@ -180,29 +136,10 @@ region GTTL0M2SR
    select mtbjets >= 120
    select bigm >= 200 
 
-region GTTL0M2CR 
-   preselection
-   select Size(leptons) == 1 
-   select Size(jets) >= 9 
-   select Size(bjets) >= 3 
-   select MET >= 200 
-   select meff >= 800 
-   select mt < 150
-   select bigm >= 100 
-
-region GTTL0M2VR 
-   preselection
-   select Size(leptons) == 0 
-   select Size(jets) >= 10 
-   select Size(bjets) >= 3 
-   select MET >= 300 
-   select phi4j >= 0.4 
-   select meff >= 800 
-   select bigm < 200 
 
 # Region C (Moderate dm)
 
-region GTTL0CSR 
+region TABLE3REGIONC 
    preselection
    select Size(leptons) == 0 
    select Size(jets) >= 10 
@@ -213,33 +150,13 @@ region GTTL0CSR
    select mtbjets >= 180
    select bigm >= 100 
 
-region GTTL0CCR 
-   preselection
-   select Size(leptons) == 1 
-   select Size(jets) >= 9 
-   select Size(bjets) >= 4
-   select MET >= 200 
-   select meff >= 800 
-   select mt < 150
-   select bigm >= 100 
-
-region GTTL0CVR 
-   preselection
-   select Size(leptons) == 0 
-   select Size(jets) >= 10 
-   select Size(bjets) >= 4 
-   select MET >= 200 
-   select phi4j >= 0.4 
-   select meff >= 800 
-   select bigm < 200 
-
 	
 
 # Table 4 // CC Gtt 1-lepton SR
 
 # Region B (Boosted, Large dm)
 
-region GTTL1BSR 
+region TABLE4REGIONB 
    preselection
    select Size(jets) >= 4 
    select MET >= 600 
@@ -248,34 +165,11 @@ region GTTL1BSR
    select mtbjets >= 120
    select bigm >= 200 
 
-region GTTL1BCR 
-   preselection
-   select Size(jets) == 4 
-   select MET >= 200 
-   select meff >= 1500 
-   select mt < 150
-
-region GTTL1B1VR
-   preselection
-   select Size(jets) >= 4 
-   select MET >= 200 
-   select meff >= 1500 
-   select mt >= 150 
-   select bigm < 200 
-
-region GTTL1B2VR
-   preselection
-   select Size(jets) >= 5 
-   select MET >= 200 
-   select meff >= 1200 
-   select mt < 150
-   select mtbjets >= 120
-   select bigm >= 200 
 
 
 # Region M1 (Moderate dm)
 
-region GTTL1M1SR 
+region TABLE4REGION1M 
    preselection
    select Size(jets) >= 5 
    select MET >= 600 
@@ -284,34 +178,10 @@ region GTTL1M1SR
    select mtbjets >= 120
    select bigm >= 200 
 
-region GTTL1M1CR 
-   preselection
-   select Size(jets) == 5 
-   select MET >= 200 
-   select meff >= 1200 
-   select mt < 200
-
-region GTTL1M11VR
-   preselection
-   select Size(jets) >= 5 
-   select MET >= 200 
-   select meff >= 1200 
-   select mt >= 200 
-   select bigm < 200 
-
-region GTTL1M12VR
-   preselection
-   select Size(jets) >= 6 
-   select MET >= 200 
-   select meff >= 1000 
-   select mt < 200
-   select mtbjets >= 120
-   select bigm >= 100 
-
 
 # Region M2 (Moderate dm)
 
-region GTTL1M2SR 
+region TABLE4REGION2M 
    preselection
    select Size(jets) >= 8 
    select MET >= 500 
@@ -320,33 +190,10 @@ region GTTL1M2SR
    select mtbjets >= 120
    select bigm >= 100 
 
-region GTTL1M2CR 
-   preselection
-   select Size(jets) == 8 
-   select MET >= 200 
-   select meff >= 800 
-   select mt < 200
-
-region GTTL1M21VR
-   preselection
-   select Size(jets) >= 8 
-   select MET >= 200 
-   select meff >= 800 
-   select mt >= 200 
-   select bigm < 100 
-
-region GTTL1M22VR
-   preselection
-   select Size(jets) >= 9
-   select MET >= 200 
-   select meff >= 800 
-   select mt < 200
-   select mtbjets >= 120
-   select bigm >= 100 
 
 # Region C (compressed, small dm)
 
-region GTTL1CSR 
+region TABLE4REGIONC 
    preselection
    select Size(jets) >= 9 
    select MET >= 300 
@@ -354,35 +201,12 @@ region GTTL1CSR
    select mt >= 150
    select mtbjets >= 120
 
-region GTTL1CCR 
-   preselection
-   select Size(jets) == 9 
-   select MET >= 200 
-   select meff >= 800 
-   select mt < 150
-
-region GTTL1C1VR
-   preselection
-   select Size(jets) >= 9 
-   select MET >= 200 
-   select meff >= 800 
-   select mt >= 150 
-   select mtbjets < 120
-
-region GTTL1C2VR
-   preselection
-   select Size(jets) >= 10
-   select MET >= 200 
-   select meff >= 800 
-   select mt < 150
-   select mtbjets >= 120
-
 
 # Table 5 // CC Gbb 0-lepton SR 
 
 # Region B (boosted, large dm)
 
-region GBBL0BSR 
+region TABLE5REGIONB 
    preselection
    select Size(leptons) == 0 
    select pT(jets) > 65
@@ -390,25 +214,10 @@ region GBBL0BSR
    select MET > 550
    select mtbjets > 130
 
-region GBBL0BCR 
-   preselection
-   select Size(leptons) == 1 
-   select pT(jets) > 65 
-   select meff > 2600
-   select MET > 450 
-   select mt < 150 
-
-region GBBL0BVR
-   preselection
-   select Size(leptons) == 0 
-   select pT(jets) > 65
-   select meff < 2400 
-   select MET > 550
-   select mtbjets > 130
 
 # Region M (moderate dm)
 
-region GBBL0MSR 
+region TABLE5REGIONM 
    preselection
    select Size(leptons) == 0 
    select Size(jets) > 30
@@ -416,25 +225,10 @@ region GBBL0MSR
    select MET > 550
    select mtbjets > 130
 
-region GBBL0MCR 
-   preselection
-   select Size(leptons) == 1 
-   select pT(jets) > 30 
-   select meff > 2000
-   select MET > 550 
-   select mt < 150 
-
-region GBBL0MVR
-   preselection
-   select Size(leptons) == 0 
-   select pT(jets) > 30
-   select meff > 1600 
-   select MET < 500
-   select mtbjets > 80
 
 # Region C (compressed , small dm)
 
-region GBBL0CSR 
+region TABLE5REGIONC 
    preselection
    select Size(leptons) == 0 
    select pT(jets) > 30
@@ -442,29 +236,12 @@ region GBBL0CSR
    select MET > 550 
    select mtbjets > 130
 
-region GBBL0CR
-   preselection
-   select Size(leptons) == 1 
-   select pT(jets) > 30
-   select meff > 1600 
-   select MET > 550
-   select mt < 150 
-
-region GBBL0VR 
-   preselection 
-   select Size(leptons) == 0 
-   select pT(jets) > 30
-   select meff > 1500 
-   select MET < 450
-   select mtbjets > 130 
-
-
 
 # Table 6 // CC Gtb 0-lepton SRs
 
 # Region B (boosted, large dm)
 
-region GTBL0BSR 
+region TABLE6REGIONB
    preselection
    select Size(leptons) == 0 
    select Size(jets) >= 4 
@@ -474,30 +251,10 @@ region GTBL0BSR
    select mtbjets > 130
    select bigm > 200 
 
-region GTBL0BCR
-   preselection
-   select Size(leptons) == 1 
-   select Size(jets) >= 4 
-   select Size(bjets) >= 3 
-   select meff > 2200 
-   select MET > 400 
-   select mt < 150 
-   select bigm > 200
-
-region GTBL0BVR 
-   preselection
-   select Size(leptons) == 0 
-   select Size(jets) >= 4
-   select Size(bjets) >= 3 
-   select meff < 2500 
-   select MET > 450 
-   select mtbjets > 130
-   select bigm > 200 
-
 
 # Region M (moderate dm)
 
-region GTBL0MSR 
+region TABLE6REGIONM
    preselection 
    select Size(leptons) == 0 
    select Size(jets) >= 6
@@ -507,30 +264,11 @@ region GTBL0MSR
    select mtbjets > 130
    select bigm > 200
 
-region GTBL0MCR
-   preselection 
-   select Size(leptons) == 1 
-   select Size(jets) >= 6
-   select Size(bjets) >= 4
-   select meff > 1700
-   select MET > 300
-   select mt < 150
-   select bigm > 200
-
-region GTBL0MSR 
-   preselection 
-   select Size(leptons) == 0 
-   select Size(jets) >= 6
-   select Size(bjets) >= 4
-   select meff > 1600
-   select MET > 550
-   select mtbjets > 110
-   select bigm > 200
 
 
 # Region C (compressed , small dm)
 
-region GTBL0CSR 
+region TABLE6REGIONC 
    preselection 
    select Size(leptons) == 0 
    select Size(jets) >= 7
@@ -540,25 +278,45 @@ region GTBL0CSR
    select mtbjets > 130
    select bigm > 50
 
-region GTBL0CCR
+
+# NN Selections
+
+# Table 7 
+region TABLE7GTT2100SR
    preselection 
-   select Size(leptons) == 1 
-   select Size(jets) >= 7
-   select Size(bjets) >= 4
-   select meff > 1300
-   select MET > 350
-   select mt < 150
-   select bigm > 50
+   select NNCut >= 0.9997
 
-region GTBL0CSR 
+region TABLE7GTT1800SR
    preselection 
-   select Size(leptons) == 0 
-   select Size(jets) >= 7
-   select Size(bjets) >= 4
-   select meff > 1300
-   select MET < 500
-   select mtbjets > 80
-   select bigm > 50
+   select NNCut >= 0.9997
 
+region TABLE7GTT23001200SR
+   preselection
+   select NNCut >= 0.9993
 
+region TABLE7GTT19001400SR
+   preselection
+   select NNCut >= 0.9987
+
+# Table 8 
+
+region TABLE8GBB28001400SR
+   preselection 
+   select NNCut >= 0.999
+   select phi4j >= 0.6
+
+region TABLE8GBB23001000SR
+   preselection
+   select NNCut >= 0.9994
+   select phi4j >= 0.6
+
+region TABLE8Gbb21001600SR 
+   preselection
+   select NNCut >= 0.9993
+   select phi4j >= 0.4 
+
+region TABLE8GBB20001800
+   preselection 
+   select NNCut >= 0.997
+   select phi4j >= 0.4
 
