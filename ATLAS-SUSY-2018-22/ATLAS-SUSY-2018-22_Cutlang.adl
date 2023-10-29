@@ -8,12 +8,12 @@ info analysis
 #  arXiv "2010.14293"  
 #  hepdata "https://www.hepdata.net/record/ins1827025"
 #  doi "10.1007/JHEP02(2021)143"
-# Author : Kagan Sahan
-
+#  Author : Kagan Sahan
 
 # OBJECT RECONSTRUCTION AND DEFINITION
 
 ## BASELINE OBJECTS DEFINITION
+
 object baselineJets
     take JET
     select Pt(JET) > 20
@@ -42,7 +42,7 @@ object baselineLeps : Union(baselineEles,baselineMuos)
 
 ## OBJECT REMOVAL PROCEDURES
 
-define dRMin = min(0.4, 0.04+ 10/Pt(baselineLeps) )
+define dRMin = min(0.4, 0.04 + 10/Pt(baselineLeps) )
 
 object rmElesInMuos
     take baselineEles
@@ -97,12 +97,11 @@ object JetsPt50
     take signalJets
     select Pt(signalJets) > 50
     select AbsEta(signalJets) < 2.8
-#   select BTagMV2c10  %77 working point
+#   select BTagMV2c10  at %77 working point
 
 
 ## EVENT VARIABLE DEFINITIONS
 define nJets = Size(signalJets)
-define endjet = nJets - 1
 define dPhi2JetsMETMin = min(dPhi(signalJets[:1],METLV[0]))
 define dPhi3JetsMETMin = min(dPhi(signalJets[:2],METLV[0]))
 
@@ -114,7 +113,7 @@ define mEff = MET + HTJets
 
 # EVENT SELECTION AND SIGNAL REGION DEFINITIONS
 
-region select-BaselineObjs
+region selectBaselineObjs
     select ALL
     select Size(baselineJets) >= 0
     select Size(baselineMuos) >= 0
@@ -123,7 +122,7 @@ region select-BaselineObjs
 
 
 region objectRemovalProcedures
-    select-BaselineObjs
+    selectBaselineObjs
     reject Size(rmElesInMuos) > 0               # Proc 1
     reject Size(rmJetsInEles) > 0               # Proc 2
     reject Size(rmLepsInJets) > 0               # Proc 3,4
@@ -131,7 +130,7 @@ region objectRemovalProcedures
     reject Size(rmPhosInLeps) >= 0              # Proc 7
 
 # From Table 2 on page 9
-region common-preselection
+region preselection
     objectRemovalProcedures
     select MET > 300
     select Size(signalJets) >= 2
@@ -144,8 +143,8 @@ region common-preselection
 # MULTI-BIN SEARCH
 
 # From Table 3 on page 10
-region MB-SSd-preselection
-    common-preselection
+region MBSSdpreselection
+    preselection
     select nJets >= 2
     select Pt(signalJets[0]) > 200
     select Pt(signalJets[0:]) > 100
@@ -156,21 +155,21 @@ region MB-SSd-preselection
     select mEff > 1000 
 
 # From Table 3 on page 10
-region MB-GGd-preselection
-    common-preselection
+region MBGGdpreselection
+    preselection
     select nJets >= 4
     select Pt(signalJets[0]) > 200
     select Pt(signalJets[1:]) > 100
     select AbsEta(signalJets) < 2.0
-    select nJets == 2 ? dPhi2JetsMETMin > 0.4 : dPhi3JetsMETMin > 0.4
+    select dPhi3JetsMETMin > 0.4
     select min(dPhi(signalJets[3:],METLV[0])) > 0.4
     select METSqrtHT > 10
     select mEff > 1000 
 #   select Aplanarity > 0.04
 
 # From Table 3 on page 10
-region MB-C-preselection
-    common-preselection
+region MBCpreselection
+    preselection
     select nJets >= 2
     select Pt(signalJets[0]) > 600
     select Pt(signalJets[1:]) > 50
@@ -181,8 +180,8 @@ region MB-C-preselection
     select mEff > 1600
 
 ### Multi-bin gluino-gluino-direct
-region MB-GGd
-    MB-GGd-preselection
+region MBGGd
+    MBGGdpreselection
     select nJets >= 4
     bin METSqrtHT >= 10 && METSqrtHT < 16 && mEff >= 1000 && mEff < 1600                            # 1
     bin METSqrtHT >= 10 && METSqrtHT < 16 && mEff >= 1600 && mEff < 2200                            # 2
@@ -204,8 +203,8 @@ region MB-GGd
     bin METSqrtHT >= 22 && mEff >= 4000                                                             # 18
 
 ### Multi-bin squark-squark-direct
-region MB-SSd
-    MB-SSd-preselection
+region MBSSd
+    MBSSdpreselection
     bin nJets [] 2 3 && METSqrtHT >= 10 && METSqrtHT < 16 && mEff >= 1000  && mEff < 1600           # 19
     bin nJets [] 2 3 && METSqrtHT >= 10 && METSqrtHT < 16 && mEff >= 1600                           # 20
     bin nJets [] 2 3 && METSqrtHT >= 16 && METSqrtHT < 22 && mEff >= 1000 && mEff < 1600            # 21
@@ -233,8 +232,8 @@ region MB-SSd
 
 
 ### Multi-bin combined
-region MB-C
-    MB-C-preselection
+region MBC
+    MBCpreselection
     bin nJets [] 2 3 && METSqrtHT >= 16 && METSqrtHT < 22 && mEff >= 1600 && mEff < 2200            # 43
     bin nJets [] 2 3 && METSqrtHT >= 16 && METSqrtHT < 22 && mEff >= 2200 && mEff < 2800            # 44
     bin nJets [] 2 3 && METSqrtHT >= 16 && METSqrtHT < 22 && mEff >= 2800                           # 45
@@ -258,8 +257,8 @@ region MB-C
 ## THE BDT SEARCH
 
 # Table 7 on page 12
-region BDT-GGd1
-    common-preselection
+region BDTGGd1
+    preselection
     select Size(signalJets) >= 4
     select min(dPhi(signalJets[0:2],METLV[0])) >  0.4
     select min(dPhi(signalJets[3:],METLV[0])) > 0.4
@@ -269,8 +268,8 @@ region BDT-GGd1
 #   select dM [] 1600 1900
 
 # Table 7 on page 12
-region BDT-GGd2
-    common-preselection
+region BDTGGd2
+    preselection
     select Size(signalJets) >= 4
     select min(dPhi(signalJets[0:2],METLV[0])) >  0.4
     select min(dPhi(signalJets[3:],METLV[0])) > 0.4
@@ -281,8 +280,8 @@ region BDT-GGd2
 
 
 # Table 7 on page 12
-region BDT-GGd3
-    common-preselection
+region BDTGGd3
+    preselection
     select Size(signalJets) >= 4
     select min(dPhi(signalJets[0:2],METLV[0])) >  0.4
     select min(dPhi(signalJets[3:],METLV[0])) > 0.4
@@ -292,8 +291,8 @@ region BDT-GGd3
 #   select dM [] 600 1000
 
 # Table 7 on page 12
-region BDT-GGd3
-    common-preselection
+region BDTGGd3
+    preselection
     select Size(signalJets) >= 4
     select min(dPhi(signalJets[0:2],METLV[0])) >  0.4
     select min(dPhi(signalJets[3:],METLV[0])) > 0.4
@@ -304,8 +303,8 @@ region BDT-GGd3
 
 
 # Table 7 on page 12
-region BDT-GGo1
-    common-preselection
+region BDTGGo1
+    preselection
     select nJets >= 4
     select min(dPhi(signalJets[0:2],METLV[0])) >  0.4
     select min(dPhi(signalJets[3:],METLV[0])) > 0.4
@@ -315,8 +314,8 @@ region BDT-GGo1
 #   select dM [] 1400 2000
 
 # Table 7 on page 12
-region BDT-GGo2
-    common-preselection
+region BDTGGo2
+    preselection
     select nJets >= 4
     select min(dPhi(signalJets[0:2],METLV[0])) >  0.4
     select min(dPhi(signalJets[3:],METLV[0])) > 0.4
@@ -326,8 +325,8 @@ region BDT-GGo2
 #   select dM [] 1200 1400
 
 # Table 7 on page 12
-region BDT-GGo3
-    common-preselection
+region BDTGGo3
+    preselection
     select nJets >= 5
     select min(dPhi(signalJets[0:2],METLV[0])) >  0.4
     select min(dPhi(signalJets[3:],METLV[0])) > 0.4
@@ -337,8 +336,8 @@ region BDT-GGo3
 #   select dM [] 600 1000
 
 # Table 7 on page 12
-region BDT-GGo4
-    common-preselection
+region BDTGGo4
+    preselection
     select nJets >= 4
     select min(dPhi(signalJets[0:2],METLV[0])) >  0.2
     select min(dPhi(signalJets[3:],METLV[0])) > 0.2
@@ -347,12 +346,12 @@ region BDT-GGo4
 #   select BDTScore > 0.84
 #   select dM [] 200 400
 
+
 # MODEL-INDEPENDENT SEARCH
 
-
 # Table 8 on page 14
-region SR2j-1600
-    common-preselection
+region SR2j1600
+    preselection
     select nJets >= 2
     select Pt(signalJets[0]) > 250
     select Pt(signalJets[1:]) > 250
@@ -363,8 +362,8 @@ region SR2j-1600
     select mEff > 1600
 
 # Table 8 on page 14
-region SR2j-2200
-    common-preselection
+region SR2j2200
+    preselection
     select nJets >= 2
     select Pt(signalJets[0]) > 600
     select Pt(signalJets[1:]) > 50
@@ -375,8 +374,8 @@ region SR2j-2200
     select mEff > 2200
 
 # Table 8 on page 14
-region SR2j-2800
-    common-preselection
+region SR2j2800
+    preselection
     select nJets >= 2
     select Pt(signalJets[0]) > 250
     select Pt(signalJets[1:]) > 250
@@ -387,8 +386,8 @@ region SR2j-2800
     select mEff > 2800
 
 # Table 8 on page 14
-region SR4j-1000
-    common-preselection
+region SR4j1000
+    preselection
     select nJets >= 4
     select Pt(signalJets[0]) > 200
     select Pt(signalJets[1:]) > 100
@@ -399,8 +398,8 @@ region SR4j-1000
     select mEff > 1000
 
 # Table 8 on page 14
-region SR4j-2200
-    common-preselection
+region SR4j2200
+    preselection
     select nJets >= 4
     select Pt(signalJets[0]) > 200
     select Pt(signalJets[1:]) > 100
@@ -411,8 +410,8 @@ region SR4j-2200
     select mEff > 2200
 
 # Table 8 on page 14
-region SR4j-3400
-    common-preselection
+region SR4j3400
+    preselection
     select nJets >= 4
     select Pt(signalJets[0]) > 200
     select Pt(signalJets[1:]) > 100
@@ -423,8 +422,8 @@ region SR4j-3400
     select mEff > 3400
 
 # Table 9 on page 14
-region SR5j-1600
-    common-preselection
+region SR5j1600
+    preselection
     select nJets >= 5
     select Pt(signalJets[0]) > 600
     select Pt(signalJets[1:]) > 50
@@ -435,8 +434,8 @@ region SR5j-1600
     select mEff > 1600
 
 # Table 9 on page 14
-region SR6j-1000
-    common-preselection
+region SR6j1000
+    preselection
     select nJets >= 6
     select Pt(signalJets[0]) > 200
     select Pt(signalJets[1:]) > 75
@@ -447,8 +446,8 @@ region SR6j-1000
     select mEff > 1000
 
 # Table 9 on page 14
-region SR6j-2000
-    common-preselection
+region SR6j2000
+    preselection
     select nJets >= 6
     select Pt(signalJets[0]) > 200
     select Pt(signalJets[1:]) > 75
@@ -459,8 +458,8 @@ region SR6j-2000
     select mEff > 2000
 
 # Table 9 on page 14
-region SR6j-2200
-    common-preselection
+region SR6j2200
+    preselection
     select nJets >= 6
     select Pt(signalJets[0]) > 200
     select Pt(signalJets[1:]) > 75
@@ -471,8 +470,8 @@ region SR6j-2200
     select mEff > 2200
 
 # Table 9 on page 14
-region SR6j-3400
-    common-preselection
+region SR6j3400
+    preselection
     select nJets >= 6
     select Pt(signalJets[0]) > 200
     select Pt(signalJets[1:]) > 75
