@@ -45,6 +45,7 @@ object tauloose
   select dR(electrons, tau) <= 0.2
   select dR(electrons, tau) <= 0.2
   
+  
 object photons
   take Pho
   select pT(Pho) > 10
@@ -58,209 +59,184 @@ region EM0
   select ALL
   select MET [] 200 250
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region EM1
   select ALL
   select MET [] 250 300
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
+  
 
 region EM2
   select ALL
   select MET [] 300 350
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
 
 region EM3
   select ALL
   select MET [] 350 400
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region EM4
   select ALL
   select MET [] 400 500
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region EM5
   select ALL
   select MET [] 500 600
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region EM6
   select ALL
   select MET [] 600 700
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region EM7
   select ALL
   select MET [] 700 800
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region EM8
   select ALL
   select MET [] 800 900
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
 
 region EM9
   select ALL
   select MET [] 900 1000
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region EM10
   select ALL
   select MET [] 1000 1100
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region EM11
   select ALL
   select MET [] 1100 1200
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
-
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
+  
 region EM12
   select ALL
   select MET > 1200
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region IM0
   select ALL
   select MET > 200
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region IM1
   select ALL
   select MET > 250
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
 
 region IM2
   select ALL
   select MET > 300
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
 
 region IM3
   select ALL
   select MET > 350
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region IM4
   select ALL
   select MET > 400
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
 
 region IM5
   select ALL
   select MET > 500
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region IM6
   select ALL
   select MET > 600
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region IM7
   select ALL
   select MET > 700
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region IM8
   select ALL
   select MET > 800
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region IM9
   select ALL
   select MET > 900
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region IM10
   select ALL
   select MET > 1000
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
 
 region IM11
   select ALL
   select MET > 1100
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 region IM12
   select ALL
   select MET > 1200
   select Size(jets) >=1
-  select pT(jets[0]) > 150
-  select pT(jets[1],jets[2],jets[3]) > 30
-  select abs(eta(jets)) < 2.8
+  select pT(jets[0]) > 150 && abs(eta(jets[0])) < 2.4
+  select pT(jets[1:3]) > 30 && abs(eta(jets[1:3]))< 2.8
   
 
   
@@ -268,4 +244,3 @@ region IM12
   
 
   
-
