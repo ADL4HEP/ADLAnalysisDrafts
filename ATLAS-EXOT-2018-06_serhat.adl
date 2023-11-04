@@ -33,17 +33,17 @@ object muons
 object tau
   take jets
   select pT(jets) > 10
-  select abs(eta(jets)) [] 1.37 1.52
+  select abs(eta(jets)) < 2.5
   select dR(electrons, tau) <= 0.2
   select dR(electrons, tau) <=0.2
   
 object tauloose
   take tau
   select pT(tau) > 20
-  select abs(eta(tau)) [] 1.37 1.52
+  select abs(eta(tau)) < 2.5
+  reject abs(eta(tau)) [] 1.37 1.52
   select dR(electrons, tau) <= 0.2
   select dR(electrons, tau) <= 0.2
-  
   
 object photons
   take Pho
