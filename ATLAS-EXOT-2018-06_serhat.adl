@@ -49,7 +49,7 @@ object photons
   take Pho
   select pT(Pho) > 10
   select abs(eta(Pho)) < 2.37
-  select dR(, electron) < 0.4
+  #select dR(, electron) < 0.4
   
  
 #EVENT SELECTION
