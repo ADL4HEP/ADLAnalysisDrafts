@@ -1,0 +1,271 @@
+#info analysis
+#  title "Search for new phenomena in events with an energetic jet and missing transverse momentum in √p p collisions at s = 13 TeV with the ATLAS detector"
+#  experiment ATLAS
+#  id EXOT-2018-06
+
+# OBJECT DEFINITIONS
+
+object jets
+  take Jet
+  select pT(Jet) > 20
+  select abs(eta(Jet)) < 2.8
+  
+object cjets
+  take jets
+  select pT(jets) < 120
+  select abs(eta(jets)) < 2.5
+  
+object btagjets
+  take jets
+  select pT(jets) > 30
+  select abs(eta(jets)) < 2.5
+  
+object electrons
+  take Ele
+  select pT(Ele) > 7
+  select abs(eta(Ele)) <2.47
+  
+object muons
+  take Muo
+  select pT(Muo) > 7
+  select abs(eta(Muo)) < 2.5
+  
+object tau
+  take jets
+  select pT(jets) > 10
+  select abs(eta(jets)) [] 1.37 1.52
+  select dR(electrons, tau) <= 0.2
+  select dR(electrons, tau) <=0.2
+  
+object tauloose
+  take tau
+  select pT(tau) > 20
+  select abs(eta(tau)) [] 1.37 1.52
+  select dR(electrons, tau) <= 0.2
+  select dR(electrons, tau) <= 0.2
+  
+  
+object photons
+  take Pho
+  select pT(Pho) > 10
+  select abs(eta(Pho)) < 2.37
+  select dR(, electron) < 0.4
+  
+ 
+#EVENT SELECTION
+
+region EM0
+  select ALL
+  select MET [] 200 250
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region EM1
+  select ALL
+  select MET [] 250 300
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+
+region EM2
+  select ALL
+  select MET [] 300 350
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+
+region EM3
+  select ALL
+  select MET [] 350 400
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region EM4
+  select ALL
+  select MET [] 400 500
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region EM5
+  select ALL
+  select MET [] 500 600
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region EM6
+  select ALL
+  select MET [] 600 700
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region EM7
+  select ALL
+  select MET [] 700 800
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region EM8
+  select ALL
+  select MET [] 800 900
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+
+region EM9
+  select ALL
+  select MET [] 900 1000
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region EM10
+  select ALL
+  select MET [] 1000 1100
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region EM11
+  select ALL
+  select MET [] 1100 1200
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+
+region EM12
+  select ALL
+  select MET > 1200
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region IM0
+  select ALL
+  select MET > 200
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region IM1
+  select ALL
+  select MET > 250
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+
+region IM2
+  select ALL
+  select MET > 300
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+
+region IM3
+  select ALL
+  select MET > 350
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region IM4
+  select ALL
+  select MET > 400
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+
+region IM5
+  select ALL
+  select MET > 500
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region IM6
+  select ALL
+  select MET > 600
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region IM7
+  select ALL
+  select MET > 700
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region IM8
+  select ALL
+  select MET > 800
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region IM9
+  select ALL
+  select MET > 900
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region IM10
+  select ALL
+  select MET > 1000
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+
+region IM11
+  select ALL
+  select MET > 1100
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+region IM12
+  select ALL
+  select MET > 1200
+  select Size(jets) >=1
+  select pT(jets[0]) > 150
+  select pT(jets[1],jets[2],jets[3]) > 30
+  select abs(eta(jets)) < 2.8
+  
+
+  
+
+  
+
+  
+
