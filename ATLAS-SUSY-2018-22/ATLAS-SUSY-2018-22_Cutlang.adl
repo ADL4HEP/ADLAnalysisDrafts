@@ -146,11 +146,11 @@ region preselection
 region MBSSdpreselection
     preselection
     select nJets >= 2
+    select Pt(signalJets) > 100
     select Pt(signalJets[0]) > 200
-    select Pt(signalJets[0:]) > 100
     select AbsEta(signalJets) < 2.0
+    select min(dPhi(signalJets,METLV[0])) > 0.4
     select nJets == 2 ? dPhi2JetsMETMin > 0.8 : dPhi3JetsMETMin > 0.8 
-    select min(dPhi(signalJets[3:],METLV[0])) > 0.4
     select METSqrtHT > 10
     select mEff > 1000 
 
@@ -158,11 +158,10 @@ region MBSSdpreselection
 region MBGGdpreselection
     preselection
     select nJets >= 4
+    select Pt(signalJets) > 100
     select Pt(signalJets[0]) > 200
-    select Pt(signalJets[1:]) > 100
     select AbsEta(signalJets) < 2.0
-    select dPhi3JetsMETMin > 0.4
-    select min(dPhi(signalJets[3:],METLV[0])) > 0.4
+    select min(dPhi(signalJets,METLV[0])) > 0.4
     select METSqrtHT > 10
     select mEff > 1000 
 #   select Aplanarity > 0.04
@@ -171,11 +170,11 @@ region MBGGdpreselection
 region MBCpreselection
     preselection
     select nJets >= 2
+    select Pt(signalJets) > 50
     select Pt(signalJets[0]) > 600
-    select Pt(signalJets[1:]) > 50
     select AbsEta(signalJets) < 2.8
+    select min(dPhi(signalJets,METLV[0])) > 0.2
     select nJets == 2 ? dPhi2JetsMETMin > 0.4 : dPhi3JetsMETMin > 0.4
-    select min(dPhi(signalJets[3:],METLV[0])) > 0.2
     select METSqrtHT > 10
     select mEff > 1600
 
