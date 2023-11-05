@@ -49,8 +49,9 @@ object photons
   take Pho
   select pT(Pho) > 10
   select abs(eta(Pho)) < 2.37
-  #select dR(, electron) < 0.4
-  
+  reject dR(Pho, electron) < 0.4
+  reject dR(Pho, muons) < 0.4
+  reject dR(Pho, jets) < 0.4
  
 #EVENT SELECTION
 
