@@ -60,11 +60,11 @@ object SFOS : COMB (leptons[-1] leptons[-2]) alias sfos
 object SFOS : COMB (leptons[0] leptons[1]) alias sfos
   select PDGID(leptons[0]) + PDGID(leptons[1]) == 0
 
-define MT(leptons[0]) : sqrt( 2*pT(leptons[0]) * MET*(1-cos(Phi(METLV[0]) - Phi(leptons[0]) )))
-define MT(leptons[1]) : sqrt( 2*pT(leptons[1]) * MET*(1-cos(Phi(METLV[0]) - Phi(leptons[1]) )))
-define MTmin : min(MT(leptons[0]),MT(leptons[1]))
-define MT2 : fMT2(leptons[0],leptons[1],METLV[0])
-define Meff : sum(pT(leptons)) + sum(pT(Jet)) + MET  
+define MTL0 : sqrt( 2*pT(sigLEP[0]) * MET*(1-cos(Phi(METLV[0]) - Phi(sigLEP[0]) )))
+define MTL1 : sqrt( 2*pT(sigLEP[1]) * MET*(1-cos(Phi(METLV[0]) - Phi(sigLEP[1]) )))
+define MTmin : min(MTL0,MTL1)
+define MT2 : fMT2(sigLEP[0],sigLEP[1],METLV[0])
+define Meff : sum(pT(sigLEP[0:])) + sum(pT(sigJETS[0:])) + MET  
 define SUMPTR : sum(pt(bjet[0:])) / sum(pt(sigJETS[0:]))
 define SUMPTjet : sum(pt(sigJETS[0:]))
 
