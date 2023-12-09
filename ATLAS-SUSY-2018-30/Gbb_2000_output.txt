@@ -1,0 +1,573 @@
+Analysis with Multiple Regions /tmp/CLAdir.QoFKSB
+A region, ID:  0 named:      [preselection] 	 is defined in lines from 1 to 10
+A region, ID:  1 named:     [TABLE3REGIONB] 	 is defined in lines from 10 to 22
+   this region depends on: preselection
+A region, ID:  2 named:    [TABLE3REGION1M] 	 is defined in lines from 22 to 34
+   this region depends on: preselection
+A region, ID:  3 named:    [TABLE3REGION2M] 	 is defined in lines from 34 to 47
+   this region depends on: preselection
+A region, ID:  4 named:     [TABLE3REGIONC] 	 is defined in lines from 47 to 62
+   this region depends on: preselection
+A region, ID:  5 named:     [TABLE4REGIONB] 	 is defined in lines from 62 to 75
+   this region depends on: preselection
+A region, ID:  6 named:    [TABLE4REGION1M] 	 is defined in lines from 75 to 87
+   this region depends on: preselection
+A region, ID:  7 named:    [TABLE4REGION2M] 	 is defined in lines from 87 to 99
+   this region depends on: preselection
+A region, ID:  8 named:     [TABLE4REGIONC] 	 is defined in lines from 99 to 111
+   this region depends on: preselection
+A region, ID:  9 named:     [TABLE5REGIONB] 	 is defined in lines from 111 to 121
+   this region depends on: preselection
+A region, ID: 10 named:     [TABLE5REGIONM] 	 is defined in lines from 121 to 131
+   this region depends on: preselection
+A region, ID: 11 named:     [TABLE5REGIONC] 	 is defined in lines from 131 to 142
+   this region depends on: preselection
+A region, ID: 12 named:     [TABLE6REGIONB] 	 is defined in lines from 142 to 154
+   this region depends on: preselection
+A region, ID: 13 named:     [TABLE6REGIONM] 	 is defined in lines from 154 to 167
+   this region depends on: preselection
+A region, ID: 14 named:     [TABLE6REGIONC] 	 is defined in lines from 167 to 179
+   this region depends on: preselection
+A region, ID: 15 named:   [TABLE7GTT2100SR] 	 is defined in lines from 179 to 184
+   this region depends on: preselection
+A region, ID: 16 named:   [TABLE7GTT1800SR] 	 is defined in lines from 184 to 189
+   this region depends on: preselection
+A region, ID: 17 named:[TABLE7GTT23001200SR] 	 is defined in lines from 189 to 194
+   this region depends on: preselection
+A region, ID: 18 named:[TABLE7GTT19001400SR] 	 is defined in lines from 194 to 200
+   this region depends on: preselection
+A region, ID: 19 named:[TABLE8GBB28001400SR] 	 is defined in lines from 200 to 206
+   this region depends on: preselection
+A region, ID: 20 named:[TABLE8GBB23001000SR] 	 is defined in lines from 206 to 212
+   this region depends on: preselection
+A region, ID: 21 named:[TABLE8Gbb21001600SR] 	 is defined in lines from 212 to 218
+   this region depends on: preselection
+A region, ID: 22 named: [TABLE8GBB20001800] 	 is defined in lines from 218 to 223
+   this region depends on: preselection
+/Users/Hazal/Desktop/Cutlang/bin/CutLang/CLA/CLA.exe /Users/Hazal/Desktop/CutLang/OME/ATLAS-SUSY-2018-30/DELPHES/Gbb_2000_1000.13_short.root -inp DELPHES -BP 23 -EVT 0 -V 5000 -ST 0 -S 0 w
+CLA v2.50.0	compiled on Fri Dec  8 13:02:17 +03 2023	 
+Analysis run count is 23
+~Now using Delphes files.~~~~~~ beta!
+open /Users/Hazal/Desktop/CutLang/OME/ATLAS-SUSY-2018-30/DELPHES/Gbb_2000_1000.13_short.root
+RetVal:1
+initialized with the chain...28627
+ #systematic included:0
+	 REGION/ALGO:preselection
+This is a run with name: nominal algo:preselection.
+==Parsing started:
+Parsing finished.==
+We have 4 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 0 BP_1
+	 REGION/ALGO:TABLE3REGIONB
+This is a run with name: nominal algo:TABLE3REGIONB.
+==Parsing started:
+Parsing finished.==
+We have 12 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 1 BP_2
+	 REGION/ALGO:TABLE3REGION1M
+This is a run with name: nominal algo:TABLE3REGION1M.
+==Parsing started:
+Parsing finished.==
+We have 12 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 2 BP_3
+	 REGION/ALGO:TABLE3REGION2M
+This is a run with name: nominal algo:TABLE3REGION2M.
+==Parsing started:
+Parsing finished.==
+We have 12 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 3 BP_4
+	 REGION/ALGO:TABLE3REGIONC
+This is a run with name: nominal algo:TABLE3REGIONC.
+==Parsing started:
+Parsing finished.==
+We have 12 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 4 BP_5
+	 REGION/ALGO:TABLE4REGIONB
+This is a run with name: nominal algo:TABLE4REGIONB.
+==Parsing started:
+Parsing finished.==
+We have 11 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 5 BP_6
+	 REGION/ALGO:TABLE4REGION1M
+This is a run with name: nominal algo:TABLE4REGION1M.
+==Parsing started:
+Parsing finished.==
+We have 11 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 6 BP_7
+	 REGION/ALGO:TABLE4REGION2M
+This is a run with name: nominal algo:TABLE4REGION2M.
+==Parsing started:
+Parsing finished.==
+We have 11 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 7 BP_8
+	 REGION/ALGO:TABLE4REGIONC
+This is a run with name: nominal algo:TABLE4REGIONC.
+==Parsing started:
+Parsing finished.==
+We have 10 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 8 BP_9
+	 REGION/ALGO:TABLE5REGIONB
+This is a run with name: nominal algo:TABLE5REGIONB.
+==Parsing started:
+Parsing finished.==
+We have 9 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 9 BP_10
+	 REGION/ALGO:TABLE5REGIONM
+This is a run with name: nominal algo:TABLE5REGIONM.
+==Parsing started:
+Parsing finished.==
+We have 9 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 10 BP_11
+	 REGION/ALGO:TABLE5REGIONC
+This is a run with name: nominal algo:TABLE5REGIONC.
+==Parsing started:
+Parsing finished.==
+We have 9 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 11 BP_12
+	 REGION/ALGO:TABLE6REGIONB
+This is a run with name: nominal algo:TABLE6REGIONB.
+==Parsing started:
+Parsing finished.==
+We have 11 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 12 BP_13
+	 REGION/ALGO:TABLE6REGIONM
+This is a run with name: nominal algo:TABLE6REGIONM.
+==Parsing started:
+Parsing finished.==
+We have 11 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 13 BP_14
+	 REGION/ALGO:TABLE6REGIONC
+This is a run with name: nominal algo:TABLE6REGIONC.
+==Parsing started:
+Parsing finished.==
+We have 11 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 14 BP_15
+	 REGION/ALGO:TABLE7GTT2100SR
+This is a run with name: nominal algo:TABLE7GTT2100SR.
+==Parsing started:
+Parsing finished.==
+We have 6 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 15 BP_16
+	 REGION/ALGO:TABLE7GTT1800SR
+This is a run with name: nominal algo:TABLE7GTT1800SR.
+==Parsing started:
+Parsing finished.==
+We have 6 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 16 BP_17
+	 REGION/ALGO:TABLE7GTT23001200SR
+This is a run with name: nominal algo:TABLE7GTT23001200SR.
+==Parsing started:
+Parsing finished.==
+We have 6 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 17 BP_18
+	 REGION/ALGO:TABLE7GTT19001400SR
+This is a run with name: nominal algo:TABLE7GTT19001400SR.
+==Parsing started:
+Parsing finished.==
+We have 6 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 18 BP_19
+	 REGION/ALGO:TABLE8GBB28001400SR
+This is a run with name: nominal algo:TABLE8GBB28001400SR.
+==Parsing started:
+Parsing finished.==
+We have 7 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 19 BP_20
+	 REGION/ALGO:TABLE8GBB23001000SR
+This is a run with name: nominal algo:TABLE8GBB23001000SR.
+==Parsing started:
+Parsing finished.==
+We have 7 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 20 BP_21
+	 REGION/ALGO:TABLE8Gbb21001600SR
+This is a run with name: nominal algo:TABLE8Gbb21001600SR.
+==Parsing started:
+Parsing finished.==
+We have 7 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 21 BP_22
+	 REGION/ALGO:TABLE8GBB20001800
+This is a run with name: nominal algo:TABLE8GBB20001800.
+==Parsing started:
+Parsing finished.==
+We have 7 CutLang Cuts, 8 CutLang objects and 0 Bins
+TRGe:1  TRGm:0
+ => 22 BP_23
+End of analysis initialization
+** WARNING: cannot access branch 'Particle', return NULL pointer
+** WARNING: cannot access branch 'FatJet', return NULL pointer
+** WARNING: cannot access branch 'Track', return NULL pointer
+number of entries 28627
+Forced number of entries 28627
+starting entry 0  last:28627
+Processing event 0
+
+
+Efficiencies for analysis : BP_1
+						preselection	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+					 --> Overall efficiency	 =   35.7 % +-  0.289 %
+Bins for analysis : BP_1
+saving...	saved.
+BP_1 finalized.
+Efficiencies for analysis : BP_2
+						TABLE3REGIONB	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                Size(leptons) == 0 : 0.9997 +-  0.000176 evt:     9825
+                                                   Size(jets) >= 5 :  0.903 +-   0.00299 evt:     8872
+                                                  Size(bjets) >= 3 :      1 +-         0 evt:     8872
+                                                        MET >= 600 : 0.4559 +-   0.00529 evt:     4045
+                                                      phi4j >= 0.4 : 0.2532 +-   0.00684 evt:     1024
+                                                      meff >= 2900 :  0.124 +-    0.0103 evt:      127
+                                                    mtbjets >= 120 : 0.9291 +-    0.0228 evt:      118
+                                                       bigm >= 300 : 0.0678 +-    0.0231 evt:        8
+					 --> Overall efficiency	 =  0.029 % +- 0.0103 %
+Bins for analysis : BP_2
+saving...	saved.
+BP_2 finalized.
+Efficiencies for analysis : BP_3
+						TABLE3REGION1M	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                Size(leptons) == 0 : 0.9997 +-  0.000176 evt:     9825
+                                                   Size(jets) >= 9 : 0.1038 +-   0.00308 evt:     1020
+                                                  Size(bjets) >= 3 :      1 +-         0 evt:     1020
+                                                        MET >= 600 : 0.4569 +-    0.0156 evt:      466
+                                                      phi4j >= 0.4 : 0.2511 +-    0.0201 evt:      117
+                                                      meff >= 1700 : 0.9915 +-   0.00851 evt:      116
+                                                    mtbjets >= 120 : 0.9052 +-    0.0272 evt:      105
+                                                       bigm >= 300 : 0.0381 +-    0.0187 evt:        4
+					 --> Overall efficiency	 = 0.0145 % +- 0.00726 %
+Bins for analysis : BP_3
+saving...	saved.
+BP_3 finalized.
+Efficiencies for analysis : BP_4
+						TABLE3REGION2M	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                Size(leptons) == 0 : 0.9997 +-  0.000176 evt:     9825
+                                                  Size(jets) >= 10 : 0.04285 +-   0.00204 evt:      421
+                                                  Size(bjets) >= 3 :      1 +-         0 evt:      421
+                                                        MET >= 500 : 0.5867 +-     0.024 evt:      247
+                                                      phi4j >= 0.4 : 0.2348 +-     0.027 evt:       58
+                                                      meff >= 1100 :      1 +-         0 evt:       58
+                                                    mtbjets >= 120 : 0.8276 +-    0.0496 evt:       48
+                                                       bigm >= 200 : 0.08333 +-    0.0399 evt:        4
+					 --> Overall efficiency	 = 0.0145 % +- 0.00726 %
+Bins for analysis : BP_4
+saving...	saved.
+BP_4 finalized.
+Efficiencies for analysis : BP_5
+						TABLE3REGIONC	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                Size(leptons) == 0 : 0.9997 +-  0.000176 evt:     9825
+                                                  Size(jets) >= 10 : 0.04285 +-   0.00204 evt:      421
+                                                  Size(bjets) >= 4 : 0.6176 +-    0.0237 evt:      260
+                                                        MET >= 400 : 0.7192 +-    0.0279 evt:      187
+                                                      phi4j >= 0.4 : 0.2299 +-    0.0308 evt:       43
+                                                       meff >= 800 :      1 +-         0 evt:       43
+                                                    mtbjets >= 180 : 0.8372 +-    0.0563 evt:       36
+                                                       bigm >= 100 : 0.7222 +-    0.0747 evt:       26
+					 --> Overall efficiency	 = 0.0943 % +- 0.0185 %
+Bins for analysis : BP_5
+saving...	saved.
+BP_5 finalized.
+Efficiencies for analysis : BP_6
+						TABLE4REGIONB	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                   Size(jets) >= 4 :      1 +-         0 evt:     9828
+                                                Size(leptons) >= 1 : 0.0003053 +-  0.000176 evt:        3
+                                                        MET >= 600 : 0.3333 +-     0.272 evt:        1
+                                                      meff >= 2300 :      1 +-         0 evt:        1
+                                                         mt >= 150 :      1 +-         0 evt:        1
+                                                    mtbjets >= 120 :      1 +-         0 evt:        1
+                                                       bigm >= 200 :      0 +-         0 evt:        0
+					 --> Overall efficiency	 =      0 % +-      0 %
+Bins for analysis : BP_6
+saving...	saved.
+BP_6 finalized.
+Efficiencies for analysis : BP_7
+						TABLE4REGION1M	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                   Size(jets) >= 5 : 0.9029 +-   0.00299 evt:     8874
+                                                Size(leptons) >= 1 : 0.0002254 +-  0.000159 evt:        2
+                                                        MET >= 600 :    0.5 +-     0.354 evt:        1
+                                                      meff >= 2000 :      1 +-         0 evt:        1
+                                                         mt >= 200 :      1 +-         0 evt:        1
+                                                    mtbjets >= 120 :      1 +-         0 evt:        1
+                                                       bigm >= 200 :      0 +-         0 evt:        0
+					 --> Overall efficiency	 =      0 % +-      0 %
+Bins for analysis : BP_7
+saving...	saved.
+BP_7 finalized.
+Efficiencies for analysis : BP_8
+						TABLE4REGION2M	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                   Size(jets) >= 8 : 0.2241 +-   0.00421 evt:     2202
+                                                Size(leptons) >= 1 : 0.0004541 +-  0.000454 evt:        1
+                                                        MET >= 500 :      0 +-         0 evt:        0
+                                                      meff >= 1100 :    nan +-       nan evt:        0
+                                                         mt >= 200 :    nan +-       nan evt:        0
+                                                    mtbjets >= 120 :    nan +-       nan evt:        0
+                                                       bigm >= 100 :    nan +-       nan evt:        0
+					 --> Overall efficiency	 =      0 % +-      0 %
+Bins for analysis : BP_8
+saving...	saved.
+BP_8 finalized.
+Efficiencies for analysis : BP_9
+						TABLE4REGIONC	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                   Size(jets) >= 9 : 0.1038 +-   0.00308 evt:     1020
+                                                Size(leptons) >= 1 :      0 +-         0 evt:        0
+                                                        MET >= 300 :    nan +-       nan evt:        0
+                                                       meff >= 800 :    nan +-       nan evt:        0
+                                                         mt >= 150 :    nan +-       nan evt:        0
+                                                    mtbjets >= 120 :    nan +-       nan evt:        0
+					 --> Overall efficiency	 =      0 % +-      0 %
+Bins for analysis : BP_9
+saving...	saved.
+BP_9 finalized.
+Efficiencies for analysis : BP_10
+						TABLE5REGIONB	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                Size(leptons) == 0 : 0.9997 +-  0.000176 evt:     9825
+                                                     pT(jets) > 65 :      1 +-         0 evt:     9825
+                                                       meff > 2600 : 0.1664 +-   0.00376 evt:     1635
+                                                         MET > 550 : 0.8483 +-   0.00887 evt:     1387
+                                                     mtbjets > 130 : 0.8673 +-   0.00911 evt:     1203
+					 --> Overall efficiency	 =   4.36 % +-  0.123 %
+Bins for analysis : BP_10
+saving...	saved.
+BP_10 finalized.
+Efficiencies for analysis : BP_11
+						TABLE5REGIONM	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                Size(leptons) == 0 : 0.9997 +-  0.000176 evt:     9825
+                                                   Size(jets) > 30 :      0 +-         0 evt:        0
+                                                       meff > 2000 :    nan +-       nan evt:        0
+                                                         MET > 550 :    nan +-       nan evt:        0
+                                                     mtbjets > 130 :    nan +-       nan evt:        0
+					 --> Overall efficiency	 =      0 % +-      0 %
+Bins for analysis : BP_11
+saving...	saved.
+BP_11 finalized.
+Efficiencies for analysis : BP_12
+						TABLE5REGIONC	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                Size(leptons) == 0 : 0.9997 +-  0.000176 evt:     9825
+                                                     pT(jets) > 30 :      1 +-         0 evt:     9825
+                                                       meff > 1600 : 0.8881 +-   0.00318 evt:     8726
+                                                         MET > 550 : 0.5881 +-   0.00527 evt:     5132
+                                                     mtbjets > 130 :  0.872 +-   0.00466 evt:     4475
+					 --> Overall efficiency	 =   16.2 % +-  0.222 %
+Bins for analysis : BP_12
+saving...	saved.
+BP_12 finalized.
+Efficiencies for analysis : BP_13
+						TABLE6REGIONB	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                Size(leptons) == 0 : 0.9997 +-  0.000176 evt:     9825
+                                                   Size(jets) >= 4 :      1 +-         0 evt:     9825
+                                                  Size(bjets) >= 3 :      1 +-         0 evt:     9825
+                                                       meff > 2500 : 0.2152 +-   0.00415 evt:     2114
+                                                         MET > 550 : 0.8302 +-   0.00817 evt:     1755
+                                                     mtbjets > 130 : 0.8684 +-   0.00807 evt:     1524
+                                                        bigm > 200 : 0.1706 +-   0.00964 evt:      260
+					 --> Overall efficiency	 =  0.943 % +- 0.0582 %
+Bins for analysis : BP_13
+saving...	saved.
+BP_13 finalized.
+Efficiencies for analysis : BP_14
+						TABLE6REGIONM	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                Size(leptons) == 0 : 0.9997 +-  0.000176 evt:     9825
+                                                   Size(jets) >= 6 : 0.6805 +-    0.0047 evt:     6686
+                                                  Size(bjets) >= 4 : 0.4785 +-   0.00611 evt:     3199
+                                                       meff > 2000 : 0.6118 +-   0.00862 evt:     1957
+                                                         MET > 550 : 0.7041 +-    0.0103 evt:     1378
+                                                     mtbjets > 130 : 0.8919 +-   0.00837 evt:     1229
+                                                        bigm > 200 : 0.09032 +-   0.00818 evt:      111
+					 --> Overall efficiency	 =  0.403 % +- 0.0381 %
+Bins for analysis : BP_14
+saving...	saved.
+BP_14 finalized.
+Efficiencies for analysis : BP_15
+						TABLE6REGIONC	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                Size(leptons) == 0 : 0.9997 +-  0.000176 evt:     9825
+                                                   Size(jets) >= 7 : 0.4223 +-   0.00498 evt:     4149
+                                                  Size(bjets) >= 4 : 0.5182 +-   0.00776 evt:     2150
+                                                       meff > 1300 : 0.9926 +-   0.00185 evt:     2134
+                                                         MET > 500 : 0.6003 +-    0.0106 evt:     1281
+                                                     mtbjets > 130 : 0.8829 +-   0.00898 evt:     1131
+                                                         bigm > 50 : 0.9973 +-   0.00153 evt:     1128
+					 --> Overall efficiency	 =   4.09 % +-  0.119 %
+Bins for analysis : BP_15
+saving...	saved.
+BP_15 finalized.
+Efficiencies for analysis : BP_16
+						TABLE7GTT2100SR	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                  Size(jets) >= 10 : 0.04284 +-   0.00204 evt:      421
+                                                   NNCut >= 0.9997 :      1 +-         0 evt:      421
+					 --> Overall efficiency	 =   1.53 % +- 0.0739 %
+Bins for analysis : BP_16
+saving...	saved.
+BP_16 finalized.
+Efficiencies for analysis : BP_17
+						TABLE7GTT1800SR	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                  Size(jets) >= 10 : 0.04284 +-   0.00204 evt:      421
+                                                   NNCut >= 0.9997 :      1 +-         0 evt:      421
+					 --> Overall efficiency	 =   1.53 % +- 0.0739 %
+Bins for analysis : BP_17
+saving...	saved.
+BP_17 finalized.
+Efficiencies for analysis : BP_18
+						TABLE7GTT23001200SR	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                  Size(jets) >= 10 : 0.04284 +-   0.00204 evt:      421
+                                                   NNCut >= 0.9993 :      1 +-         0 evt:      421
+					 --> Overall efficiency	 =   1.53 % +- 0.0739 %
+Bins for analysis : BP_18
+saving...	saved.
+BP_18 finalized.
+Efficiencies for analysis : BP_19
+						TABLE7GTT19001400SR	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                  Size(jets) >= 10 : 0.04284 +-   0.00204 evt:      421
+                                                   NNCut >= 0.9987 :      1 +-         0 evt:      421
+					 --> Overall efficiency	 =   1.53 % +- 0.0739 %
+Bins for analysis : BP_19
+saving...	saved.
+BP_19 finalized.
+Efficiencies for analysis : BP_20
+						TABLE8GBB28001400SR	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                  Size(jets) >= 10 : 0.04284 +-   0.00204 evt:      421
+                                                    NNCut >= 0.999 :      1 +-         0 evt:      421
+                                                      phi4j >= 0.6 : 0.1948 +-    0.0193 evt:       82
+					 --> Overall efficiency	 =  0.298 % +- 0.0328 %
+Bins for analysis : BP_20
+saving...	saved.
+BP_20 finalized.
+Efficiencies for analysis : BP_21
+						TABLE8GBB23001000SR	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                  Size(jets) >= 10 : 0.04284 +-   0.00204 evt:      421
+                                                   NNCut >= 0.9994 :      1 +-         0 evt:      421
+                                                      phi4j >= 0.6 : 0.1948 +-    0.0193 evt:       82
+					 --> Overall efficiency	 =  0.298 % +- 0.0328 %
+Bins for analysis : BP_21
+saving...	saved.
+BP_21 finalized.
+Efficiencies for analysis : BP_22
+						TABLE8Gbb21001600SR	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                  Size(jets) >= 10 : 0.04284 +-   0.00204 evt:      421
+                                                   NNCut >= 0.9993 :      1 +-         0 evt:      421
+                                                      phi4j >= 0.4 : 0.2043 +-    0.0196 evt:       86
+					 --> Overall efficiency	 =  0.312 % +- 0.0336 %
+Bins for analysis : BP_22
+saving...	saved.
+BP_22 finalized.
+Efficiencies for analysis : BP_23
+						TABLE8GBB20001800	Based on 27562 events:
+                                                   Size(jets) >= 4 : 0.9628 +-   0.00112 evt:    27562
+                                                  Size(bjets) >= 3 : 0.5332 +-   0.00301 evt:    14697
+                                                         MET > 200 : 0.9137 +-   0.00232 evt:    13429
+                                              Size(largejets) >= 4 : 0.7318 +-   0.00382 evt:     9828
+                                                  Size(jets) >= 10 : 0.04284 +-   0.00204 evt:      421
+                                                    NNCut >= 0.997 :      1 +-         0 evt:      421
+                                                      phi4j >= 0.4 : 0.2043 +-    0.0196 evt:       86
+					 --> Overall efficiency	 =  0.312 % +- 0.0336 %
+Bins for analysis : BP_23
+saving...	saved.
+BP_23 finalized.
+finished.
+input file Closed.
+end CLA single. Output file:  histoOut-ATLAS-SUSY-2018-30.root
