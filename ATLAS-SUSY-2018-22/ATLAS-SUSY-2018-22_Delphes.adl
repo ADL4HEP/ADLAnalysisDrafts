@@ -13,6 +13,11 @@ info analysis
 # Energy Unit : GeV
 # Datatier : Delphes
 
+countsformat SR
+    process SSd-1200-600, "Model-Independent SSd 1200 600", stat
+    process SSd-1400-600, "Model-Independent SSd 1400 600", stat
+    process SSd-1600-600, "Model-Independent SSd 1600 600", stat
+
 ## BASELINE OBJECTS DEFINITION
 
 object baselineJets
@@ -319,38 +324,59 @@ region BDTGGo4
 # Table 8 on page 14
 region SR2j1600
     preselection
+    counts SR 1423, 432, 139
     select nJets >= 2
+    counts SR 1423, 432, 139
+    select dPhiLeadJetsMETMin >  0.8
+    counts SR 1146, 344, 108
+    select dPhiOtherJetsMETMin > 0.4
+    counts SR 1097,329, 103
     select Pt(signalJets[0]) > 250
     select Pt(signalJets) > 250
-    select AbsEta(signalJets) < 2
-    select dPhiLeadJetsMETMin >  0.8
-    select dPhiOtherJetsMETMin > 0.4
+    counts SR 714, 249, 89.2
+    select AbsEta(signalJets[0]) < 2
+    select AbsEta(signalJets[1]) < 1
+    counts SR 696, 244, 87.4
     select METSqrtHT > 16
+    counts SR 474, 182, 69.7
     select mEff > 1600
+    counts SR 319, 161, 67.2
 
 # Table 8 on page 14
 region SR2j2200
     preselection
+    counts SR 1423, 432, 139
     select nJets >= 2
+    counts SR 1423, 432, 139
+    select dPhiLeadJetsMETMin >  0.4
+    counts SR 1278, 385, 124
+    select dPhiOtherJetsMETMin > 0.2
+    counts SR 1246, 376, 121
     select Pt(signalJets[0]) > 600
+    counts SR 414, 214, 95.9
     select Pt(signalJets) > 50
     select AbsEta(signalJets) < 2.8
-    select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.2
     select METSqrtHT > 16
+    counts SR 280, 161, 75.5
     select mEff > 2200
+    counts SR 87.1, 85.9, 60.8
 
 # Table 8 on page 14
 region SR2j2800
     preselection
-    select nJets >= 2
+    select dPhiLeadJetsMETMin >  0.8
+    counst SR 1146, 344, 108
+    select dPhiOtherJetsMETMin > 0.4
+    counts SR 1097, 329, 103
     select Pt(signalJets[0]) > 250
     select Pt(signalJets) > 250
+    counts SR 714, 249, 89.2
     select AbsEta(signalJets) < 1.2
-    select dPhiLeadJetsMETMin >  0.8
-    select dPhiOtherJetsMETMin > 0.4
+    counts SR 547, 188, 65.8
     select METSqrtHT > 16
+    counts SR 368, 138, 52.0
     select mEff > 2800
+    counts SR 12.8, 14.8, 23.1
 
 # Table 8 on page 14
 region SR4j1000
