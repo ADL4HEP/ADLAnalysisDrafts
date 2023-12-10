@@ -4,8 +4,16 @@
 # doi: https://doi.org/10.1140/epjc/s10052-023-11543-6
 # Author: Hazal Candan Kacar 
 
-# ./CutLang/runs/CLA.sh /Users/Hazal/Desktop/CutLang/OME/ATLAS-SUSY-2018-30/DELPHES/Gtt_2400_1000.13_short.root DELPHES -i /Users/Hazal/Desktop/CutLang/OME/ATLAS-SUSY-2018-30/ADL/ATLAS-SUSY-2018-30.adl -j6
+# ./CutLang/runs/CLA.sh /Users/Hazal/Desktop/CutLang/OME/ATLAS-SUSY-2018-30/DELPHES/Gtt_2400_1000.13_short.root DELPHES -i /Users/Hazal/Desktop/CutLang/OME/ATLAS-SUSY-2018-30/ADL/cutflow.adl -j6
 # ./CutLang/runs/CLA.sh /Users/Hazal/Desktop/CutLang/OME/ATLAS-SUSY-2018-30/DELPHES/Gbb_2000_1000.13_short.root DELPHES -i /Users/Hazal/Desktop/CutLang/OME/ATLAS-SUSY-2018-30/ADL/ATLAS-SUSY-2018-30.adl -j6
+
+
+#Counts 
+countsformat gtt24001000
+    process gtt24001000 , "gtt 2400 1000 " , stat 
+
+countsformat gbb20001000
+    process gbb20001000 , "gbb 2000 1000 " , stat 
 
 
 # OBJECT DEFINITIONS 
@@ -24,16 +32,16 @@ object bjets : jets
 object nonbjets : jets
    select bTag(jets) == 0 
 
-object largejets : JET  #FJET
-   select pT(JET) > 100
-   select abs(eta(JET)) < 2.0 
+object largejets : FJET  #FJET
+   select pT(FJET) > 100
+   select abs(eta(FJET)) < 2.0 
 
 object electrons : ELE 
    #select loose? 
    select pT(ELE) > 20
    select abs(eta(ELE)) < 2.47
-   #select dR(ELE, nonbjets) < 0.2 
-   #reject dR(ELE,jets) [] 0.2 0.4 
+   #select dR(ELE, nonbjets) < 0.2 #argumanlarin yerini degistirerek dene. ilk argumandan loop yapiyor sart ikinci argumana uymak zorunda
+   #reject dR(ELE,jets) [] 0.2 0.4  # ss al
 
 
 object muons : MUO
@@ -45,9 +53,6 @@ object muons : MUO
 
 object signalmuon : muons 
    select d0(muons) < 3 
-
-
-
 
 object leptons : Union(electrons , muons) 
 
@@ -102,66 +107,125 @@ define NNCut = OME("/Users/Hazal/Desktop/CutLang/OME/SUSY-2018-30/ANA-SUSY-2018-
 
 region preselection 
    select Size(jets) >= 4
-   select Size(bjets) >= 3 
+   select Size(bjets) >= 3 # Should check if this is actually a preselection! 
    select MET > 200 
+   select Size(largejets) >= 4 # This is not a part of the original analysis, but if I don't add this Cutlang gives error later since bigm function requires 4 largejets. 
 
-   # My preselection 
 
-   select Size(largejets) >= 4 #  This is not a part of the original analysis, but if I don't add this Cutlang gives error later since bigm function requires 4 largejets. 
- # Table 3 // CC Gtt 0-lepton SR #
+
+# Table 3 // CC Gtt 0-lepton SR #
 
 # Region B (Boosted, Large dm)
 
 region TABLE3REGIONB 
    preselection
+
+   select Size(bjets) >= 3 #? Check again.
+
    select Size(leptons) == 0 
+   counts gtt24001000 5.02
+
+   select phi4j >= 0.4
+   counts gtt24001000 3.93
+
    select Size(jets) >= 5 
-   select Size(bjets) >= 3 
+   counts gtt24001000 3.92
+
    select MET >= 600 
-   select phi4j >= 0.4 
+   counts gtt24001000 2.60
+
    select meff >= 2900 
+   counts gtt24001000 2.60
+
    select mtbjets >= 120
-   select bigm >= 300 
+   counts gtt24001000 1.07
+
+   select bigm >= 300
+   counts gtt24001000 0.997
+
+
 
 # Region M1 (Moderate dm)
 
 region TABLE3REGION1M 
    preselection
+
    select Size(leptons) == 0 
-   select Size(jets) >= 9 
-   select Size(bjets) >= 3 
+   counts gtt24001000 5.02
+
+   select phi4j >= 0.4
+   counts gtt24001000 3.93
+
+   select Size(jets) >= 9 && Size(bjets) >= 3
+   counts gtt24001000 2.34
+
    select MET >= 600 
-   select phi4j >= 0.4 
-   select meff >= 1700 
+   counts gtt24001000 1.53
+
+   select meff >= 1700
+   counts gtt24001000 1.53
+
    select mtbjets >= 120
+   counts gtt24001000 1.36
+
    select bigm >= 300 
+   counts gtt24001000 1.17
 
 # Region M2 (Moderate dm)
 
 region TABLE3REGION2M
    preselection 
+
    select Size(leptons) == 0 
-   select Size(jets) >= 10 
-   select Size(bjets) >= 3 
-   select MET >= 500 
-   select phi4j >= 0.4 
+   counts gtt24001000 5.02
+
+   select phi4j >= 0.4
+   counts gtt24001000 3.93
+
+   select Size(jets) >= 10 && Size(bjets) >= 3 
+   counts gtt24001000 1.49
+
+   select MET >= 500
+   counts gtt24001000 1.13
+
    select meff >= 1100 
+   counts gtt24001000 1.13
+
    select mtbjets >= 120
+   counts gtt24001000 0.990
+
    select bigm >= 200 
+   counts gtt24001000 0.973
 
 
 # Region C (Moderate dm)
 
 region TABLE3REGIONC 
    preselection
+
    select Size(leptons) == 0 
+   counts gtt24001000 5.02
+
+   select phi4j >= 0.4
+   counts gtt24001000 3.93
+
    select Size(jets) >= 10 
+   counts gtt24001000 1.49
+
    select Size(bjets) >= 4 
+   counts gtt24001000 0.772
+
    select MET >= 400 
-   select phi4j >= 0.4 
+   counts gtt24001000 0.638
+
    select meff >= 800 
+   counts gtt24001000 0.638
+
    select mtbjets >= 180
+   counts gtt24001000 0.526
+
    select bigm >= 100 
+   counts gtt24001000 0.526
 
 	
 
@@ -171,13 +235,27 @@ region TABLE3REGIONC
 
 region TABLE4REGIONB 
    preselection
-   select Size(jets) >= 4 
-   select Size(leptons) >= 1 # This is not a part of analysis, but it is required for mt function to work
+
+   select Size(leptons) >= 1  # This is not a part of analysis, but it is required for mt function to work 
+   counts gtt24001000 6.30    # Update: Seems like it was, in fact, a part of the analysis according to cutflow table, even though it was not in the paper..? 
+
+   select Size(jets) >= 4 && Size(bjets) >= 3 
+   counts gtt24001000 4.34 
+
    select MET >= 600 
+   counts gtt24001000 2.55
+
    select meff >= 2300 
+   counts gtt24001000 1.98
+
    select mt >= 150
+   counts gtt24001000 1.73
+
    select mtbjets >= 120
+   counts gtt24001000 1.47
+
    select bigm >= 200 
+   counts gtt24001000 1.36
 
 
 
@@ -185,38 +263,78 @@ region TABLE4REGIONB
 
 region TABLE4REGION1M 
    preselection
-   select Size(jets) >= 5 
-   select Size(leptons) >= 1 # for mt
+
+   select Size(leptons) >= 1 
+   counts gtt24001000 6.30 
+    
+   select Size(jets) >= 5 && Size(bjets) >= 3 
+   counts gtt24001000 4.26 
+
    select MET >= 600 
+   counts gtt24001000 2.51
+
    select meff >= 2000 
+   counts gtt24001000 2.32
+
    select mt >= 200
+   counts gtt24001000 1.93
+
    select mtbjets >= 120
+   counts gtt24001000 1.65
+
    select bigm >= 200 
+   counts gtt24001000 1.47
 
 
 # Region M2 (Moderate dm)
 
 region TABLE4REGION2M 
    preselection
-   select Size(jets) >= 8 
-   select Size(leptons) >= 1 # for mt
+   select Size(leptons) >= 1 
+   counts gtt24001000 6.30 
+    
+   select Size(jets) >= 8 && Size(bjets) >= 3 
+   counts gtt24001000 2.34 
+   
    select MET >= 500 
+   counts gtt24001000 1.67 
+
    select meff >= 1100 
+   counts gtt24001000 1.67
+
    select mt >= 200
+   counts gtt24001000 1.37
+
    select mtbjets >= 120
+   counts gtt24001000 1.15
+
    select bigm >= 100 
+   counts gtt24001000 1.14
 
 
 # Region C (compressed, small dm)
 
 region TABLE4REGIONC 
    preselection
-   select Size(jets) >= 9 
-   select Size(leptons) >= 1 # for mt
-   select MET >= 300 
+   select Size(leptons) >= 1 
+   counts gtt24001000 6.30 
+    
+   select Size(jets) >= 9 && Size(bjets) >= 3 
+   counts gtt24001000 1.44
+
+   select MET >= 300
+   counts gtt24001000 1.32
+    
    select meff >= 800 
+   counts gtt24001000 1.32
+
    select mt >= 150
+   counts gtt24001000 1.13
+
    select mtbjets >= 120
+   counts gtt24001000 0.906
+
+
 
 
 # Table 5 // CC Gbb 0-lepton SR 
@@ -225,33 +343,70 @@ region TABLE4REGIONC
 
 region TABLE5REGIONB 
    preselection
+
    select Size(leptons) == 0 
-   select pT(jets) > 65
-   select meff > 2600 
-   select MET > 550
+   counts gbb20001000 80.0 
+
+   select phi4j >= 0.4 # ? was not in the analysis ? 
+   counts gbb20001000 61.1 
+
    select mtbjets > 130
+   counts gbb20001000 56.6 
+   
+   select MET > 550
+   counts gbb20001000 35.69
+
+   select pT(jets) > 65 
+   counts gbb20001000 35.69
+
+   select meff > 2600 
+   counts gbb20001000 10.13
 
 
 # Region M (moderate dm)
 
 region TABLE5REGIONM 
    preselection
+   
    select Size(leptons) == 0 
-   select Size(jets) > 30
-   select meff > 2000 
-   select MET > 550
+   counts gbb20001000 80.0 
+
+   select phi4j >= 0.4 # ? this cut was not in the analysis but is in the cutflow table ? 
+   counts gbb20001000 61.1 
+
    select mtbjets > 130
+   counts gbb20001000 56.6 
+   
+   #select Size(jets) > 30 # ? this cut was in the analysis but not in the cutflow table?
+
+   select MET > 550
+   counts gbb20001000 35.69 
+
+   select meff > 2000 
+   counts gbb20001000 28.30  
 
 
 # Region C (compressed , small dm)
 
 region TABLE5REGIONC 
    preselection
+
    select Size(leptons) == 0 
-   select pT(jets) > 30
-   select meff > 1600
-   select MET > 550 
+   counts gbb20001000 80.0 
+
+   select phi4j >= 0.4 # ? this cut was not in the analysis but is in the cutflow table ? 
+   counts gbb20001000 61.1 
+
    select mtbjets > 130
+   counts gbb20001000 56.6 
+
+   # select pT(jets) > 30 # is not in the cutflow table?
+   
+   select MET > 550 
+   counts gbb20001000 35.69
+
+   select meff > 1600
+   counts gbb20001000 34.71
 
 
 # Table 6 // CC Gtb 0-lepton SRs
@@ -301,46 +456,83 @@ region TABLE6REGIONC
 # Table 7 
 region TABLE7GTT2100SR
    preselection 
+   # select nlepton signal > 1 or nlepton base = 0 # says on cutflow, check this on paper
    select Size(jets) >= 10 # for NN
    select NNCut >= 0.9997
+   counts gtt24001000 2.63
 
 region TABLE7GTT1800SR
    preselection 
-   select Size(jets) >= 10 # for NN
+   
+   select Size(jets) >= 10 # for NN, MY ADDITION
+
+   # select nlepton signal > 1 or nlepton base = 0 # says on cutflow, check this on paper
    select NNCut >= 0.9997
+   counts gtt24001000 2.80
+
 
 region TABLE7GTT23001200SR
    preselection
-   select Size(jets) >= 10 # for NN
+   select Size(jets) >= 10 # for NN, MY ADDITION
+
+   
    select NNCut >= 0.9993
+   counts gtt24001000 2.95
 
 region TABLE7GTT19001400SR
    preselection
-   select Size(jets) >= 10 # for NN
+
+   select Size(jets) >= 10 # for NN, MY ADDITION 
+
+   # select nlepton signal > 1 or nlepton base = 0 # says on cutflow, check this on paper
+
    select NNCut >= 0.9987
+   counts gtt24001000 0.19
+
 
 # Table 8 
 
 region TABLE8GBB28001400SR
    preselection 
+   # Select nleptonbase = 0 # Says in cutflow, check this on paper. What is the definition of lepton base?
    select Size(jets) >= 10 # for NN
-   select NNCut >= 0.999
+
    select phi4j >= 0.6
+   counts gbb20001000 52.5
+
+   select NNCut >= 0.999
+   counts gbb20001000 21.7
 
 region TABLE8GBB23001000SR
    preselection
    select Size(jets) >= 10 # for NN
-   select NNCut >= 0.9994
+
    select phi4j >= 0.6
+   counts gbb20001000 52.5
+
+   select NNCut >= 0.9994
+   counts gbb20001000 21.3
+
+
 
 region TABLE8Gbb21001600SR 
    preselection
    select Size(jets) >= 10 # for NN
-   select NNCut >= 0.9993
+
    select phi4j >= 0.4 
+   counts gbb20001000 61.1
+
+   select NNCut >= 0.9993
+   counts gbb20001000 6.20
+
 
 region TABLE8GBB20001800
    preselection 
    select Size(jets) >= 10 # for NN
-   select NNCut >= 0.997
+
    select phi4j >= 0.4
+   counts gbb20001000 61.1
+
+   select NNCut >= 0.997
+   counts gbb20001000 0.192
+
