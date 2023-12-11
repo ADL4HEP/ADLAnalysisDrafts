@@ -40,8 +40,8 @@ object electrons : ELE
    #select loose? 
    select pT(ELE) > 20
    select abs(eta(ELE)) < 2.47
-   #select dR(ELE, nonbjets) < 0.2 #argumanlarin yerini degistirerek dene. ilk argumandan loop yapiyor sart ikinci argumana uymak zorunda
-   #reject dR(ELE,jets) [] 0.2 0.4  # ss al
+   #select dR(ELE, nonbjets) < 0.2 
+   #reject dR(ELE,jets) [] 0.2 0.4 
 
 
 object muons : MUO
@@ -358,7 +358,7 @@ region TABLE5REGIONB
    select Size(leptons) == 0 
    counts gbb20001000 80.0 
 
-   select phi4j >= 0.4 # ? was not in the analysis ? 
+   select phi4j >= 0.4 
    counts gbb20001000 61.1 
 
    select mtbjets > 130
@@ -405,7 +405,7 @@ region TABLE5REGIONC
    select Size(leptons) == 0 
    counts gbb20001000 80.0 
 
-   #select pT(jets) > 30 # is not in the cutflow table, but in the analysis. 
+   #select pT(jets) > 30 # is in the analysis but not in the cutflow table?
 
    select phi4j >= 0.4
    counts gbb20001000 61.1 
