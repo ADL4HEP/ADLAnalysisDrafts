@@ -75,6 +75,17 @@ define mtbjets = min(mtbjets1 , mtbjets2 , mtbjets3)
 define bigm    = sum(m(largejets[0:3])) 
 define phi4j   = min(phi4j1 , phi4j2 , phi4j3 , phi4j4)
 
+
+
+# Normalization constant for cutflow 
+#define nevents = 29170 # Based on the current DELPHES file I have 
+# Calculation of the cross section may be much more precise, I have used this paper https://link.springer.com/article/10.1140/epjc/s10052-014-3174-y
+#define crosssection = 10^(-2) * 10^(-36) # assuming it is aproxximately 10^-2 pb based on the paper (this is likely wrong)
+#define integratedluminosity = 139*10^(43) 
+#define expectedevents = crosssection*integratedluminosity
+#define normalizationconstant = expectedevents/nevents
+
+
 # NN Variable List 
 
 define NNVar = {
@@ -236,8 +247,8 @@ region TABLE3REGIONC
 region TABLE4REGIONB 
    preselection
 
-   select Size(leptons) >= 1  # This is not a part of analysis, but it is required for mt function to work 
-   counts gtt24001000 6.30    # Update: Seems like it was, in fact, a part of the analysis according to cutflow table, even though it was not in the paper..? 
+   select Size(leptons) >= 1 
+   counts gtt24001000 6.30  
 
    select Size(jets) >= 4 && Size(bjets) >= 3 
    counts gtt24001000 4.34 
@@ -371,13 +382,13 @@ region TABLE5REGIONM
    select Size(leptons) == 0 
    counts gbb20001000 80.0 
 
-   select phi4j >= 0.4 # ? this cut was not in the analysis but is in the cutflow table ? 
+   select phi4j >= 0.4
    counts gbb20001000 61.1 
 
    select mtbjets > 130
    counts gbb20001000 56.6 
    
-   #select Size(jets) > 30 # ? this cut was in the analysis but not in the cutflow table?
+   #select pT(jets) > 30 # is in the analysis but not in the cutflow table?
 
    select MET > 550
    counts gbb20001000 35.69 
@@ -394,13 +405,13 @@ region TABLE5REGIONC
    select Size(leptons) == 0 
    counts gbb20001000 80.0 
 
-   select phi4j >= 0.4 # ? this cut was not in the analysis but is in the cutflow table ? 
+   #select pT(jets) > 30 # is not in the cutflow table, but in the analysis. 
+
+   select phi4j >= 0.4
    counts gbb20001000 61.1 
 
    select mtbjets > 130
    counts gbb20001000 56.6 
-
-   # select pT(jets) > 30 # is not in the cutflow table?
    
    select MET > 550 
    counts gbb20001000 35.69
@@ -409,7 +420,7 @@ region TABLE5REGIONC
    counts gbb20001000 34.71
 
 
-# Table 6 // CC Gtb 0-lepton SRs
+# Table 6 // CC Gtb 0-lepton SRs // Did not apply cutflow yet since there is no data. 
 
 # Region B (boosted, large dm)
 
@@ -458,6 +469,7 @@ region TABLE7GTT2100SR
    preselection 
    # select nlepton signal > 1 or nlepton base = 0 # says on cutflow, check this on paper
    select Size(jets) >= 10 # for NN
+
    select NNCut >= 0.9997
    counts gtt24001000 2.63
 
