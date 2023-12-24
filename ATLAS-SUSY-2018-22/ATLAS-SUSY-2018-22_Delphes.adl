@@ -323,8 +323,7 @@ region SR2j1600
     select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.8
     select dPhiRestJetsMETMin > 0.4
-    select Pt(signalJets[0]) > 250          # not applied before and not included in Cutflow!
-    select Pt(signalJets[1]) > 250      
+    select min(Pt(signalJets[0:1])) > 250
     select AbsEta(signalJets[0]) < 2.0
     select AbsEta(signalJets[1]) < 2.0
     select METSqrtHT > 16
