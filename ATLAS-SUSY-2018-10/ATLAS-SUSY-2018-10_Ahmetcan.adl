@@ -1,0 +1,380 @@
+#info analysis
+#  title "Search for squarks and gluinos in final states with one isolated lepton, jets and missing transverse momentum at sqrt(s) = 13 TeV with the ATLAS detector"
+#  experiment ATLAS
+#  id "SUSY-2018-10"
+#  publication "Eur. Phys. J. C 81 (2021) 600"
+#  sqrtS 13.0
+#  lumi 139
+#  arXiv "2101.01629"
+#  doi "10.1140/epjc/s10052-021-09344-w"
+
+countsformat signals2JBT
+  process SR2JBT1000, "SR2JBT GG 1000 900 800", stat
+  process SR2JBT700, "SR2JBT SS 700 650 600", stat
+
+countsformat signals2JBV
+  process SR2JBV1000, "SR2JBV GG 1000 900 800", stat
+  process SR2JBV700, "SR2JBV SS 700 650 600", stat
+ 
+countsformat signals4JBT
+  process SR4JBT1800, "SR4JBT GG 1800 1260 60", stat
+  process SR4JBT1600, "SR4JBT SS 1600 360 60", stat
+
+countsformat signals4JBV
+  process SR4JBV1800, "SR4JBV GG 1800 1260 60", stat
+  process SR4JBV1600, "SR4JBV SS 1600 360 60", stat
+
+countsformat signals6JBT
+  process SR6JBT2000, "SR6JBT GG 2000 1100 200", stat
+  process SR6JBT1200, "SR6JBT SS 1200 700 200", stat
+
+countsformat signals6JBV
+  process SR6JBV2000, "SR6JBV GG 2000 1100 200", stat
+  process SR6JBV1200, "SR6JBV SS 1200 700 200", stat
+
+object baselineele 
+  take ELE
+  select Pt(ELE) > 7
+  select absEta(ELE) < 2.47
+  reject dR(ELE,JET) == min(0.4,0.04 + 10/Pt(ELE))
+  #select isLoose(ELE) == 1
+  #select abs(z0(ELE)*sin(Theta(ELE))) < 5
+
+object signalele 
+  take baselineele
+  select Pt(baselineele) > 7
+  #select abs(d0/sigma(d0)) < 5
+  #select Pt(baselineele) < 200 ? isLoose(baselineele) == 1 : all
+  #select Pt(baselineele) > 200 ? HighPtCaloOnly(baselineele) == 1 : all
+  
+object baselinemuo 
+  take MUO
+  select Pt(MUO) > 6 
+  select absEta(MUO) < 2.7
+  reject dR(MUO,JET) == min(0.4,0.04 + 10/Pt(MUO))
+  #select Medium(MUO) == 1
+  #select abs(z0(MUO)*sin(Theta(MUO))) < 5
+
+object signalmuo 
+  take baselinemuo
+  select absEta(baselinemuo) < 2.5
+  #select abs(d0/sigma(d0)) < 3
+  #select FixedCutLoose(baselinemuo) == 1
+
+object baselinejet
+  take JET
+  select Pt(JET) > 20
+  select absEta(JET) < 4.5
+  reject dR(JET,ELE) == 0.2
+  reject dR(JET,MUO) == 0.2
+  
+object signaljet
+  take baselinejet
+  select Pt(baselinejet) > 30
+  select absEta(baselinejet) < 2.8
+
+object signalbjet
+  take signaljet
+  select bTag(signaljet) == 1
+
+object signallep : Union(signalele,signalmuo)
+object defaultlep : Union(ELE,MUO)
+
+define MTl : sqrt(2*Pt(signallep[0])*MET*(1 - cos(dPhi(signallep[0],METLV[0]))))
+
+define meff : Pt(signallep[0]) + sum(Pt(signaljet)) + MET
+
+## weight coefficients: 
+## 0.72636 (GG_1000_900_800) 2J regions
+## 0.470808  (SS_700_650_600) 2J regions
+## 0.00599346 (GG_1800_1260_60) 4J regions
+## 0.01897893 (SS_1600_360_60) 4J regions
+## 0.00198199 (GG_2000_1100_200) 6J regions
+## 0.0158515  (SS_1200_700_200) 6J regions
+
+region SR2JBT
+  weight eventweight 0.72636 #
+  counts signals2JBT 18130 +- 230, 10080 +- 220 
+  select Size(signaljet) >= 2
+  counts signals2JBT 17990 +- 230, 9530 +- 210
+  select Size(signalele) >= 0
+  counts signals2JBT 17990 +- 230, 9530 +- 210
+  select Size(signalmuo) >= 0
+  counts signals2JBT 17990 +- 230, 9530 +- 210
+  select Size(signallep) == 1
+  counts signals2JBT 13550 +- 200, 7130 +- 180
+  Sort Pt(signallep) descend
+  counts signals2JBT 13550 +- 200, 7130 +- 180
+  select MTl > 50 
+  counts signals2JBT 10100 +- 170, 4460 +- 150
+  select MET > 240 # Preselection
+  counts signals2JBT 1800 +- 50, 2160 +- 60
+  select Pt(signallep[0]) < 25
+  counts signals2JBT 379 +- 24, 1150 +- 50
+  select MET > 400
+  counts signals2JBT 133 +- 14, 492 +- 29
+  select Size(signalbjet) > 0
+  counts signals2JBT 32 +- 7, 89 +- 12
+  select MET/meff > 0.25
+  counts signals2JBT 32 +- 7, 89 +- 12
+  select Size(signaljet) / Pt(signallep[0]) > 0.1
+  counts signals2JBT 32 +- 7, 85 +- 12
+  select MTl > 100
+  counts signals2JBT 29 +- 6, 58 +- 10 
+  bin "1" meff [] 700 1300
+  bin "2" meff [] 1300 1900
+  bin "3" meff > 1900
+
+region SR2JBV
+  weight eventweight 0.72636
+  counts signals2JBV 18130 +- 230, 10080 +- 220
+  select Size(signaljet) >= 2
+  counts signals2JBV 17990 +- 230, 9530 +- 210
+  select Size(signalele) >= 0 
+  counts signals2JBV 17990 +- 230, 9530 +- 210
+  select Size(signalmuo) >= 0
+  counts signals2JBV 17990 +- 230, 9530 +- 210
+  select Size(signallep) == 1
+  counts signals2JBV 13550 +- 200, 7130 +- 180
+  Sort Pt(signallep) descend
+  counts signals2JBV 13550 +- 200, 7130 +- 180
+  select MTl > 50
+  counts signals2JBV 10100 +- 170, 4460 +- 150
+  select MET > 240 #Preselection
+  counts signals2JBV 1800 +- 50, 2160 +- 60
+  select Pt(signallep[0]) < 25
+  counts signals2JBV 379 +- 24, 1150 +- 50
+  select MET > 400
+  counts signals2JBV 133 +- 14, 492 +- 29
+  select Size(signalbjet) == 0
+  counts signals2JBV 101 +- 12, 402 +- 26
+  select MET/meff > 0.25
+  counts signals2JBV 100 +- 12, 402 +- 26
+  select Size(signaljet) / Pt(signallep[0]) > 0.1
+  counts signals2JBV 100 +- 12, 400 +- 26
+  select MTl > 100
+  counts signals2JBV 75 +- 11, 251 +- 21 
+  bin "1" meff [] 700 1300
+  bin "2" meff [] 1300 1900
+  bin "3" meff > 1900
+
+region SR4JBTlowx
+  weight eventweight 0.00599346
+  counts signals4JBT 168.5 +- 2.7, 500 +- 8
+  select Size(signaljet) >= 2
+  counts signals4JBT 168.2 +- 2.7, 499 +- 8
+  select Size(signalele) >= 0
+  counts signals4JBT 168.2 +- 2.7, 499 +- 8
+  select Size(signalmuo) >= 0
+  counts signals4JBT 168.2 +- 2.7, 499 +- 8
+  select Size(signallep) == 1
+  counts signals4JBT 128.9 +- 2.4, 388 +- 7
+  Sort Pt(signallep) descend
+  counts signals4JBT 128.9 +- 2.4, 388 +- 7
+  select MTl > 50
+  counts signals4JBT 115.9 +- 2.2, 306 +- 6
+  select MET > 240 #Preselection
+  counts signals4JBT 100.6 +- 1.5, 234.0 +- 3.3 
+  select Pt(signallep[0]) > 25
+  counts signals4JBT 97.8 +- 1.4, 215.0 +- 3.2 
+  select Size(signaljet) >= 4 && Size(signaljet) < 6
+  counts signals4JBT 27.6 +- 0.8, 35.5 +- 1.3 
+  select Size(signalbjet) > 0
+  counts signals4JBT 7.5 +- 0.4, 9.2 +- 0.6 
+  select MET > 300
+  counts signals4JBT 7.1 +- 0.4, 8.2 +- 0.6 
+  select MET/meff > 0.2
+  counts signals4JBT 6.00 +- 0.35, 4.8 +- 0.5 
+  select fAplanarity(signaljet) > 0.01
+  counts signals4JBT 5.68 +- 0.35, 4.5 +- 0.5 
+  select meff > 1000
+  counts signals4JBT 5.66 +- 0.35, 4.5 +- 0.5 
+  select MTl [] 150 520 
+  counts signals4JBT 2.06 +- 0.21, 2.6 +- 0.34 
+  bin "1" meff [] 1000 1600
+  bin "2" meff [] 1600 2200
+  bin "3" meff > 2200
+
+region SR4JBThighx
+  weight eventweight 0.00599346
+  counts signals4JBT 168.5 +- 2.7, 500 +- 8
+  select Size(signaljet) >= 2
+  counts signals4JBT 168.2 +- 2.7, 499 +- 8
+  select Size(signalele) >= 0
+  counts signals4JBT 168.2 +- 2.7, 499 +- 8
+  select Size(signalmuo) >= 0
+  counts signals4JBT 168.2 +- 2.7, 499 +- 8
+  select Size(signallep) == 1
+  counts signals4JBT 128.9 +- 2.4, 388 +- 7
+  Sort Pt(signallep) descend
+  counts signals4JBT 128.9 +- 2.4, 388 +- 7
+  select MTl > 50
+  counts signals4JBT 115.9 +- 2.2, 306 +- 6
+  select MET > 240 #Preselection
+  counts signals4JBT 100.6 +- 1.5, 234.0 +- 3.3 
+  select Pt(signallep[0]) > 25
+  counts signals4JBT 97.8 +- 1.4, 215.0 +- 3.2 
+  select Size(signaljet) >= 4 && Size(signaljet) < 6
+  counts signals4JBT 27.6 +- 0.8, 35.5 +- 1.3 
+  select Size(signalbjet) > 0
+  counts signals4JBT 7.5 +- 0.4, 9.2 +- 0.6 
+  select MET > 300
+  counts signals4JBT 7.1 +- 0.4, 8.2 +- 0.6 
+  select MET/meff > 0.2
+  counts signals4JBT 6.00 +- 0.35, 4.8 +- 0.5 
+  select fAplanarity(signaljet) > 0.01
+  counts signals4JBT 5.68 +- 0.35, 4.5 +- 0.5 
+  select meff > 1000
+  counts signals4JBT 5.66 +- 0.35, 4.5 +- 0.5 
+  select MTl > 520 
+  counts signals4JBT 3.36 +- 0.27, 0.5 +- 0.35 
+  bin "1" meff [] 1000 1600
+  bin "2" meff [] 1600 2200
+  bin "3" meff > 2200
+
+region SR4JBVlowx
+  weight eventweight 0.00599346
+  counts signals4JBV 168.5 +- 2.7, 500 +- 8
+  select Size(signaljet) >= 2
+  counts signals4JBV 168.2 +- 2.7, 499 +- 8
+  select Size(signalele) >= 0
+  counts signals4JBV 168.2 +- 2.7, 499 +- 8
+  select Size(signalmuo) >= 0
+  counts signals4JBV 168.2 +- 2.7, 499 +- 8
+  select Size(signallep) == 1
+  counts signals4JBV 128.9 +- 2.4, 388 +- 7
+  Sort Pt(signallep) descend
+  counts signals4JBV 128.9 +- 2.4, 388 +- 7
+  select MTl > 50
+  counts signals4JBV 115.9 +- 2.2, 306 +- 6
+  select MET > 240 #Preselection
+  counts signals4JBV 100.6 +- 1.5, 234.0 +- 3.3 
+  select Pt(signallep[0]) > 25
+  counts signals4JBV 97.8 +- 1.4, 215.0 +- 3.2 
+  select Size(signaljet) >= 4 && Size(signaljet) < 6
+  counts signals4JBV 27.6 +- 0.8, 35.5 +- 1.3 
+  select Size(signalbjet) == 0
+  counts signals4JBV 20.1 +- 0.7, 26.4 +- 1.1
+  select MET > 300
+  counts signals4JBV 19.2 +- 0.6, 23.6 +- 1.1
+  select MET/meff > 0.2
+  counts signals4JBV 16.4 +- 0.6, 13.8 +- 0.8 
+  select fAplanarity(signaljet) > 0.01
+  counts signals4JBV 15.4 +- 0.6, 12.5 +- 0.8 
+  select meff > 1000
+  counts signals4JBV 15.4 +- 0.6, 12.5 +- 0.8 
+  select MTl [] 150 520 
+  counts signals4JBV 5.08 +- 0.33, 6.9 +- 0.6
+  bin "1" meff [] 1000 1600
+  bin "2" meff [] 1600 2200
+  bin "3" meff > 2200
+
+region SR4JBVhighx
+  weight eventweight 0.00599346
+  counts signals4JBV 168.5 +- 2.7, 500 +- 8
+  select Size(signaljet) >= 2
+  counts signals4JBV 168.2 +- 2.7, 499 +- 8
+  select Size(signalele) >= 0
+  counts signals4JBV 168.2 +- 2.7, 499 +- 8
+  select Size(signalmuo) >= 0
+  counts signals4JBV 168.2 +- 2.7, 499 +- 8
+  select Size(signallep) == 1
+  counts signals4JBV 128.9 +- 2.4, 388 +- 7
+  Sort Pt(signallep) descend
+  counts signals4JBV 128.9 +- 2.4, 388 +- 7
+  select MTl > 50
+  counts signals4JBV 115.9 +- 2.2, 306 +- 6
+  select MET > 240 #Preselection
+  counts signals4JBV 100.6 +- 1.5, 234.0 +- 3.3 
+  select Pt(signallep[0]) > 25
+  counts signals4JBV 97.8 +- 1.4, 215.0 +- 3.2 
+  select Size(signaljet) >= 4 && Size(signaljet) < 6
+  counts signals4JBV 27.6 +- 0.8, 35.5 +- 1.3 
+  select Size(signalbjet) == 0
+  counts signals4JBV 20.1 +- 0.7, 26.4 +- 1.1
+  select MET > 300
+  counts signals4JBV 19.2 +- 0.6, 23.6 +- 1.1
+  select MET/meff > 0.2
+  counts signals4JBV 16.4 +- 0.6, 13.8 +- 0.8 
+  select fAplanarity(signaljet) > 0.01
+  counts signals4JBV 15.4 +- 0.6, 12.5 +- 0.8 
+  select meff > 1000
+  counts signals4JBV 15.4 +- 0.6, 12.5 +- 0.8 
+  select MTl > 520 
+  counts signals4JBV 9.2 +- 0.4, 1.72 +- 0.29
+  bin "1" meff [] 1000 1600
+  bin "2" meff [] 1600 2200
+  bin "3" meff > 2200
+
+region SR6JBT
+  weight eventweight 0.00198199
+  counts signals6JBT 56.8 +- 0.9, 386 +- 6
+  select Size(signaljet) >= 2
+  counts signals6JBT 56.7 +- 0.9, 385 +- 6
+  select Size(signalele) >= 0
+  counts signals6JBT 56.7 +- 0.9, 385 +- 6
+  select Size(signalmuo) >= 0
+  counts signals6JBT 56.7 +- 0.9, 385 +- 6
+  select Size(signallep) == 1
+  counts signals6JBT 42.4 +- 0.8, 295 +- 5
+  Sort Pt(signallep) descend
+  counts signals6JBT 42.4 +- 0.8, 295 +- 5
+  select MTl > 50
+  counts signals6JBT 37.5 +- 0.7, 253 +- 5 
+  select MET > 240
+  counts signals6JBT 33.9 +- 0.4, 202.3 +- 2.7
+  select Pt(signallep[0]) > 25
+  counts signals6JBT 32.7 +- 0.4, 190.8 +- 2.6
+  select Size(signaljet) >= 6
+  counts signals6JBT 25.3 +- 0.4, 62.1 +- 1.5
+  select Size(signalbjet) > 0
+  counts signals6JBT 8.84 +- 0.21, 18.2 +- 0.8
+  select fAplanarity(signaljet) > 0.01
+  counts signals6JBT 8.77 +- 0.21, 17.7 +- 0.8
+  select meff > 700
+  counts signals6JBT 8.77 +- 0.21, 17.7 +- 0.8
+  select MET > 300
+  counts signals6JBT 8.35 +- 0.21, 16.1 +- 0.7 
+  select MTl > 225
+  counts signals6JBT 6.76 +- 0.18, 12.0 +- 0.6
+  bin "1" meff [] 700 1400
+  bin "2" meff [] 1400 2100
+  bin "3" meff [] 2100 2800
+  bin "4" meff > 2800
+
+region SR6JBV
+  weight eventweight 0.00198199
+  counts signals6JBV 56.8 +- 0.9, 386 +- 6
+  select Size(signaljet) >= 2
+  counts signals6JBV 56.7 +- 0.9, 385 +- 6
+  select Size(signalele) >= 0
+  counts signals6JBV 56.7 +- 0.9, 385 +- 6
+  select Size(signalmuo) >= 0
+  counts signals6JBV 56.7 +- 0.9, 385 +- 6
+  select Size(signallep) == 1
+  counts signals6JBV 42.4 +- 0.8, 295 +- 5
+  Sort Pt(signallep) descend
+  counts signals6JBV 42.4 +- 0.8, 295 +- 5
+  select MTl > 50
+  counts signals6JBV 37.5 +- 0.7, 253 +- 5 
+  select MET > 240
+  counts signals6JBV 33.9 +- 0.4, 202.3 +- 2.7
+  select Pt(signallep[0]) > 25
+  counts signals6JBV 32.7 +- 0.4, 190.8 +- 2.6
+  select Size(signaljet) >= 6
+  counts signals6JBV 25.3 +- 0.4, 62.1 +- 1.5
+  select Size(signalbjet) == 0
+  counts signals6JBv 16.43 +- 0.29, 43.9 +- 1.2
+  select fAplanarity(signaljet) > 0.01
+  counts signals6JBV 16.32 +- 0.29, 42.5 +- 1.2
+  select meff > 700
+  counts signals6JBV 16.43 +- 0.29, 43.9 +- 1.2
+  select MET > 300
+  counts signals6JBV 15.52 +- 0.29, 38.3 +- 1.2
+  select MTl > 225
+  counts signals6JBV 12.85 +- 0.26, 27.5 +- 1.0
+  bin "1" meff [] 700 1400
+  bin "2" meff [] 1400 2100
+  bin "3" meff [] 2100 2800
+  bin "4" meff > 2800
+
