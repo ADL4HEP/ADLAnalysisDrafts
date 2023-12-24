@@ -13,11 +13,6 @@ info analysis
 # Energy Unit : GeV
 # Datatier : Delphes
 
-countsformat SR
-    process SSd-1200-600, "Model-Independent SSd 1200 600", stat
-    process SSd-1400-600, "Model-Independent SSd 1400 600", stat
-    process SSd-1600-600, "Model-Independent SSd 1600 600", stat
-
 ## BASELINE OBJECTS DEFINITION
 
 object baselineJets
@@ -85,7 +80,7 @@ object signalMuos
 
 define nJets = Size(signalJets)
 define dPhiLeadJetsMETMin = min(dPhi(signalJets[:1],METLV[0]))*HSTEP(nJets == 2) + min(dPhi(signalJets[:2],METLV[0]))*HSTEP(nJets > 2)
-define dPhiOtherJetsMETMin = min(dPhi(signalJets[3:],METLV[0])) 
+define dPhiRestJetsMETMin = min(dPhi(signalJets[3:],METLV[0])) 
 
 define HTJets = fHT(signalJets)
 define SqrtHT = Sqrt(fHT(signalJets)) 
@@ -93,6 +88,9 @@ define METSqrtHT = Pt(METLV[0])/SqrtHT
 define mEff = MET + fHT(signalJets)
 define Aplanarity = fAplanarity(signalJets)
 
+define mEff4j = MET + sum(Pt(signalJets[0:3]))
+define mEff5j = MET + sum(Pt(signalJets[0:4]))
+define mEff6j = MET + sum(Pt(signalJets[0:5]))
 
 ### EVENT SELECTION
 region init
@@ -109,7 +107,6 @@ region init
 
 region preselection
     init
-    select Size(vetoLeps) == 0
     select Size(signalJets) >= 2
     select MET > 300
     select Pt(signalJets[0]) > 200
@@ -125,7 +122,7 @@ region MBSSdpreselection
     select Pt(signalJets) > 100
     select Pt(signalJets[0]) > 200
     select dPhiLeadJetsMETMin > 0.8 
-    select dPhiOtherJetsMETMin > 0.4
+    select dPhiRestJetsMETMin > 0.4
     #select METSqrtHT > 10
     #select mEff > 1000 
 
@@ -136,7 +133,7 @@ region MBGGdpreselection
     select Pt(signalJets) > 100
     select AbsEta(signalJets) < 2.0
     select dPhiLeadJetsMETMin > 0.4
-    select dPhiOtherJetsMETMin > 0.4
+    select dPhiRestJetsMETMin > 0.4
     select Aplanarity > 0.04
     select METSqrtHT > 10
     select mEff > 1000 
@@ -148,7 +145,7 @@ region MBCpreselection
     select Pt(signalJets) > 50
     select AbsEta(signalJets) < 2.8
     select dPhiLeadJetsMETMin > 0.4
-    select dPhiOtherJetsMETMin > 0.2
+    select dPhiRestJetsMETMin > 0.2
     select METSqrtHT > 10
     select mEff > 1600
 
@@ -231,188 +228,177 @@ region MBC
 # Table 7 on page 12
 region BDTGGd1
     preselection
+    select Size(vetoLeps) == 0 
     select Size(signalJets) >= 4
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.4
-    select MET/mEff > 0.2
+    select dPhiRestJetsMETMin > 0.4
+    select MET/mEff4j  > 0.2
     select mEff > 1400
 #   select BDTScore > 0.97
-#   select dM [] 1600 1900
-
-## THE BDT SEARCH
 
 # Table 7 on page 12
 region BDTGGd2
     preselection
+    select Size(vetoLeps) == 0
     select Size(signalJets) >= 4
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.4
-    select MET/mEff > 0.2
+    select dPhiRestJetsMETMin > 0.4
+    select MET/mEff4j > 0.2
     select mEff > 1400
 #   select BDTScore > 0.94
-#   select dM [] 1000 1400
 
 
-# Table 7 on page 12
+## Table 7 on page 12
 region BDTGGd3
     preselection
+    select Size(vetoLeps) == 0
     select Size(signalJets) >= 4
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.4
-    select MET/mEff > 0.2
-    select mEff > 800
-#   select BDTScore > 0.94
-#   select dM [] 600 1000
+    select dPhiRestJetsMETMin > 0.4
+    select MET/mEff4j > 0.2
+    select mEff > 800                   # applied before, preselection
+#    select BDTScore > 0.94
+#    select dM [] 600 1000
 
 # Table 7 on page 12
 region BDTGGd4
     preselection
+    select Size(vetoLeps) == 0
     select Size(signalJets) >= 4
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.4
-    select MET/mEff > 0.2
-    select mEff > 800
+    select dPhiRestJetsMETMin > 0.4
+    select MET/mEff4j > 0.2
+    select mEff > 800                   # applied before, preselection
 #   select BDTScore > 0.87
-#   select dM [] 200 600
-
 
 # Table 7 on page 12
 region BDTGGo1
     preselection
-    select nJets >= 4
+    select Size(vetoLeps) == 0
+    select nJets >= 6
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.4
-    select MET/mEff > 0.2
+    select dPhiRestJetsMETMin > 0.4
+    select MET/mEff6j > 0.2
     select mEff > 1400
 #   select BDTScore > 0.96
-#   select dM [] 1400 2000
 
 # Table 7 on page 12
 region BDTGGo2
     preselection
-    select nJets >= 4
+    select Size(vetoLeps) == 0
+    select nJets >= 6
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.4
-    select MET/mEff > 0.2
+    select dPhiRestJetsMETMin > 0.4
+    select MET/mEff6j > 0.2
     select mEff > 1400
 #   select BDTScore > 0.87
-#   select dM [] 1200 1400
 
 # Table 7 on page 12
 region BDTGGo3
     preselection
+    select Size(vetoLeps) == 0
     select nJets >= 5
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.4
-    select MET/mEff > 0.2
+    select dPhiRestJetsMETMin > 0.4
+    select MET/mEff5j > 0.2
     select mEff > 800
 #   select BDTScore > 0.92
-#   select dM [] 600 1000
 
 # Table 7 on page 12
 region BDTGGo4
     preselection
-    select nJets >= 4
+    select Size(vetoLeps) == 0
+    select nJets >= 5
     select dPhiLeadJetsMETMin >  0.2
-    select dPhiOtherJetsMETMin > 0.2
-    select MET/mEff > 0.2
-    select mEff > 800
+    select dPhiRestJetsMETMin > 0.2
+    select MET/mEff5j > 0.2
+    select mEff > 800                       # applied before, preselection
 #   select BDTScore > 0.84
-#   select dM [] 200 400
 
 # MODEL-INDEPENDENT SEARCH
 # Table 8 on page 14
 region SR2j1600
     preselection
-    counts SR 1423, 432, 139
-    select nJets >= 2
-    counts SR 1423, 432, 139
+    select Size(signalJets) >= 2
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.8
-    counts SR 1146, 344, 108
-    select dPhiOtherJetsMETMin > 0.4
-    counts SR 1097,329, 103
-    select Pt(signalJets[0]) > 250
-    select Pt(signalJets) > 250
-    counts SR 714, 249, 89.2
-    select AbsEta(signalJets[0]) < 2
-    select AbsEta(signalJets[1]) < 1
-    counts SR 696, 244, 87.4
+    select dPhiRestJetsMETMin > 0.4
+    select Pt(signalJets[0]) > 250          # not applied before and not included in Cutflow!
+    select Pt(signalJets[1]) > 250      
+    select AbsEta(signalJets[0]) < 2.0
+    select AbsEta(signalJets[1]) < 2.0
     select METSqrtHT > 16
-    counts SR 474, 182, 69.7
     select mEff > 1600
-    counts SR 319, 161, 67.2
 
 # Table 8 on page 14
+# squarks with direct decays
 region SR2j2200
     preselection
-    counts SR 1423, 432, 139
-    select nJets >= 2
-    counts SR 1423, 432, 139
+    select Size(signalJets) >= 2
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.4
-    counts SR 1278, 385, 124
-    select dPhiOtherJetsMETMin > 0.2
-    counts SR 1246, 376, 121
+    select dPhiRestJetsMETMin > 0.2
     select Pt(signalJets[0]) > 600
-    counts SR 414, 214, 95.9
-    select Pt(signalJets) > 50
-    select AbsEta(signalJets) < 2.8
+    select Pt(signalJets[1]) > 50           # applied before, signalJets selection
     select METSqrtHT > 16
-    counts SR 280, 161, 75.5
     select mEff > 2200
-    counts SR 87.1, 85.9, 60.8
 
 # Table 8 on page 14
+# squarks with direct decays
 region SR2j2800
     preselection
+    select Size(signalJets) >= 2
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.8
-    counst SR 1146, 344, 108
-    select dPhiOtherJetsMETMin > 0.4
-    counts SR 1097, 329, 103
-    select Pt(signalJets[0]) > 250
-    select Pt(signalJets) > 250
-    counts SR 714, 249, 89.2
-    select AbsEta(signalJets) < 1.2
-    counts SR 547, 188, 65.8
+    select dPhiRestJetsMETMin > 0.4
+    select Pt(signalJets[0]) > 250          
+    select Pt(signalJets[1]) > 50           # applied before , signalJets selection
+    select AbsEta(signalJets[0]) < 1.2
+    select AbsEta(signalJets[1]) < 1.2
     select METSqrtHT > 16
-    counts SR 368, 138, 52.0
     select mEff > 2800
-    counts SR 12.8, 14.8, 23.1
 
 # Table 8 on page 14
+# gluinos with direct decays
 region SR4j1000
     preselection
     select nJets >= 4
-    select Pt(signalJets[0]) > 200
-    select Pt(signalJets) > 100
-    select AbsEta(signalJets) < 2
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.2
+    select dPhiRestJetsMETMin > 0.2
+    select Pt(signalJets[0]) > 200          # applied before, preselection
+    select min(Pt(signalJets[1:3])) > 100
+    select max(AbsEta(signalJets[1:3])) < 2.0
     select Aplanarity > 0.04
     select METSqrtHT > 16
     select mEff > 1000
 
 # Table 8 on page 14
+# gluinos with direct decays
 region SR4j2200
     preselection
     select nJets >= 4
-    select Pt(signalJets[0]) > 200
-    select Pt(signalJets) > 100
-    select AbsEta(signalJets) < 2
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.2
+    select dPhiRestJetsMETMin > 0.2
+    select Pt(signalJets[0]) > 200          # applied before, preselection
+    select min(Pt(signalJets[1:3])) > 100             
+    select max(AbsEta(signalJets[1:3])) < 2
     select Aplanarity > 0.04
     select METSqrtHT > 16
     select mEff > 2200
 
 # Table 8 on page 14
+# gluinos with direct decays
 region SR4j3400
     preselection
     select nJets >= 4
-    select Pt(signalJets[0]) > 200
-    select Pt(signalJets) > 100
-    select AbsEta(signalJets) < 2
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.2
+    select dPhiRestJetsMETMin > 0.2
+    select Pt(signalJets[0]) > 200         # applied before, preselection
+    select min(Pt(signalJets[1:3])) > 100
+    select max(AbsEta(signalJets[1:3])) < 2.0
     select Aplanarity > 0.04
     select METSqrtHT > 10
     select mEff > 3400
@@ -421,62 +407,71 @@ region SR4j3400
 region SR5j1600
     preselection
     select nJets >= 5
-    select Pt(signalJets[0]) > 600
-    select Pt(signalJets) > 50
-    select AbsEta(signalJets) < 2.8
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.2
+    select dPhiRestJetsMETMin > 0.2
+    select Pt(signalJets[0]) > 600
+    select min(Pt(signalJets[1:4])) > 50         # applied before, jet selection
+    select max(AbsEta(signalJets[1:4])) < 2.8    # applied before, jet selection
     select METSqrtHT > 16
     select mEff > 1600
 
 # Table 9 on page 14
+# squarks with one-step decays
 region SR6j1000
     preselection
     select nJets >= 6
-    select Pt(signalJets[0]) > 200
-    select Pt(signalJets) > 75
-    select AbsEta(signalJets) < 2
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.2
+    select dPhiRestJetsMETMin > 0.2
+    select Pt(signalJets[0]) > 200          # applied before, preselection
+    select min(Pt(signalJets[1:5])) > 75         
+    select max(AbsEta(signalJets[1:5])) < 2
     select Aplanarity > 0.08
     select METSqrtHT > 16
     select mEff > 1000
 
 # Table 9 on page 14
+# gluinos with one-step decays
 region SR6j2000
     preselection
     select nJets >= 6
-    select Pt(signalJets[0]) > 200
-    select Pt(signalJets) > 75
-    select AbsEta(signalJets) < 2
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.2
+    select dPhiRestJetsMETMin > 0.2
+    select Pt(signalJets[0]) > 200         # applied before, preselection
+    select min(Pt(signalJets[1:5])) > 75              
+    select max(AbsEta(signalJets[1:5])) < 2
     select Aplanarity > 0.08
     select METSqrtHT > 16
     select mEff > 2000
 
 # Table 9 on page 14
+# gluinos with one-step decays
 region SR6j2200
     preselection
     select nJets >= 6
-    select Pt(signalJets[0]) > 200
-    select Pt(signalJets) > 75
-    select AbsEta(signalJets) < 2
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.2
+    select dPhiRestJetsMETMin > 0.2
+    select Pt(signalJets[0]) > 200          # applied before, preselection
+    select min(Pt(signalJets[1:5])) > 75                  
+    select max(AbsEta(signalJets[1:5])) < 2
     select Aplanarity > 0.08
     select METSqrtHT > 16
     select mEff > 2200
 
 # Table 9 on page 14
+# gluinos with one-step decays
 region SR6j3400
     preselection
     select nJets >= 6
-    select Pt(signalJets[0]) > 200
-    select Pt(signalJets) > 75
-    select AbsEta(signalJets) < 2
+    select Size(vetoLeps) == 0
     select dPhiLeadJetsMETMin >  0.4
-    select dPhiOtherJetsMETMin > 0.2
+    select dPhiRestJetsMETMin > 0.2
+    select Pt(signalJets[0]) > 200          # applied before, preselection
+    select min(Pt(signalJets[1:5])) > 75
+    select max(AbsEta(signalJets[1:5])) < 2
     select Aplanarity > 0.08
     select METSqrtHT > 10
     select mEff > 3400
