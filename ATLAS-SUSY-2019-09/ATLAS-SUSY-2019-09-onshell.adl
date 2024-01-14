@@ -5,6 +5,13 @@ info analysis
 	lumi 139
 	arXiv "2106.01676"
 
+
+countsformat onshellWZ
+  process onshellWZ, "onshellWZ"
+
+
+
+
 object BaselineElectrons
 	take ELE
 	select pT(ELE) > 4.5
@@ -35,7 +42,7 @@ object BaselinePhotons
 object SignalJets
 	take BaselineJets
 	select abseta(BaselineJets) < 2.8
-	select loose(BaselineJets) == 1
+	#select loose(BaselineJets) == 1
 	select abseta(BaselineJets) < 2.5 ? bTag(BaselineJets) == 1 : ALL
 
 object SignalElectrons
@@ -83,7 +90,7 @@ define chi_sfos_min_mass = m(SFOS) + 10000000*abs(PDGID(lepA)+PDGID(lepB)) + 0*q
 #to choose a SFOS (same flaviour opposite sign) pair whose mass is nearest to Zbozonmass
 define chi_sfos_Z_mass = abs(m(SFOS)-ZBozonMass) + 10000000*abs(PDGID(lepA)+PDGID(lepB)) + 0*q(lepC)
 
-#events are required to have one same-flavour same-charge-sign (SFSS) lepton pair 
+#some events are required to have one same-flavour same-charge-sign (SFSS) lepton pair 
 #as well as a third lepton which has a different flavour and opposite sign to the SFSS pair, and is referred to as the DFOS lepton
 define chi_sfss = 10000000*abs(PDGID(lepA)-PDGID(lepB))
 define chi_dfos = 10000000*abs(pdgID(lepA)+pdgID(lepC)) - 10000000*2
@@ -92,13 +99,13 @@ define chi_dfos = 10000000*abs(pdgID(lepA)+pdgID(lepC)) - 10000000*2
 
 define mll: m(SFOS[0]) #this is to choose the SFOS pair nearest to Z boson.
 define mllZ: mll
-define mllmin: m(SFOS[0]) #this is to choose the SFOS pair that has the lowest mass. one should sort before use
-define mllmax: m(SFOS[0]) #this is to choose the SFOS pair that has the highest mass. one should sort before use
-define WLepton: SignalLeptons[-2]
+define mllmin: m(SFOS[0]) 
+define mllmax: m(SFOS[0]) 
+define WLepton: lepC
 define mT: sqrt(2 * pT(WLepton) * MET * (1 - cos(dPhi(METLV[0] , WLepton))))
 define HT: sum(pT(HTCandidates))
 define HTlep: sum(pT(SignalLeptons))
-define m3l: m(SignalLeptons[1] SignalLeptons[2] SignalLeptons[3])
+define m3l: m(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])
 
 define deltaphi: dPhi(SignalLeptons[-1], SignalLeptons[-2]) #to choose the nearest SFOS lepton to the third lepton in phi
 define dROSNEAR: dR(SignalLeptons[-1], SignalLeptons[-2]) #to put a cut on the dR of the nearest lepton and the third lepton
@@ -106,14 +113,21 @@ define dROSNEAR: dR(SignalLeptons[-1], SignalLeptons[-2]) #to put a cut on the d
 
 region common
 	select ALL
+	counts onshellWZ 53784
 	select size(BaselineLeptons) == 3
+	counts onshellWZ 227
 	select size(SignalLeptons) == 3
-	#####trigger dilepton ne demek?	
+	counts onshellWZ 227
 	select pT(SignalLeptons[0]) > 25
+	counts onshellWZ 227
 	select pT(SignalLeptons[1]) > 20
+	counts onshellWZ 227
 	select pT(SignalLeptons[2]) > 10
+	counts onshellWZ 227
 	select MET > 50
-	select size(BJET) == 0
+	counts onshellWZ 227
+
+
 
 
 #Probably I added this while reading the text but this region is not in any table given in the paper.
@@ -132,12 +146,21 @@ region common
 region SRWZ
 	common
 	select chi_sfos_Z_mass ~= 0
+	counts onshellWZ 227
 	select chi_sfos_Z_mass < 10000
-	######sort m(SFOS) ~= ZBozonMass şöyle bir syntax bence olmalı
-	sort (m(SFOS) - ZBozonMass) ascend
-	select mllZ > 12	
-	select mllZ [] 75 105
+	counts onshellWZ 226
+	#####trigger dilepton ne demek?
+	#####counts onshellWZ 222
+	select size(BJET) == 0
+	counts onshellWZ 209
+	select mllZ > 12
+	counts onshellWZ 209
 	select abs(m3l - ZBozonMass) > 15
+	counts onshellWZ 203
+	select mllZ [] 75 105
+	counts onshellWZ 196
+	### with MC to data weight
+	### counts onshellWZ 186
 
 region SRWZ0
 	SRWZ
@@ -146,150 +169,283 @@ region SRWZ0
 region SRWZ1
 	SRWZ
 	select size(SignalJets) == 0
+	counts onshellWZ 76.4
+	### with MC to data weight
+	### counts onshellWZ 73.3
 	select mT [] 100 160
+	counts onshellWZ 26.7
 	select MET [] 50 100
+	counts onshellWZ 20.9
 
 region SRWZ2
 	SRWZ
 	select size(SignalJets) == 0
+	counts onshellWZ 76.4
+	### with MC to data weight
+	### counts onshellWZ 73.3
 	select mT [] 100 160
+	counts onshellWZ 26.7
 	select MET [] 100 150
+	counts onshellWZ 4.86
 
 region SRWZ3
 	SRWZ
 	select size(SignalJets) == 0
+	counts onshellWZ 76.4
+	### with MC to data weight
+	### counts onshellWZ 73.3
 	select mT [] 100 160
+	counts onshellWZ 26.7
 	select MET [] 150 200
+	counts onshellWZ 0.78
 
 region SRWZ4
 	SRWZ
 	select size(SignalJets) == 0
+	counts onshellWZ 76.4
+	### with MC to data weight
+	### counts onshellWZ 73.3
 	select mT [] 100 160
+	counts onshellWZ 26.7
 	select MET > 200
+	counts onshellWZ 0.14
 
 region SRWZ5
 	SRWZ
 	select size(SignalJets) == 0
+	counts onshellWZ 76.4
+	### with MC to data weight
+	### counts onshellWZ 73.3
 	select mT > 160
+	counts onshellWZ 5.8
 	select MET [] 50 150
+	counts onshellWZ 4.64
 
 
 region SRWZ6
 	SRWZ
 	select size(SignalJets) == 0
+	counts onshellWZ 76.4
+	### with MC to data weight
+	### counts onshellWZ 73.3
 	select mT > 160
+	counts onshellWZ 5.8
 	select MET [] 150 200
+	counts onshellWZ 0.16
 
 region SRWZ7
 	SRWZ
 	select size(SignalJets) == 0
+	counts onshellWZ 76.4
+	### with MC to data weight
+	### counts onshellWZ 73.3
 	select mT > 160
+	counts onshellWZ 5.8
 	select MET [] 200 350
+	counts onshellWZ 0
 
 region SRWZ8
 	SRWZ
 	select size(SignalJets) == 0
+	counts onshellWZ 76.4
+	### with MC to data weight
+	### counts onshellWZ 73.3
 	select mT > 160
+	counts onshellWZ 5.8
 	select MET > 350
+	counts onshellWZ 0
+
+#region SRWZ1to8 #how to combine regions
+#	SRWZ1
+#	SRWZ2
+#	SRWZ3
+#	SRWZ4
+#	SRWZ5
+#	SRWZ6
+#	SRWZ7
+#	SRWZ8
+#	counts onshellWZ 31.4
 
 region SRWZ9
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 97.5
 	select HT < 200
+	counts onshellWZ 97.5
+	#with MC to data weight
+	#counts onshellWZ 91.8
 	select mT [] 100 160
+	counts onshellWZ 29.6
 	select MET [] 100 150
+	counts onshellWZ 8.75
 
 region SRWZ10
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 97.5
 	select HT < 200
+	counts onshellWZ 97.5
+	#with MC to data weight
+	#counts onshellWZ 91.8
 	select mT [] 100 160
+	counts onshellWZ 29.6
 	select MET [] 150 250
+	counts onshellWZ 3.46
 
 region SRWZ11
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 97.5
 	select HT < 200
+	counts onshellWZ 97.5
+	#with MC to data weight
+	#counts onshellWZ 91.8
 	select mT [] 100 160
+	counts onshellWZ 29.6
 	select MET [] 250 300
+	counts onshellWZ 0.54
 
 region SRWZ12
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 97.5
 	select HT < 200
+	counts onshellWZ 97.5
+	#with MC to data weight
+	#counts onshellWZ 91.8
 	select mT [] 100 160
+	counts onshellWZ 29.6
 	select MET > 300
+	counts onshellWZ 0
 
 region SRWZ13
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 97.5
 	select HT < 200
+	counts onshellWZ 97.5
+	#with MC to data weight
+	#counts onshellWZ 91.8
 	select mT > 160
+	counts onshellWZ 9.5
 	select mT [] 50 150
+	counts onshellWZ 7.19
 
 region SRWZ14
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 97.5
 	select HT < 200
+	counts onshellWZ 97.5
+	#with MC to data weight
+	#counts onshellWZ 91.8
 	select mT > 160
-	select mT [] 150 200
+	counts onshellWZ 9.5
+	select mT [] 150 250
+	counts onshellWZ 1.53
 
 region SRWZ15
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 97.5
 	select HT < 200
+	counts onshellWZ 97.5
+	#with MC to data weight
+	#counts onshellWZ 91.8
 	select mT > 160
-	select mT [] 250 450
+	counts onshellWZ 9.5
+	select mT [] 250 400
+	counts onshellWZ 0.09
 
 region SRWZ16
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 97.5
 	select HT < 200
+	counts onshellWZ 97.5
+	#with MC to data weight
+	#counts onshellWZ 91.8
 	select mT > 160
+	counts onshellWZ 9.5
 	select mT > 400
+	counts onshellWZ 0
 
 region SRWZ17
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 22.2
 	select HT < 200
-	select mT > 160
+	counts onshellWZ 22.2
 	select HTlep < 350
+	counts onshellWZ 20.9
+	#with MC to data weigth
+	#counts onshellWZ 19.3
 	select mT > 100
+	counts onshellWZ 10.8
 	select MET [] 150 200
+	counts onshellWZ 2.53
 
 region SRWZ18
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 22.2
 	select HT < 200
-	select mT > 160
+	counts onshellWZ 22.2
 	select HTlep < 350
+	counts onshellWZ 20.9
+	#with MC to data weigth
+	#counts onshellWZ 19.3	select mT > 100
 	select mT > 100
+	counts onshellWZ 10.8
 	select MET [] 200 300
+	counts onshellWZ 3.12
 
 region SRWZ19
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 22.2
 	select HT < 200
-	select mT > 160
+	counts onshellWZ 22.2
 	select HTlep < 350
+	counts onshellWZ 20.9
+	#with MC to data weigth
+	#counts onshellWZ 19.3	select mT > 100
 	select mT > 100
+	counts onshellWZ 10.8
 	select MET [] 300 400
+	counts onshellWZ 1.09
 
 region SRWZ20
 	SRWZ
 	select size(SignalJets) > 0
+	counts onshellWZ 22.2
 	select HT < 200
-	select mT > 160
+	counts onshellWZ 22.2
 	select HTlep < 350
+	counts onshellWZ 20.9
+	#with MC to data weigth
+	#counts onshellWZ 19.3	select mT > 100
 	select mT > 100
+	counts onshellWZ 10.8
 	select MET > 400 
+	counts onshellWZ 1.13
 
-
+#region SRWZ9to21 #how to combine regions
+#	SRWZ1
+#	SRWZ2
+#	SRWZ3
+#	SRWZ4
+#	SRWZ5
+#	SRWZ6
+#	SRWZ7
+#	SRWZ8
+#	counts onshellWZ 29.4
 
 
 
 region SRWhSFOS
 	common
+	select size(BJET) == 0	
 	select chi_sfos_Z_mass ~= 0
 	select chi_sfos_Z_mass < 10000
 	sort (m(SFOS) - ZBozonMass) ascend
