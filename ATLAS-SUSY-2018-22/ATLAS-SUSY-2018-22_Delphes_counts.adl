@@ -14,33 +14,34 @@ info analysis
 # Datatier : Delphes
 
 
+
 countsformat BDTGGd
-    process GGd2200500 , "GGd 2200 500 ", stat
-    process GGd22001000, "GGd 2200 1000", stat
-    process GGd18001000, "GGd 1800 1000", stat
-    process GGd14001000, "GGd 1400 1000", stat  
+    process GGd2200500 , "GGd 2200 500"
+    process GGd22001000, "GGd 2200 1000"
+    process GGd18001000, "GGd 1800 1000"
+    process GGd14001000, "GGd 1400 1000"  
 
 countsformat BDTGGo   
-    process GGo22001300400 , "GGd 2200 500 ", stat
-    process GGo22001400800 , "GGd 2200 1000", stat
-    process GGo180014001000, "GGd 1800 1000", stat
-    process GGo140010001000, "GGd 1400 1000", stat
+    process GGo22001300400 , "GGd 2200 500"
+    process GGo22001400800 , "GGd 2200 1000"
+    process GGo180014001000, "GGd 1800 1000"
+    process GGo140010001000, "GGd 1400 1000"
 
 countsformat SR2j
-    process SSd1200600, "SSd 1200 600", stat
-    process SSd1400600, "SSd 1400 600", stat
-    process SSd1800600, "SSd 1800 600", stat 
+    process SSd1200600, "SSd 1200 600"
+    process SSd1400600, "SSd 1400 600"
+    process SSd1600600, "SSd 1800 600" 
 
 countsformat SR4j5j
-    process GGd14001000, "GGd 1400 1000", stat
-    process GGd18001000, "GGd 1800 1000", stat
-    process GGd2200600 , "GGd 2200 600", stat
+    process GGd14001000, "GGd 1400 1000"
+    process GGd18001000, "GGd 1800 1000"
+    process GGd2200600 , "GGd 2200 600" 
  
 countsformat SR6j
-    process SSo800600400   , "SSo 800 600 400", stat
-    process GGo14001100800 , "GGo 1400 1100 800", stat
-    process GGo200015001000, "GGo 2000 1500 1000", stat
-    process GGo22001200200 , "GGo 2200 1200 200", stat 
+    process SSo800600400   , "SSo 800 600 400"   
+    process GGo14001100800 , "GGo 1400 1100 800" 
+    process GGo200015001000, "GGo 2000 1500 1000"
+    process GGo22001200200 , "GGo 2200 1200 200" 
 
 ## BASELINE OBJECTS DEFINITION
 
@@ -81,25 +82,25 @@ object vetoLeps : Union(baselineEles, baselineMuos )
 ### SIGNAL OBJECT DEFINITIONS
 
 object signalJets
-    take cleanJets
-    select Pt(cleanJets) > 50
+    take baselineJets
+    select Pt(baselineJets) > 50
 
 object bJets
-    take signalJets
-    select Pt(signalJets) > 50
-    #select AbsEta(signalJets) < 2.5
-    #select BTag(signalJets) == 1
+    take baselineJets
+    select Pt(baselineJets) > 50
+    #select AbsEta(baselineJets) < 2.5
+    #select BTag(baselineJets) == 1
     # MV2c10 at 77% efficiency point
 
 object signalEles
-    take cleanEles
+    take baselineEles
     select Pt(cleanEles) > 7
 #   select TightLLH and FCTight
 #   Z0(cleanEles)*sin(Theta(cleanEles)) < 0.5 # in mm
 #   select d0pv(cleanEles)/d0sigpv(cleanEles) < 5
 
 object signalMuos
-    take cleanMuos
+    take baselineMuos
     select Pt(cleanMuos) > 6
     #select FCTight
     #select Z0(cleanMuos)*sin(Theta(cleanMuos)) < 0.5 # in mm
@@ -113,10 +114,10 @@ define dPhiRestJetsMETMin = min(dPhi(signalJets[3:],METLV[0]))
 
 define HTJets = fHT(signalJets)
 define SqrtHT = Sqrt(fHT(signalJets)) 
-define METSqrtHT = Pt(METLV[0])/SqrtHT 
-define mEff = MET + fHT(signalJets)
+define METSqrtHT = MET/SqrtHT 
 define Aplanarity = fAplanarity(signalJets)
 
+define mEff = MET + fHT(signalJets)             # inclusive
 define mEff4j = MET + sum(Pt(signalJets[0:3]))
 define mEff5j = MET + sum(Pt(signalJets[0:4]))
 define mEff6j = MET + sum(Pt(signalJets[0:5]))
@@ -124,6 +125,7 @@ define mEff6j = MET + sum(Pt(signalJets[0:5]))
 ### EVENT SELECTION
 region init
     select ALL
+	weight adlweight 1.0
     select Size(baselineJets) >= 0
     select Size(baselineMuos) >= 0
     select Size(baselineEles) >= 0     
@@ -256,11 +258,13 @@ region MBC
 # Table 7 on page 12
 region BDTGGd1
     preselection
-    counts BDTGGd 43.7, 42.5, 315, 1786
+    counts BDTGGd 5000, 50000, 60000, 60000             # Generated MC events
+    counts BDTGGd 49.5, 49.5, 407.3, 3948               # Generated MC events (weighted)
+    counts BDTGGd 43.7, 42.5, 315, 1786                 # preselection
     select Size(signalJets) >= 2
     counts BDTGGd 43.7, 42.5, 315, 1786
-    select Size(vetoLeps) == 0  
-    counts BDTGGd 43.1, 42.0, 311, 1765
+#    select Size(vetoLeps) == 0  
+#    counts BDTGGd 43.1, 42.0, 311, 1765
     select Size(signalJets) >= 4
     counts BDTGGd 40.7, 38.7, 276, 1355
     select dPhiLeadJetsMETMin >  0.4
@@ -271,17 +275,19 @@ region BDTGGd1
     counts BDTGGd 21.9, 23.7, 185, 999
     select mEff > 1400
     counts BDTGGd 21.9, 23.5, 170, 372
-#   select BDTScore > 0.97
+#    select BDTScore > 0.97
 #    counts BDTGGd 14.1, 7.04, 5.49, 3.02
 
 # Table 7 on page 12
 region BDTGGd2
     preselection
-    counts BDTGGd 43.7, 42.5, 315, 1786
+    counts BDTGGd 5000, 50000, 60000, 60000         # Generated MC events
+    counts BDTGGd 49.5, 49.5, 407.3, 3948           # Generated MC events (weighted)
+    counts BDTGGd 43.7, 42.5, 315, 1786             # preselection
     select Size(signalJets) >= 2
     counts BDTGGd 43.7, 42.5, 315, 1786
-    select Size(vetoLeps) == 0  
-    counts BDTGGd 43.1, 42.0, 311, 1765
+#    select Size(vetoLeps) == 0  
+#    counts BDTGGd 43.1, 42.0, 311, 1765
     select Size(signalJets) >= 4
     counts BDTGGd 40.7, 38.7, 276, 1355
     select dPhiLeadJetsMETMin >  0.4
@@ -299,11 +305,13 @@ region BDTGGd2
 ## Table 7 on page 12
 region BDTGGd3
     preselection
-    counts BDTGGd 43.7, 42.5, 315, 1786
+    counts BDTGGd 5000, 50000, 60000, 60000         # Generated MC events
+    counts BDTGGd 49.5, 49.5, 407.3, 3948           # Generated MC events (weighted)
+    counts BDTGGd 43.7, 42.5, 315, 1786             # preselection
     select Size(signalJets) >= 2
     counts BDTGGd 43.7, 42.5, 315, 1786
-    select Size(vetoLeps) == 0  
-    counts BDTGGd 43.1, 42.0, 311, 1765
+#    select Size(vetoLeps) == 0  
+#    counts BDTGGd 43.1, 42.0, 311, 1765
     select Size(signalJets) >= 4
     counts BDTGGd 40.7, 38.7, 276, 1355
     select dPhiLeadJetsMETMin >  0.4
@@ -319,11 +327,13 @@ region BDTGGd3
 # Table 7 on page 12
 region BDTGGd4
     preselection
-    counts BDTGGd 43.7, 42.5, 315, 1786
+    counts BDTGGd 5000, 50000, 60000, 60000         # Generated MC events
+    counts BDTGGd 49.5, 49.5, 407.3, 3948           # Generated MC events (weighted)
+    counts BDTGGd 43.7, 42.5, 315, 1786             # preselection
     select Size(signalJets) >= 2
     counts BDTGGd 43.7, 42.5, 315, 1786
-    select Size(vetoLeps) == 0  
-    counts BDTGGd 43.1, 42.0, 311, 1765
+#    select Size(vetoLeps) == 0  
+#    counts BDTGGd 43.1, 42.0, 311, 1765
     select Size(signalJets) >= 4
     counts BDTGGd 40.7, 38.7, 276, 1355
     select dPhiLeadJetsMETMin >  0.4
@@ -339,11 +349,13 @@ region BDTGGd4
 # Table 7 on page 12
 region BDTGGo1
     preselection
-    counts BDTGGo 25.3, 67.5, 167, 521
+    counts BDTGGo 50000, 50000, 70000, 90000         # Generated MC events
+    counts BDTGGo 49.5, 140, 407, 3948               # Generated MC events (weighted)
+    counts BDTGGo 25.3, 67.5, 167, 521               # preselection
     select Size(signalJets) >= 2
     counts BDTGGo 25.3, 67.5, 167, 521
-    select Size(vetoLeps) == 0
-    counts BDTGGo 25.1, 66.8, 166, 515
+#    select Size(vetoLeps) == 0
+#    counts BDTGGo 25.1, 66.8, 166, 515
     select nJets >= 6
     counts BDTGGo 21.4, 54.8, 126, 279
     select dPhiLeadJetsMETMin >  0.4
@@ -360,11 +372,13 @@ region BDTGGo1
 # Table 7 on page 12
 region BDTGGo2
     preselection
-    counts BDTGGo 25.3, 67.5, 167, 521
+    counts BDTGGo 50000, 50000, 70000, 90000         # Generated MC events
+    counts BDTGGo 49.5, 140, 407, 3948               # Generated MC events (weighted)
+    counts BDTGGo 25.3, 67.5, 167, 521               # preselection
     select Size(signalJets) >= 2
     counts BDTGGo 25.3, 67.5, 167, 521
-    select Size(vetoLeps) == 0
-    counts BDTGGo 25.1, 66.8, 166, 515
+#    select Size(vetoLeps) == 0
+#    counts BDTGGo 25.1, 66.8, 166, 515
     select nJets >= 6
     counts BDTGGo 21.4, 54.8, 126, 279
     select dPhiLeadJetsMETMin >  0.4
@@ -381,11 +395,13 @@ region BDTGGo2
 # Table 7 on page 12
 region BDTGGo3
     preselection
-    counts BDTGGo 25.3, 67.5, 167, 521
+    counts BDTGGo 50000, 50000, 70000, 90000         # Generated MC events
+    counts BDTGGo 49.5, 140, 407, 3948               # Generated MC events (weighted)
+    counts BDTGGo 25.3, 67.5, 167, 521               # preselection
     select Size(signalJets) >= 2
     counts BDTGGo 25.3, 67.5, 167, 521
-    select Size(vetoLeps) == 0
-    counts BDTGGo 25.1, 66.8, 166, 515
+#    select Size(vetoLeps) == 0
+#    counts BDTGGo 25.1, 66.8, 166, 515
     select nJets >= 5
     counts BDTGGo 24.4, 64.0, 154, 405
     select dPhiLeadJetsMETMin >  0.4
@@ -401,11 +417,13 @@ region BDTGGo3
 # Table 7 on page 12
 region BDTGGo4
     preselection
-    counts BDTGGo 25.3, 67.5, 167, 521
+    counts BDTGGo 50000, 50000, 70000, 90000         # Generated MC events
+    counts BDTGGo 49.5, 140, 407, 3948               # Generated MC events (weighted)
+    counts BDTGGo 25.3, 67.5, 167, 521               # preselection
     select Size(signalJets) >= 2
     counts BDTGGo 25.3, 67.5, 167, 521
-    select Size(vetoLeps) == 0
-    counts BDTGGo 25.1, 66.8, 166, 515
+#    select Size(vetoLeps) == 0
+#    counts BDTGGo 25.1, 66.8, 166, 515
     select nJets >= 5
     counts BDTGGo 24.4, 64.0, 154, 405
     select dPhiLeadJetsMETMin >  0.2
@@ -423,18 +441,20 @@ region BDTGGo4
 # squarks with direct decays
 region SR2j1600
     preselection
-    counts SR2j 1423, 432, 139
+    counts SR2j 10000, 6000, 6000            # Generated MC events
+    counts SR2j 1902, 530, 160               # Generated MC events (weighted)
+    counts SR2j 1423, 432, 139               # preselection
     select Size(signalJets) >= 2
     counts SR2j 1423, 432, 139
-    select Size(vetoLeps) == 0
-    counts SR2j 1406, 427, 138
+#    select Size(vetoLeps) == 0
+#    counts SR2j 1406, 427, 138
     select dPhiLeadJetsMETMin >  0.8
     counts SR2j 1146, 344, 108
     select dPhiRestJetsMETMin > 0.4
     counts SR2j 1097, 329, 103
-    select min(Pt(signalJets[0])) > 250
+    select Pt(signalJets[1]) > 250
     counts SR2j 714, 249, 89.2
-    select max(AbsEta(signalJets[0])) < 2.0
+    select max(AbsEta(signalJets[0:1])) < 2.0
     counts SR2j 696, 244, 87.4
     select METSqrtHT > 16
     counts SR2j 474, 182, 69.7
@@ -445,11 +465,13 @@ region SR2j1600
 # squarks with direct decays
 region SR2j2200
     preselection
-    counts SR2j 1423, 432, 139
+    counts SR2j 10000, 6000, 6000            # Generated MC events
+    counts SR2j 1902, 530, 160               # Generated MC events (weighted)
+    counts SR2j 1423, 432, 139               # preselection    
     select Size(signalJets) >= 2
     counts SR2j 1423, 432, 139
-    select Size(vetoLeps) == 0
-    counts SR2j 1406, 427, 138
+#    select Size(vetoLeps) == 0
+#    counts SR2j 1406, 427, 138
     select dPhiLeadJetsMETMin >  0.4
     counts SR2j 1278, 385, 124
     select dPhiRestJetsMETMin > 0.2
@@ -466,16 +488,18 @@ region SR2j2200
 # squarks with direct decays
 region SR2j2800
     preselection
-    counts SR2j 1423, 432, 139
+    counts SR2j 10000, 6000, 6000            # Generated MC events
+    counts SR2j 1902, 530, 160               # Generated MC events (weighted)
+    counts SR2j 1423, 432, 139               # preselection
     select Size(signalJets) >= 2
     counts SR2j 1423, 432, 139
-    select Size(vetoLeps) == 0
-    counts SR2j 1406, 427, 138
+#    select Size(vetoLeps) == 0
+#    counts SR2j 1406, 427, 138
     select dPhiLeadJetsMETMin >  0.8
     counts SR2j 1146, 344, 108
     select dPhiRestJetsMETMin > 0.4
     counts SR2j 1097, 329, 103
-    select Pt(signalJets[0]) > 250
+    select Pt(signalJets[1]) > 250
     counts SR2j 714, 249, 89.2          
 #    select Pt(signalJets[1]) > 50           # applied before  
     select max(AbsEta(signalJets[0:1])) < 1.2      
@@ -489,10 +513,13 @@ region SR2j2800
 # gluinos with direct decays
 region SR4j1000
     preselection
+    counts SR4j5j 60000, 60000, 50000       # Generated MC events
+    counts SR4j5j 3948, 407, 49.5           # Generated MC events (weighted)
+    counts SR4j5j 1787, 315, 43.8           # preselection
     select Size(signalJets) >= 2
     counts SR4j5j 1787, 315, 43.8
-    select Size(vetoLeps) == 0
-    counts SR4j5j 1766, 311, 43.2
+#    select Size(vetoLeps) == 0
+#    counts SR4j5j 1766, 311, 43.2
     select nJets >= 4
     counts SR4j5j 1355, 276, 40.6
     select dPhiLeadJetsMETMin >  0.4
@@ -515,10 +542,13 @@ region SR4j1000
 # gluinos with direct decays
 region SR4j2200
     preselection
+    counts SR4j5j 60000, 60000, 50000       # Generated MC events
+    counts SR4j5j 3948, 407, 49.5           # Generated MC events (weighted)
+    counts SR4j5j 1787, 315, 43.8           # preselection
     select Size(signalJets) >= 2
     counts SR4j5j 1787, 315, 43.8
-    select Size(vetoLeps) == 0
-    counts SR4j5j 1766, 311, 43.2
+ #   select Size(vetoLeps) == 0
+ #   counts SR4j5j 1766, 311, 43.2
     select nJets >= 4
     counts SR4j5j 1355, 276, 40.6
     select dPhiLeadJetsMETMin >  0.4
@@ -541,10 +571,13 @@ region SR4j2200
 # gluinos with direct decays
 region SR4j3400
     preselection
+    counts SR4j5j 60000, 60000, 50000       # Generated MC events
+    counts SR4j5j 3948, 407, 49.5           # Generated MC events (weighted)
+    counts SR4j5j 1787, 315, 43.8           # preselection    
     select Size(signalJets) >= 2
     counts SR4j5j 1787, 315, 43.8
-    select Size(vetoLeps) == 0
-    counts SR4j5j 1766, 311, 43.2
+#    select Size(vetoLeps) == 0
+#    counts SR4j5j 1766, 311, 43.2
     select nJets >= 4
     counts SR4j5j 1355, 276, 40.6
     select dPhiLeadJetsMETMin >  0.4
@@ -566,10 +599,13 @@ region SR4j3400
 # Table 9 on page 14
 region SR5j1600
     preselection
+    counts SR4j5j 60000, 60000, 50000       # Generated MC events
+    counts SR4j5j 3948, 407, 49.5           # Generated MC events (weighted)
+    counts SR4j5j 1787, 315, 43.8           # preselection    
     select Size(signalJets) >= 2
     counts SR4j5j 1787, 315, 43.8
-    select Size(vetoLeps) == 0
-    counts SR4j5j 1766, 311, 43.2
+#    select Size(vetoLeps) == 0
+#    counts SR4j5j 1766, 311, 43.2
     select nJets >= 4
     counts SR4j5j 815, 181, 28.8
     select dPhiLeadJetsMETMin >  0.4
@@ -589,11 +625,13 @@ region SR5j1600
 # squarks with one-step decays
 region SR6j1000
     preselection
-    counts SR6j 2651, 1161, 64.3, 25.4
+    counts SR6j 30000, 30000, 30000, 30000          # Generated MC events
+    counts SR6j 18237, 3948, 140, 49.5              # Generated MC events (weighted)
+    counts SR6j 2651, 1161, 64.3, 25.4              # preselection    
     select Size(signalJets) >= 2
     counts SR6j 2651, 1161, 64.3, 25.4
-    select Size(vetoLeps) == 0
-    counts SR6j 2621, 1148, 63.5, 25.1
+#    select Size(vetoLeps) == 0
+#    counts SR6j 2621, 1148, 63.5, 25.1
     select nJets >= 6
     counts SR6j 870, 791, 50.7, 21.7
     select dPhiLeadJetsMETMin >  0.4
@@ -616,11 +654,13 @@ region SR6j1000
 # gluinos with one-step decays
 region SR6j2200
     preselection
-    counts SR6j 2651, 1161, 64.3, 25.4
+    counts SR6j 30000, 30000, 30000, 30000          # Generated MC events
+    counts SR6j 18237, 3948, 140, 49.5              # Generated MC events (weighted)
+    counts SR6j 2651, 1161, 64.3, 25.4              # preselection
     select Size(signalJets) >= 2
     counts SR6j 2651, 1161, 64.3, 25.4
-    select Size(vetoLeps) == 0
-    counts SR6j 2621, 1148, 63.5, 25.1
+#    select Size(vetoLeps) == 0
+#    counts SR6j 2621, 1148, 63.5, 25.1
     select nJets >= 6
     counts SR6j 870, 791, 50.7, 21.7
     select dPhiLeadJetsMETMin >  0.4
@@ -643,10 +683,12 @@ region SR6j2200
 # gluinos with one-step decays
 region SR6j3400
     preselection
-    counts SR6j 2651, 1161, 64.3, 25.4
+    counts SR6j 30000, 30000, 30000, 30000          # Generated MC events
+    counts SR6j 18237, 3948, 140, 49.5              # Generated MC events (weighted)
+    counts SR6j 2651, 1161, 64.3, 25.4              # preselection
     select Size(signalJets) >= 2
-    counts SR6j 2651, 1161, 64.3, 25.4
-    select Size(vetoLeps) == 0
+#    counts SR6j 2651, 1161, 64.3, 25.4
+#    select Size(vetoLeps) == 0
     counts SR6j 2621, 1148, 63.5, 25.1
     select nJets >= 6
     counts SR6j 870, 791, 50.7, 21.7
