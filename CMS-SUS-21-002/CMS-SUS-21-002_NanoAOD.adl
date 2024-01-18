@@ -2,12 +2,12 @@
 #  title "Search for electroweak production of supersymmetric particles in final states containing hadronic decays of WW, WZ, or WH and missing transverse momentum"
 #  experiment CMS
 #  id SUS-21-002
-#  publication ...
+#  publication Phys. Lett. B 842 (2023) 137460
 #  sqrtS 13.0
 #  lumi 137
-#  arXiv ...
-#  hepdata ...
-#  doi ...
+#  arXiv 2205.09597
+#  hepdata https://www.hepdata.net/record/ins2085373
+#  doi https://doi.org/10.1016/j.physletb.2022.137460
 
 #info adl
 #  author S. Sekmen
