@@ -31,6 +31,8 @@ object BaselineJets
 	select pT(JET) > 20
 	select abseta(JET) < 4.5
 	#select pT(JET) < 120 AND abseta(JET) < 2.5 ? medium(JET) == 1 : ALL
+	select dR(JET, ELE) >= 0.2
+	select dR(JET, MUO) >= 0.4
 
 object BaselinePhotons
 	take PHO
@@ -61,9 +63,6 @@ object ExceptionallyIncludedMuons
 	#select medium(MUO) == 1
 	#select abs(z0*sin(theta)) < 0.5
 
-object HTCandidates
-	take SignalJets
-	select pT(SignalJets) > 20
 
 object BaselineLeptons: Union(BaselineElectrons, ExceptionallyIncludedMuons)
 object SignalLeptons: Union(SignalElectrons, SignalMuons)
@@ -103,7 +102,7 @@ define mllmin: m(SFOS[0])
 define mllmax: m(SFOS[0]) 
 define WLepton: lepC
 define mT: sqrt(2 * pT(WLepton) * MET * (1 - cos(dPhi(METLV[0] , WLepton))))
-define HT: sum(pT(HTCandidates))
+define HT: sum(pT(SignalJets))
 define HTlep: sum(pT(SignalLeptons))
 define m3l: m(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])
 
