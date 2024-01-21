@@ -24,6 +24,8 @@ object BaselineJets
 	select pT(JET) > 20
 	select abseta(JET) < 4.5
 	#select pT(JET) < 120 AND abseta(JET) < 2.5 ? medium(JET) == 1 : ALL
+	select dR(JET, ELE) >= 0.2
+	select dR(JET, MUO) >= 0.4
 
 object BaselinePhotons
 	take PHO
@@ -35,7 +37,7 @@ object BaselinePhotons
 object SignalJets
 	take BaselineJets
 	select abseta(BaselineJets) < 2.8
-	select loose(BaselineJets) == 1
+	#select loose(BaselineJets) == 1
 	select abseta(BaselineJets) < 2.5 ? bTag(BaselineJets) == 1 : ALL
 
 object SignalElectrons
@@ -54,10 +56,6 @@ object ExceptionallyIncludedMuons
 	#select medium(MUO) == 1
 	#select abs(z0*sin(theta)) < 0.5
 
-object HTCandidates
-	take SignalJets
-	select pT(SignalJets) > 20
-
 object pT30gevjets
 	take SignalJets
 	select pT(SignalJets) > 30
@@ -70,8 +68,20 @@ define lepA : SignalLeptons[-1] #negative same index means lapA and lepB are int
 define lepB : SignalLeptons[-1]
 define lepC : SignalLeptons[-2]
 
+define lepAMin : SignalLeptons[-3] #Min suffix is used to indicate this set will be used for min mass SFOS pair
+define lepBMin : SignalLeptons[-3]
+define lepCMin : SignalLeptons[-4]
+
+define lepAMax : SignalLeptons[-5] #Max suffix is used to indicate this set will be used for max mass SFOS pair
+define lepBMax : SignalLeptons[-5]
+define lepCMax : SignalLeptons[-6]
+
+
 define SFOS : lepA lepB
-define WLepton: SignalLeptons[-2]
+define SFOSMin : lepAMin lepBMin
+define SFOSMax : lepAMax lepBMax
+define WLepton : lepCMin  ################
+
 
 define SFSS : lepA lepB
 define DFOS : lepC
@@ -84,7 +94,9 @@ define ZBozonMass: 91.1876
 #include lepC with a 0 coefficient to find the missinng index.
 
 #to choose a SFOS (same flaviour opposite sign) pair with the smaller mass.
-define chi_sfos_min_mass = m(SFOS) + 10000000*abs(PDGID(lepA)+PDGID(lepB)) + 0*q(lepC)
+define chi_sfos_min_mass = m(SFOSMin) + 10000000*abs(PDGID(lepAMin)+PDGID(lepBMin)) + 0*q(lepCMin)
+#to choose a SFOS (same flaviour opposite sign) pair with the bigger mass.
+define chi_sfos_max_mass = abs(10000 - m(SFOSMax)) + 10000000*abs(PDGID(lepAMax)+PDGID(lepBMax)) + 0*q(lepCMax)
 #to choose a SFOS (same flaviour opposite sign) pair whose mass is nearest to Zbozonmass
 define chi_sfos_Z_mass = abs(m(SFOS)-ZBozonMass) + 10000000*abs(PDGID(lepA)+PDGID(lepB)) + 0*q(lepC)
 
@@ -95,14 +107,14 @@ define chi_dfos = 10000000*abs(pdgID(lepA)+pdgID(lepC)) - 10000000*2
 
 
 
-define mll: m(SFOS[0]) #this is to choose the SFOS pair nearest to Z boson.
+define mll: m(SFOS[0]) #this is to choose the SFOS pair nearest mass to Z boson.
 define mllZ: mll
-define mllmin: m(SFOS[0]) #this is to choose the SFOS pair that has the lowest mass. one should sort before use
-define mllmax: m(SFOS[0]) #this is to choose the SFOS pair that has the highest mass. one should sort before use
+define mllmin: m(SFOSMin[0]) #this is to choose the SFOS pair that has the lowest mass
+define mllmax: m(SFOSMax[0]) #this is to choose the SFOS pair that has the highest mass
 define mT: sqrt(2 * pT(WLepton) * MET * (1 - cos(dPhi(METLV[0] , WLepton))))
-define HT: sum(pT(HTCandidates))
+define HT: sum(pT(SignalJets))
 define HTlep: sum(pT(SignalLeptons))
-define m3l: m(SignalLeptons[1] SignalLeptons[2] SignalLeptons[3])
+define m3l: m(SignalLeptons[0] SignalLeptons[1] SignalLeptons[2])
 
 define deltaphi: dPhi(SignalLeptons[-1], SignalLeptons[-2]) #to choose the nearest SFOS lepton to the third lepton in phi
 define dROSNEAR: dR(SignalLeptons[-1], SignalLeptons[-2]) #to put a cut on the dR of the nearest lepton and the third lepton
@@ -123,10 +135,10 @@ region SRoffWZprecelectioncommon
 	select size(BaselineLeptons) == 3
 	select size(SignalLeptons) == 3
 	select chi_sfos_min_mass ~= 0
-	select chi_sfos_min_mass < 10000
-	sort m(SFOS) descend ####sfos'u dizmek ne anlama geliyor?
+	select chi_sfos_min_mass < 1000000
+	select chi_sfos_max_mass ~= 0
+	select chi_sfos_max_mass < 1000000
 	select mllmax < 75
-	sort m(SFOS) ascend
 	select mllmin [] 1 75
 	select size(BJET) == 0
 	select mindR3l > 0.4
