@@ -47,6 +47,7 @@ object SignalJets
 	#select loose(BaselineJets) == 1
 	select abseta(BaselineJets) < 2.5 ? bTag(BaselineJets) == 1 : ALL
 
+
 object SignalElectrons
 	take BaselineElectrons
 	select pT(BaselineElectrons) > 0 #I want to choose all but in the current versin of the CutLang this throws an error.
@@ -84,8 +85,7 @@ define ZBozonMass: 91.1876
 #high coefficent is to emphasize this is a requirement not an optimizaiton, if requirement does not met the chi explodes.
 #include lepC with a 0 coefficient to find the missinng index.
 
-#to choose a SFOS (same flaviour opposite sign) pair with the smaller mass.
-define chi_sfos_min_mass = m(SFOS) + 10000000*abs(PDGID(lepA)+PDGID(lepB)) + 0*q(lepC)
+
 #to choose a SFOS (same flaviour opposite sign) pair whose mass is nearest to Zbozonmass
 define chi_sfos_Z_mass = abs(m(SFOS)-ZBozonMass) + 10000000*abs(PDGID(lepA)+PDGID(lepB)) + 0*q(lepC)
 
