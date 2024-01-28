@@ -411,6 +411,3 @@ region SR6JBV
   bin "3" meff [] 2100 2800
   bin "4" meff > 2800
 
-region test
-  select Size(JET) >= 2
-  print Jet_PT
