@@ -5,14 +5,14 @@ info analysis
 	lumi 139
 	arXiv "2106.01676"
 
-object BaselineElectrons
+object BaselineElectronss
 	take ELE
 	select pT(ELE) > 4.5
 	select abseta(ELE) < 2.47
 	#select LooseAndBLayerLikelihood(ELE) == 1 ##########
 	#select abs(z0*sin(theta)) < 0.5
 
-object BaselineMuons
+object BaselineMuonss
 	take MUO
 	select pT(MUO) > 3
 	select abseta(MUO) < 2.5
@@ -24,8 +24,16 @@ object BaselineJets
 	select pT(JET) > 20
 	select abseta(JET) < 4.5
 	#select pT(JET) < 120 AND abseta(JET) < 2.5 ? medium(JET) == 1 : ALL
-	select dR(JET, ELE) >= 0.2
-	select dR(JET, MUO) >= 0.4
+	select dR(JET, BaselineElectronss) >= 0.2
+	select dR(JET, BaselineMuonss) >= 0.4
+
+	object BaselineElectrons
+	take BaselineElectronss
+	select dR(BaselineJets, BaselineElectronss) >= 0.4
+
+object BaselineMuons
+	take BaselineMuonss
+	select dR(BaselineJets, BaselineMuonss) >= 0.4
 
 object BaselinePhotons
 	take PHO
@@ -62,20 +70,20 @@ object pT30gevjets
 
 object BaselineLeptons: Union(BaselineElectrons, ExceptionallyIncludedMuons)
 object SignalLeptons: Union(SignalElectrons, SignalMuons)
-
+object SignalLeptonsMin: Union(SignalElectrons, SignalMuons)
+object SignalLeptonsMax: Union(SignalElectrons, SignalMuons)
 
 define lepA : SignalLeptons[-1] #negative same index means lapA and lepB are interchangable.
 define lepB : SignalLeptons[-1]
 define lepC : SignalLeptons[-2]
 
-define lepAMin : SignalLeptons[-3] #Min suffix is used to indicate this set will be used for min mass SFOS pair
-define lepBMin : SignalLeptons[-3]
-define lepCMin : SignalLeptons[-4]
+define lepAMin : SignalLeptonsMin[-3] #Min suffix is used to indicate this set will be used for min mass SFOS pair
+define lepBMin : SignalLeptonsMin[-3]
+define lepCMin : SignalLeptonsMin[-4]
 
-define lepAMax : SignalLeptons[-5] #Max suffix is used to indicate this set will be used for max mass SFOS pair
-define lepBMax : SignalLeptons[-5]
-define lepCMax : SignalLeptons[-6]
-
+define lepAMax : SignalLeptonsMax[-5] #Max suffix is used to indicate this set will be used for max mass SFOS pair
+define lepBMax : SignalLeptonsMax[-5]
+define lepCMax : SignalLeptonsMax[-6]
 
 define SFOS : lepA lepB
 define SFOSMin : lepAMin lepBMin
@@ -132,7 +140,11 @@ define l1l2: SignalLeptons[0] SignalLeptons[1]
 
 region SRoffWZprecelectioncommon
 	select ALL
+	select size(BaselineElectrons) >= 0
+	select size(BaselineMuons) >=0
 	select size(BaselineLeptons) == 3
+	select size(SignalLeptonsMin) == 3
+	select size(SignalLeptonsMax) == 3
 	select size(SignalLeptons) == 3
 	select chi_sfos_min_mass ~= 0
 	select chi_sfos_min_mass < 1000000
