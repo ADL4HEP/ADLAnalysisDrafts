@@ -12,14 +12,14 @@ countsformat onshellWZ
 
 
 
-object BaselineElectrons
+object BaselineElectronss
 	take ELE
 	select pT(ELE) > 4.5
 	select abseta(ELE) < 2.47
 	#select LooseAndBLayerLikelihood(ELE) == 1 ##########
 	#select abs(z0*sin(theta)) < 0.5
 
-object BaselineMuons
+object BaselineMuonss
 	take MUO
 	select pT(MUO) > 3
 	select abseta(MUO) < 2.5
@@ -31,8 +31,16 @@ object BaselineJets
 	select pT(JET) > 20
 	select abseta(JET) < 4.5
 	#select pT(JET) < 120 AND abseta(JET) < 2.5 ? medium(JET) == 1 : ALL
-	select dR(JET, ELE) >= 0.2
-	select dR(JET, MUO) >= 0.4
+	select dR(JET, BaselineElectronss) >= 0.2
+	select dR(JET, BaselineMuonss) >= 0.4
+
+	object BaselineElectrons
+	take BaselineElectronss
+	select dR(BaselineJets, BaselineElectronss) >= 0.4
+
+object BaselineMuons
+	take BaselineMuonss
+	select dR(BaselineJets, BaselineMuonss) >= 0.4
 
 object BaselinePhotons
 	take PHO
@@ -112,6 +120,10 @@ define dROSNEAR: dR(SignalLeptons[-1], SignalLeptons[-2]) #to put a cut on the d
 
 region common
 	select ALL
+	counts onshellWZ 53784
+	select size(BaselineElectrons) >= 0
+	counts onshellWZ 53784
+	select size(BaselineMuons) >=0
 	counts onshellWZ 53784
 	select size(BaselineLeptons) == 3
 	counts onshellWZ 227
