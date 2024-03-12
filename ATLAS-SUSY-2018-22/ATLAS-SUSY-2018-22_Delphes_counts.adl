@@ -32,6 +32,7 @@ countsformat SR2j
     process SSd1400600, "SSd 1400 600"
     process SSd1600600, "SSd 1800 600" 
 
+
 countsformat SR4j5j
     process GGd14001000, "GGd 1400 1000"
     process GGd18001000, "GGd 1800 1000"
@@ -39,7 +40,7 @@ countsformat SR4j5j
  
 countsformat SR6j
     process SSo800600400   , "SSo 800 600 400"   
-    process GGo14001100800 , "GGo 1400 1100 800" 
+    process GGo14001100800, "GGo 1400 1100 800" 
     process GGo200015001000, "GGo 2000 1500 1000"
     process GGo22001200200 , "GGo 2200 1200 200" 
 
@@ -106,13 +107,20 @@ object signalMuos
     #select Z0(cleanMuos)*sin(Theta(cleanMuos)) < 0.5 # in mm
     #select d0pv(cleanMuos)/d0sigpv(cleanMuos) < 3
 
+object Pt40Jets
+    take baselineJets
+    select Pt(baselineJets) > 40
+
 ## EVENT VARIABLE DEFINITIONS
 
 define nJets = Size(signalJets)
-define dPhiLeadJetsMETMin = min(dPhi(signalJets[:1],METLV[0]))*HSTEP(nJets == 2) + min(dPhi(signalJets[:2],METLV[0]))*HSTEP(nJets > 2)
+
+define dPhiLeadJets2METMin = min(dPhi(signalJets[:1],METLV[0]))*HSTEP(Size(signalJets) == 2)
+define dPhiLeadJets3METMin = min(dPhi(signalJets[:2],METLV[0]))*HSTEP(Size(signalJets) > 2)
+define dPhiLeadJetsMETMin = dPhiLeadJets2METMin + dPhiLeadJets3METMin
 define dPhiRestJetsMETMin = min(dPhi(signalJets[3:],METLV[0])) 
 
-define HTJets = fHT(signalJets)
+
 define SqrtHT = Sqrt(fHT(signalJets)) 
 define METSqrtHT = MET/SqrtHT 
 define Aplanarity = fAplanarity(signalJets)
@@ -135,9 +143,11 @@ region init
     select Size(signalJets) >= 0
     select Size(signalMuos) >= 0
     select Size(signalEles) >= 0
+    select Size(Pt40Jets) >= 0
 
 region preselection
     init
+    select sum(Pt(Pt40Jets)) > 150
     select Size(signalJets) >= 2
     select MET > 300
     select Pt(signalJets[0]) > 200
@@ -508,7 +518,7 @@ region SR2j2800
     counts SR2j 368, 138, 52.0
     select mEff > 2800
     counts SR2j 12.8, 14.8, 23.1
-
+    
 # Table 8 on page 14
 # gluinos with direct decays
 region SR4j1000
