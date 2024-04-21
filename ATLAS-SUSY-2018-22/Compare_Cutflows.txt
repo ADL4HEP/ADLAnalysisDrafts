@@ -1,0 +1,325 @@
+Filename :	Output_ZeroLepton/histoOut-SSd_1200_600.root
+Proc :		SSd1200600
+Region :	SR2j1600
+                       preselection 1423.00    1.00 1423.00    1.00
+              Size(signalJets) >= 2 1423.00    1.00 1423.00    1.00
+           dPhiLeadJetsMETMin > 0.8 1146.00    0.81 1139.66    0.80
+           dPhiRestJetsMETMin > 0.4 1097.00    0.96  969.86    0.85
+            Pt(signalJets[1]) > 250  714.00    0.65  599.31    0.62
+ max(AbsEta(signalJets[0:1])) < 2.0  696.00    0.97  587.11    0.98
+                     METSqrtHT > 16  474.00    0.68  358.61    0.61
+                        mEff > 1600  319.00    0.67  233.80    0.65
+
+
+
+Filename :	Output_ZeroLepton/histoOut-SSd_1200_600.root
+Proc :		SSd1200600
+Region :	SR2j2200
+                       preselection 1423.00    1.00 1423.00    1.00
+              Size(signalJets) >= 2 1423.00    1.00 1423.00    1.00
+           dPhiLeadJetsMETMin > 0.4 1278.00    0.90 1329.14    0.93
+           dPhiRestJetsMETMin > 0.2 1246.00    0.97 1227.80    0.92
+            Pt(signalJets[0]) > 600  414.00    0.33  375.93    0.31
+                     METSqrtHT > 16  280.00    0.68  230.44    0.61
+                        mEff > 2200   87.10    0.31   67.28    0.29
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-SSd_1200_600.root
+Proc :		SSd1200600
+Region :	SR2j2800
+                       preselection 1423.00    1.00 1423.00    1.00
+              Size(signalJets) >= 2 1423.00    1.00 1423.00    1.00
+           dPhiLeadJetsMETMin > 0.8 1146.00    0.81 1139.66    0.80
+           dPhiRestJetsMETMin > 0.4 1097.00    0.96  969.86    0.85
+            Pt(signalJets[1]) > 250  714.00    0.65  599.31    0.62
+ max(AbsEta(signalJets[0:1])) < 1.2  547.00    0.77  457.09    0.76
+                     METSqrtHT > 16  368.00    0.67  281.91    0.62
+                        mEff > 2800   12.80    0.03   10.85    0.04
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-SSd_1400_600.root
+Proc :		SSd1400600
+Region :	SR2j1600
+                       preselection  432.00    1.00  432.00    1.00
+              Size(signalJets) >= 2  432.00    1.00  432.00    1.00
+           dPhiLeadJetsMETMin > 0.8  344.00    0.80  342.90    0.79
+           dPhiRestJetsMETMin > 0.4  329.00    0.96  290.76    0.85
+            Pt(signalJets[1]) > 250  249.00    0.76  217.83    0.75
+ max(AbsEta(signalJets[0:1])) < 2.0  244.00    0.98  214.30    0.98
+                     METSqrtHT > 16  182.00    0.75  148.28    0.69
+                        mEff > 1600  161.00    0.88  127.10    0.86
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-SSd_1400_600.root
+Proc :		SSd1400600
+Region :	SR2j2200
+                       preselection  432.00    1.00  432.00    1.00
+              Size(signalJets) >= 2  432.00    1.00  432.00    1.00
+           dPhiLeadJetsMETMin > 0.4  385.00    0.89  402.23    0.93
+           dPhiRestJetsMETMin > 0.2  376.00    0.98  370.55    0.92
+            Pt(signalJets[0]) > 600  214.00    0.57  193.43    0.52
+                     METSqrtHT > 16  161.00    0.75  136.28    0.70
+                        mEff > 2200   85.90    0.53   69.75    0.51
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-SSd_1400_600.root
+Proc :		SSd1400600
+Region :	SR2j2800
+                       preselection  432.00    1.00  432.00    1.00
+              Size(signalJets) >= 2  432.00    1.00  432.00    1.00
+           dPhiLeadJetsMETMin > 0.8  344.00    0.80  342.90    0.79
+           dPhiRestJetsMETMin > 0.4  329.00    0.96  290.76    0.85
+            Pt(signalJets[1]) > 250  249.00    0.76  217.83    0.75
+ max(AbsEta(signalJets[0:1])) < 1.2  188.00    0.76  168.76    0.77
+                     METSqrtHT > 16  138.00    0.73  115.98    0.69
+                        mEff > 2800   14.80    0.11   11.45    0.10
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-SSd_1600_600.root
+Proc :		SSd1600600
+Region :	SR2j1600
+                       preselection  139.00    1.00  139.00    1.00
+              Size(signalJets) >= 2  139.00    1.00  139.00    1.00
+           dPhiLeadJetsMETMin > 0.8  108.00    0.78  110.54    0.80
+           dPhiRestJetsMETMin > 0.4  103.00    0.95   92.87    0.84
+            Pt(signalJets[1]) > 250   89.20    0.87   78.58    0.85
+ max(AbsEta(signalJets[0:1])) < 2.0   87.40    0.98   76.99    0.98
+                     METSqrtHT > 16   69.70    0.80   58.23    0.76
+                        mEff > 1600   67.20    0.96   55.78    0.96
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-SSd_1600_600.root
+Proc :		SSd1600600
+Region :	SR2j2200
+                       preselection  139.00    1.00  139.00    1.00
+              Size(signalJets) >= 2  139.00    1.00  139.00    1.00
+           dPhiLeadJetsMETMin > 0.4  124.00    0.89  129.40    0.93
+           dPhiRestJetsMETMin > 0.2  121.00    0.98  118.80    0.92
+            Pt(signalJets[0]) > 600   95.90    0.79   90.73    0.76
+                     METSqrtHT > 16   75.50    0.79   69.65    0.77
+                        mEff > 2200   60.80    0.81   53.49    0.77
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-SSd_1600_600.root
+Proc :		SSd1600600
+Region :	SR2j2800
+                       preselection  139.00    1.00  139.00    1.00
+              Size(signalJets) >= 2  139.00    1.00  139.00    1.00
+           dPhiLeadJetsMETMin > 0.8  108.00    0.78  110.54    0.80
+           dPhiRestJetsMETMin > 0.4  103.00    0.95   92.87    0.84
+            Pt(signalJets[1]) > 250   89.20    0.87   78.58    0.85
+ max(AbsEta(signalJets[0:1])) < 1.2   65.80    0.74   59.05    0.75
+                     METSqrtHT > 16   52.00    0.79   44.30    0.75
+                        mEff > 2800   23.10    0.44   16.82    0.38
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1400_1000.root
+Proc :		GGd14001000
+Region :	SR4j1000
+                       preselection 1787.00    1.00 1787.00    1.00
+              Size(signalJets) >= 2 1787.00    1.00 1787.00    1.00
+                         nJets >= 4 1355.00    0.76 1383.10    0.77
+           dPhiLeadJetsMETMin > 0.4 1199.00    0.88 1295.09    0.94
+           dPhiRestJetsMETMin > 0.2 1099.00    0.92 1110.52    0.86
+     min(Pt(signalJets[1:3])) > 100  498.00    0.45  492.76    0.44
+ max(AbsEta(signalJets[1:3])) < 2.0  435.00    0.87  436.43    0.89
+                  Aplanarity > 0.04  318.00    0.73  303.06    0.69
+                     METSqrtHT > 16  109.00    0.34   95.37    0.31
+                        mEff > 1000  109.00    1.00   95.20    1.00
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1400_1000.root
+Proc :		GGd14001000
+Region :	SR4j2200
+                       preselection 1787.00    1.00 1787.00    1.00
+              Size(signalJets) >= 2 1787.00    1.00 1787.00    1.00
+                         nJets >= 4 1355.00    0.76 1383.10    0.77
+           dPhiLeadJetsMETMin > 0.4 1199.00    0.88 1295.09    0.94
+           dPhiRestJetsMETMin > 0.2 1099.00    0.92 1110.52    0.86
+     min(Pt(signalJets[1:3])) > 100  498.00    0.45  492.76    0.44
+   max(AbsEta(signalJets[1:3])) < 2  435.00    0.87  436.43    0.89
+                  Aplanarity > 0.04  318.00    0.73  303.06    0.69
+                     METSqrtHT > 16  109.00    0.34   95.37    0.31
+                        mEff > 2200   13.10    0.12   11.47    0.12
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1400_1000.root
+Proc :		GGd14001000
+Region :	SR4j3400
+                       preselection 1787.00    1.00 1787.00    1.00
+              Size(signalJets) >= 2 1787.00    1.00 1787.00    1.00
+                         nJets >= 4 1355.00    0.76 1383.10    0.77
+           dPhiLeadJetsMETMin > 0.4 1199.00    0.88 1295.09    0.94
+           dPhiRestJetsMETMin > 0.2 1099.00    0.92 1110.52    0.86
+     min(Pt(signalJets[1:3])) > 100  498.00    0.45  492.76    0.44
+ max(AbsEta(signalJets[1:3])) < 2.0  435.00    0.87  436.43    0.89
+                  Aplanarity > 0.04  318.00    0.73  303.06    0.69
+                     METSqrtHT > 10  294.00    0.92  274.80    0.91
+                        mEff > 3400    1.15    0.00    0.68    0.00
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1400_1000.root
+Proc :		GGd14001000
+Region :	SR5j1600
+                       preselection 1787.00    1.00 1787.00    1.00
+              Size(signalJets) >= 2 1787.00    1.00 1787.00    1.00
+                         nJets >= 4  815.00    0.46 1383.10    0.77
+           dPhiLeadJetsMETMin > 0.4  714.00    0.88 1295.09    0.94
+           dPhiRestJetsMETMin > 0.2  634.00    0.89 1110.52    0.86
+            Pt(signalJets[0]) > 600   62.20    0.10   93.48    0.08
+                     METSqrtHT > 16   34.50    0.55   46.23    0.49
+                        mEff > 1600   34.20    0.99   44.86    0.97
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1400_1000.root
+Proc :		GGd14001000
+Region :	SR4j1000
+                       preselection 1787.00    1.00 1787.00    1.00
+              Size(signalJets) >= 2 1787.00    1.00 1787.00    1.00
+                         nJets >= 4 1355.00    0.76 1383.10    0.77
+           dPhiLeadJetsMETMin > 0.4 1199.00    0.88 1295.09    0.94
+           dPhiRestJetsMETMin > 0.2 1099.00    0.92 1110.52    0.86
+     min(Pt(signalJets[1:3])) > 100  498.00    0.45  492.76    0.44
+ max(AbsEta(signalJets[1:3])) < 2.0  435.00    0.87  436.43    0.89
+                  Aplanarity > 0.04  318.00    0.73  303.06    0.69
+                     METSqrtHT > 16  109.00    0.34   95.37    0.31
+                        mEff > 1000  109.00    1.00   95.20    1.00
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1400_1000.root
+Proc :		GGd14001000
+Region :	SR4j2200
+                       preselection 1787.00    1.00 1787.00    1.00
+              Size(signalJets) >= 2 1787.00    1.00 1787.00    1.00
+                         nJets >= 4 1355.00    0.76 1383.10    0.77
+           dPhiLeadJetsMETMin > 0.4 1199.00    0.88 1295.09    0.94
+           dPhiRestJetsMETMin > 0.2 1099.00    0.92 1110.52    0.86
+     min(Pt(signalJets[1:3])) > 100  498.00    0.45  492.76    0.44
+   max(AbsEta(signalJets[1:3])) < 2  435.00    0.87  436.43    0.89
+                  Aplanarity > 0.04  318.00    0.73  303.06    0.69
+                     METSqrtHT > 16  109.00    0.34   95.37    0.31
+                        mEff > 2200   13.10    0.12   11.47    0.12
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1400_1000.root
+Proc :		GGd14001000
+Region :	SR4j3400
+                       preselection 1787.00    1.00 1787.00    1.00
+              Size(signalJets) >= 2 1787.00    1.00 1787.00    1.00
+                         nJets >= 4 1355.00    0.76 1383.10    0.77
+           dPhiLeadJetsMETMin > 0.4 1199.00    0.88 1295.09    0.94
+           dPhiRestJetsMETMin > 0.2 1099.00    0.92 1110.52    0.86
+     min(Pt(signalJets[1:3])) > 100  498.00    0.45  492.76    0.44
+ max(AbsEta(signalJets[1:3])) < 2.0  435.00    0.87  436.43    0.89
+                  Aplanarity > 0.04  318.00    0.73  303.06    0.69
+                     METSqrtHT > 10  294.00    0.92  274.80    0.91
+                        mEff > 3400    1.15    0.00    0.68    0.00
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1400_1000.root
+Proc :		GGd14001000
+Region :	SR5j1600
+                       preselection 1787.00    1.00 1787.00    1.00
+              Size(signalJets) >= 2 1787.00    1.00 1787.00    1.00
+                         nJets >= 4  815.00    0.46 1383.10    0.77
+           dPhiLeadJetsMETMin > 0.4  714.00    0.88 1295.09    0.94
+           dPhiRestJetsMETMin > 0.2  634.00    0.89 1110.52    0.86
+            Pt(signalJets[0]) > 600   62.20    0.10   93.48    0.08
+                     METSqrtHT > 16   34.50    0.55   46.23    0.49
+                        mEff > 1600   34.20    0.99   44.86    0.97
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1800_1000.root
+Proc :		GGd18001000
+Region :	SR4j1000
+                       preselection  315.00    1.00  315.00    1.00
+              Size(signalJets) >= 2  315.00    1.00  315.00    1.00
+                         nJets >= 4  276.00    0.88  279.93    0.89
+           dPhiLeadJetsMETMin > 0.4  241.00    0.87  259.90    0.93
+           dPhiRestJetsMETMin > 0.2  218.00    0.90  218.20    0.84
+     min(Pt(signalJets[1:3])) > 100  157.00    0.72  152.20    0.70
+ max(AbsEta(signalJets[1:3])) < 2.0  144.00    0.92  140.35    0.92
+                  Aplanarity > 0.04  107.00    0.74  102.80    0.73
+                     METSqrtHT > 16   55.40    0.52   48.38    0.47
+                        mEff > 1000    5.40    0.10   48.38    1.00
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1800_1000.root
+Proc :		GGd18001000
+Region :	SR4j2200
+                       preselection  315.00    1.00  315.00    1.00
+              Size(signalJets) >= 2  315.00    1.00  315.00    1.00
+                         nJets >= 4  276.00    0.88  279.93    0.89
+           dPhiLeadJetsMETMin > 0.4  241.00    0.87  259.90    0.93
+           dPhiRestJetsMETMin > 0.2  218.00    0.90  218.20    0.84
+     min(Pt(signalJets[1:3])) > 100  157.00    0.72  152.20    0.70
+   max(AbsEta(signalJets[1:3])) < 2  144.00    0.92  140.35    0.92
+                  Aplanarity > 0.04  107.00    0.74  102.80    0.73
+                     METSqrtHT > 16   55.40    0.52   48.38    0.47
+                        mEff > 2200   23.20    0.42   17.29    0.36
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1800_1000.root
+Proc :		GGd18001000
+Region :	SR4j3400
+                       preselection  315.00    1.00  315.00    1.00
+              Size(signalJets) >= 2  315.00    1.00  315.00    1.00
+                         nJets >= 4  276.00    0.88  279.93    0.89
+           dPhiLeadJetsMETMin > 0.4  241.00    0.87  259.90    0.93
+           dPhiRestJetsMETMin > 0.2  218.00    0.90  218.20    0.84
+     min(Pt(signalJets[1:3])) > 100  157.00    0.72  152.20    0.70
+ max(AbsEta(signalJets[1:3])) < 2.0  144.00    0.92  140.35    0.92
+                  Aplanarity > 0.04  107.00    0.74  102.80    0.73
+                     METSqrtHT > 10   95.40    0.89   90.71    0.88
+                        mEff > 3400    0.94    0.01    0.88    0.01
+
+
+
+
+Filename :	Output_ZeroLepton/histoOut-GGd_1800_1000.root
+Proc :		GGd18001000
+Region :	SR5j1600
+                       preselectison  315.00    1.00  315.00    1.00
+              Size(signalJets) >= 2  315.00    1.00  315.00    1.00
+                         nJets >= 4  181.00    0.57  279.93    0.89
+           dPhiLeadJetsMETMin > 0.4  158.00    0.87  259.90    0.93
+           dPhiRestJetsMETMin > 0.2  139.00    0.88  218.20    0.84
+            Pt(signalJets[0]) > 600   38.00    0.27   58.09    0.27
+                     METSqrtHT > 16   20.50    0.54   31.16    0.54
+                        mEff > 1600   20.50    1.00   30.96    0.99
