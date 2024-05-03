@@ -1,0 +1,191 @@
+run on C1posN2_offshellWZ_positiveWinoBino_125_125_85.13_short.root
+
+
+Efficiencies for analysis : BP_1
+						twolEwkLowMet	Based on 20597 events:
+                                                               ALL :      1 +-         0 evt:    20597
+                                                Size(leptons) == 2 : 0.007768 +-  0.000612 evt:      160
+                                                  Size(muons) == 2 : 0.5188 +-    0.0395 evt:       83
+                                            pT(leptons[0]) [] 5 30 :      1 +-         0 evt:       83
+                                            pT(leptons[1]) [] 5 30 :      1 +-         0 evt:       83
+                               q(leptons[0]) * q(leptons[1]) == -1 : 0.9398 +-    0.0261 evt:       78
+                          Size(electrons) == 2 or Size(muons) == 2 :      1 +-         0 evt:       78
+                                               m(dilepton) [] 4 50 : 0.9744 +-    0.0179 evt:       76
+                                                  pT(dilepton) > 3 : 0.9737 +-    0.0184 evt:       74
+                                                   Size(jets) >= 1 : 0.5676 +-    0.0576 evt:       42
+                                           MTl1 < 70 and MTl2 < 70 : 0.8095 +-    0.0606 evt:       34
+                                               MET / HT [] 2/3 1.4 : 0.3529 +-     0.082 evt:       12
+              fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160 : 0.08333 +-    0.0798 evt:        1
+					 --> Overall efficiency	 = 0.00486 % +- 0.00485 %
+Bins for analysis : BP_1
+						Bin:0 has:0 events
+						Bin:1 has:0 events
+						Bin:2 has:0 events
+						Bin:3 has:0 events
+saving...	saved.
+BP_1 finalized.
+Efficiencies for analysis : BP_2
+						twolEwkHigherMet	Based on 160 events:
+                                                Size(leptons) == 2 : 0.007768 +-  0.000612 evt:      160
+                          Size(electrons) == 2 or Size(muons) == 2 :   0.85 +-    0.0282 evt:      136
+                               q(leptons[0]) * q(leptons[1]) == -1 : 0.9485 +-    0.0189 evt:      129
+                                  dR(leptons[0], leptons[1]) > 0.3 :      1 +-         0 evt:      129
+                                               m(dilepton) [] 1 50 :  0.969 +-    0.0153 evt:      125
+                                                  pT(dilepton) > 3 :  0.984 +-    0.0112 evt:      123
+                                                   Size(jets) >= 1 : 0.5935 +-    0.0443 evt:       73
+                                           MTl1 < 70 and MTl2 < 70 : 0.8493 +-    0.0419 evt:       62
+                                               MET / HT [] 2/3 1.4 : 0.4194 +-    0.0627 evt:       26
+              fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160 : 0.3462 +-    0.0933 evt:        9
+					 --> Overall efficiency	 =   5.62 % +-   1.82 %
+Bins for analysis : BP_2
+						Bin:0 has:0 events
+						Bin:1 has:0 events
+						Bin:2 has:0 events
+						Bin:3 has:0 events
+						Bin:4 has:0 events
+						Bin:5 has:0 events
+						Bin:6 has:0 events
+						Bin:7 has:0 events
+						Bin:8 has:0 events
+						Bin:9 has:0 events
+						Bin:10 has:0 events
+						Bin:11 has:0 events
+						Bin:12 has:0 events
+						Bin:13 has:0 events
+						Bin:14 has:0 events
+saving...	saved.
+BP_2 finalized.
+Efficiencies for analysis : BP_3
+						threelEwkLowMet	Based on 15 events:
+                                                Size(leptons) == 3 : 0.0007283 +-  0.000188 evt:       15
+                                                  Size(muons) >= 2 : 0.7333 +-     0.114 evt:       11
+                                                pT(leptons[0]) > 5 :      1 +-         0 evt:       11
+                                                pT(leptons[1]) > 5 :      1 +-         0 evt:       11
+                                                pT(leptons[2]) > 5 :      1 +-         0 evt:       11
+                                                 Size(sfosll) >= 1 :      1 +-         0 evt:       11
+                                                  m(sfosll) ascend :      1 +-         0 evt:       11
+                                              m(sfosll[0]) [] 4 50 :      1 +-         0 evt:       11
+                                                 Size(sfasll) >= 1 :      1 +-         0 evt:       11
+                                                 m(sfasll) descend :      1 +-         0 evt:       11
+                                                 m(sfasll[0]) < 60 :      1 +-         0 evt:       11
+					 --> Overall efficiency	 =   73.3 % +-   11.4 %
+Bins for analysis : BP_3
+						Bin:0 has:0 events
+						Bin:1 has:0 events
+						Bin:2 has:0 events
+						Bin:3 has:0 events
+saving...	saved.
+BP_3 finalized.
+Efficiencies for analysis : BP_4
+						threelEwkHigherMet	Based on 15 events:
+                                                Size(leptons) == 3 : 0.0007283 +-  0.000188 evt:       15
+                                                 Size(sfosll) >= 1 :      1 +-         0 evt:       15
+dR(leptons[0], leptons[1]) > 0.3 and dR(leptons[0], leptons[2]) >  :      1 +-         0 evt:       15
+                                                  m(sfosll) ascend :      1 +-         0 evt:       15
+                                              m(sfosll[0]) [] 1 50 :      1 +-         0 evt:       15
+					 --> Overall efficiency	 =    100 % +-      0 %
+Bins for analysis : BP_4
+						Bin:0 has:0 events
+						Bin:1 has:0 events
+						Bin:2 has:0 events
+						Bin:3 has:0 events
+						Bin:4 has:0 events
+saving...	saved.
+BP_4 finalized.
+Efficiencies for analysis : BP_5
+						WZLowMet	Based on 31 events:
+                                              Size(leptonswz) == 3 : 0.001505 +-   0.00027 evt:       31
+                                             pT(leptonswz) descend :      1 +-         0 evt:       31
+                                                Size(muonswz) >= 2 : 0.7097 +-    0.0815 evt:       22
+                                             pT(leptonswz[0]) > 30 :    0.5 +-     0.107 evt:       11
+                                             pT(leptonswz[1]) > 10 :      1 +-         0 evt:       11
+                                             pT(leptonswz[2]) > 10 :      1 +-         0 evt:       11
+                                               pT(muonswz[0]) > 20 :      1 +-         0 evt:       11
+                                               Size(sfosllwz) >= 1 :      1 +-         0 evt:       11
+                                                m(sfosllwz) ascend :      1 +-         0 evt:       11
+					 --> Overall efficiency	 =   35.5 % +-   8.59 %
+Bins for analysis : BP_5
+						Bin:0 has:0 events
+						Bin:1 has:0 events
+						Bin:2 has:2 events
+saving...	saved.
+BP_5 finalized.
+Efficiencies for analysis : BP_6
+						WZHigherMet	Based on 31 events:
+                                              Size(leptonswz) == 3 : 0.001505 +-   0.00027 evt:       31
+                                             pT(leptonswz) descend :      1 +-         0 evt:       31
+                                               Size(sfosllwz) >= 1 :      1 +-         0 evt:       31
+dR(leptonswz[0], leptonswz[1]) > 0.3 and dR(leptonswz[0], leptonsw :      1 +-         0 evt:       31
+                                                m(sfosllwz) ascend :      1 +-         0 evt:       31
+					 --> Overall efficiency	 =    100 % +-      0 %
+Bins for analysis : BP_6
+						Bin:0 has:0 events
+						Bin:1 has:0 events
+						Bin:2 has:0 events
+						Bin:3 has:0 events
+saving...	saved.
+BP_6 finalized.
+Efficiencies for analysis : BP_7
+						twolStopLowMet	Based on 160 events:
+                                                Size(leptons) == 2 : 0.007768 +-  0.000612 evt:      160
+                                                  Size(muons) == 2 : 0.5188 +-    0.0395 evt:       83
+                                            pT(leptons[0]) [] 5 30 :      1 +-         0 evt:       83
+                                            pT(leptons[1]) [] 5 30 :      1 +-         0 evt:       83
+                               q(leptons[0]) * q(leptons[1]) == -1 : 0.9398 +-    0.0261 evt:       78
+                          Size(electrons) == 2 or Size(muons) == 2 :      1 +-         0 evt:       78
+                                               m(dilepton) [] 4 50 : 0.9744 +-    0.0179 evt:       76
+                                             m(dilepton) ][ 9 10.5 :      1 +-         0 evt:       76
+                                              m(dilepton) ][ 3 3.2 :      1 +-         0 evt:       76
+                                                  pT(dilepton) > 3 : 0.9737 +-    0.0184 evt:       74
+                                                   Size(jets) >= 1 : 0.5676 +-    0.0576 evt:       42
+                                                          HT > 100 : 0.2857 +-    0.0697 evt:       12
+                                               MET / HT [] 2/3 1.4 : 0.1667 +-     0.108 evt:        2
+                                                  Size(bjets) == 0 :      1 +-         0 evt:        2
+              fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160 :      1 +-         0 evt:        2
+					 --> Overall efficiency	 =   1.25 % +-  0.878 %
+Bins for analysis : BP_7
+						Bin:0 has:0 events
+						Bin:1 has:0 events
+						Bin:2 has:0 events
+						Bin:3 has:0 events
+						Bin:4 has:1 events
+						Bin:5 has:0 events
+saving...	saved.
+BP_7 finalized.
+Efficiencies for analysis : BP_8
+						twolStopHigherMet	Based on 160 events:
+                                                Size(leptons) == 2 : 0.007768 +-  0.000612 evt:      160
+                               q(leptons[0]) * q(leptons[1]) == -1 : 0.8812 +-    0.0256 evt:      141
+                                  dR(leptons[0], leptons[1]) > 0.3 :      1 +-         0 evt:      141
+                                               m(dilepton) [] 1 50 : 0.9504 +-    0.0183 evt:      134
+                                             m(dilepton) ][ 9 10.5 : 0.9925 +-   0.00743 evt:      133
+                                              m(dilepton) ][ 3 3.2 :      1 +-         0 evt:      133
+                                                  pT(dilepton) > 3 :  0.985 +-    0.0106 evt:      131
+                                                   Size(jets) >= 1 : 0.5725 +-    0.0432 evt:       75
+                                                          HT > 100 : 0.2533 +-    0.0502 evt:       19
+                                               MET / HT [] 2/3 1.4 : 0.2105 +-    0.0935 evt:        4
+                                                  Size(bjets) == 0 :      1 +-         0 evt:        4
+              fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160 :      1 +-         0 evt:        4
+					 --> Overall efficiency	 =    2.5 % +-   1.23 %
+Bins for analysis : BP_8
+						Bin:0 has:0 events
+						Bin:1 has:0 events
+						Bin:2 has:0 events
+						Bin:3 has:0 events
+						Bin:4 has:0 events
+						Bin:5 has:1 events
+						Bin:6 has:0 events
+						Bin:7 has:0 events
+						Bin:8 has:0 events
+						Bin:9 has:0 events
+						Bin:10 has:0 events
+						Bin:11 has:0 events
+						Bin:12 has:0 events
+						Bin:13 has:0 events
+						Bin:14 has:0 events
+						Bin:15 has:0 events
+						Bin:16 has:0 events
+						Bin:17 has:0 events
+saving...	saved.
+BP_8 finalized.
+finished.
