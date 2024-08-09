@@ -1,0 +1,69 @@
+
+
+*******Working on WZ15050
+*****WARNING: LENGTHS ARE NOT MATCHING***** 13 13
+
+ ====== Comparing "C1N2 WZ 150 50" :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                     size(sigJETS) >= 1 :  93.79  100.00  -6.21
+                                      size(sigLEP) >= 2 :  2.45  49.09  -95.00
+                       q(sigLEP[0]) * q(sigLEP[1]) == 1 :  0.28  34.69  -99.20
+                                      size(sigLEP) == 2 :  0.20  15.71  -98.74
+            pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25 :  0.13  0.24  -44.56
+                                        size(bjet) == 0 :  0.13  0.22  -43.11
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  0.13  0.22  -43.11
+                                             MT2 >= 100 :  0.00  0.22  -100.00
+                                           MTmin >= 100 :  0.00  0.01  -100.00
+                                             MET >= 100 :  0.00  0.01  -100.00
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                     size(sigJETS) >= 1 :  0.94  1.00  0.00
+                                      size(sigLEP) >= 2 :  2.62  49.09  -94.67
+                       q(sigLEP[0]) * q(sigLEP[1]) == 1 :  11.32  70.67  -83.97
+                                      size(sigLEP) == 2 :  71.19  45.29  57.17
+            pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25 :  66.67  1.51  4300.80
+                                        size(bjet) == 0 :  96.43  93.97  2.62
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  100.00  100.00  0.00
+                                             MT2 >= 100 :  0.00  98.75  -100.00
+                                           MTmin >= 100 :  0.00  5.02  -100.00
+                                             MET >= 100 :  0.00  100.00  -100.00
+*****WARNING: LENGTHS ARE NOT MATCHING***** 13 13
+*****WARNING: LENGTHS ARE NOT MATCHING***** 15 15
+
+ ====== Comparing "C1N2 WZ 150 50" :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                     size(sigJETS) >= 1 :  93.79  100.00  -6.21
+                                      size(sigLEP) >= 2 :  2.45  49.09  -95.00
+                       q(sigLEP[0]) * q(sigLEP[1]) == 1 :  0.28  34.69  -99.20
+                                      size(sigLEP) == 2 :  0.20  15.71  -98.74
+            pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25 :  0.13  0.24  -44.56
+                                        size(bjet) == 0 :  0.13  0.22  -43.11
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  0.13  0.22  -43.11
+                                             MT2 <= 100 :  0.13  0.22  -42.39
+                                           MTmin >= 130 :  0.00  0.21  -97.75
+                                             MET >= 140 :  0.00  0.02  -78.39
+                                            Meff <= 600 :  0.00  0.00  -100.00
+                          dR(sigLEP[0], sigLEP[1]) <= 3 :  0.00  0.00  -100.00
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                     size(sigJETS) >= 1 :  0.94  1.00  0.00
+                                      size(sigLEP) >= 2 :  2.62  49.09  -94.67
+                       q(sigLEP[0]) * q(sigLEP[1]) == 1 :  11.32  70.67  -83.97
+                                      size(sigLEP) == 2 :  71.19  45.29  57.17
+            pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25 :  66.67  1.51  4300.80
+                                        size(bjet) == 0 :  96.43  93.97  2.62
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  100.00  100.00  0.00
+                                             MT2 <= 100 :  100.00  98.75  1.27
+                                           MTmin >= 130 :  3.70  94.98  -96.10
+                                             MET >= 140 :  100.00  10.40  861.75
+                                            Meff <= 600 :  0.00  20.49  -100.00
+                          dR(sigLEP[0], sigLEP[1]) <= 3 :  0.00  49.33  -100.00
+*****WARNING: LENGTHS ARE NOT MATCHING***** 15 15
