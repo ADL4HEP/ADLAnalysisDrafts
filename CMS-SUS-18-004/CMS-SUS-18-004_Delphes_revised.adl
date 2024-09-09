@@ -1,0 +1,576 @@
+#info analysis
+#  title "Search for supersymmetry in final states with two or three soft leptons and missing transverse momentum in proton-proton collisions at sqrt(s) = 13 TeV "
+#  experiment CMS
+#  id SUS-18-004
+#  publication JHEP. 04 (2022) 091
+#  sqrtS 13.0
+#  lumi 137.1
+#  arXiv 2111.06296
+#  hepdata https://www.hepdata.net/record/ins1966342
+#  doi 10.1007/JHEP04(2022)091
+
+#info adl
+#  adlauthor Sezen Sekmen, Changgi Huh, Demircan Demirbağ
+#  datatier Delphes
+
+countsformat ewk
+  process TChi175170, "TChi175/5"
+  process TChi200160, "TChi200/40"
+  process Higgsino160157, "Higgsino160/3"
+  process Higgsino180170, "Higgsino180/10"
+
+countsformat col
+  process T2bffx325315, "T2bff#tilde{x}_{1}^{0}325/10"
+  process T2bffx425315, "T2bff#tilde{x}_{1}^{0}425/50"
+  process T2bW450430, "T2bW450/20"
+  process T2bW500460, "T2bW500/40"
+
+# Efficiency tables
+table btagdeepCSVmedium
+  tabletype efficiency
+  nvars 1
+  errors true
+  # val    err-     err+     pTmin     pTmax
+  0.5790   0.0016   0.0016    -10.4     30.0
+  0.6314   0.0013   0.0013     30.0     35.0
+  0.6442   0.0011   0.0011     35.0     40.0
+  0.6596   0.0007   0.0007     40.0     50.0
+  0.6727   0.0007   0.0007     50.0     60.0
+  0.6812   0.0008   0.0008     60.0     70.0
+  0.6855   0.0008   0.0008     70.0     80.0
+  0.6873   0.0009   0.0009     80.0     90.0
+  0.6881   0.0010   0.0010     90.0    100.0
+  0.6880   0.0008   0.0008    100.0    125.0
+  0.6867   0.0011   0.0011    125.0    150.0
+  0.6826   0.0015   0.0015    150.0    175.0
+  0.6734   0.0020   0.0020    175.0    200.0
+  0.6624   0.0026   0.0026    200.0    225.0
+  0.6494   0.0034   0.0034    225.0    250.0
+  0.6419   0.0044   0.0044    250.0    275.0
+  0.6301   0.0054   0.0054    275.0    300.0
+  0.6202   0.0051   0.0051    300.0    350.0
+  0.6006   0.0073   0.0073    350.0    400.0
+  0.5889   0.0098   0.0098    400.0    450.0
+  0.5798   0.0126   0.0126    450.0    500.0
+  0.5547   0.0118   0.0118    500.0    600.0
+  0.5412   0.0172   0.0172    600.0    700.0
+  0.5197   0.0234   0.0234    700.0    800.0
+  0.4959   0.0243   0.0243    800.0   7000.0
+
+table eleeff
+  tabletype efficiency
+  nvars 2
+  errors false
+  #val    err-    err+    pTmin    pTmax absEtamin absEtamax
+  0.39       0       0        5       10         0       1.5
+  0.63    0.03    0.03       10       15         0       1.5
+  0.59    0.06    0.06       15       20         0       1.5
+  0.58   0.045   0.045       20       30         0       1.5
+  0.42    0.11    0.11      3.5       10       1.5       2.5
+  0.47    0.08    0.08       10       15       1.5       2.5
+  0.55    0.07    0.07       15       20       1.5       2.5
+  0.46    0.02    0.02       20       30       1.5       2.5
+
+table muoneff
+  tabletype efficiency
+  nvars 2
+  errors false
+  #val    err-    err+    pTmin    pTmax absEtamin absEtamax
+  0.79    0.07    0.07      3.5       10         0       1.2
+  0.67    0.06    0.06       10       15         0       1.2
+  0.70   0.025   0.025       15       20         0       1.2
+  0.78    0.08    0.08       20       30         0       1.2
+  0.73    0.06    0.06      3.5       10       1.2       2.4
+  0.66       0       0       10       15       1.2       2.4
+  0.68    0.04    0.04       15       20       1.2       2.4
+  0.73     0.7     0.7       20       30       1.2       2.4
+
+# OBJECT DEFINITIONS
+object electrons
+  take Electron 
+  select Pt(Electron) [] 5 30
+  select abs(Eta(Electron)) < 2.5
+  select absIso(Electron) < 5
+  select absIso(Electron) / pT(Electron) < 0.5
+  select applyHM( eleeff( Pt(Electron), absEta(Electron)) == 1) ############ abs(Eta(Electron))) yazınca "second functions parameters cannot be set" hatası aldım
+  # eff: .3 for 5 GeV, .7 for 30 GeV 
+
+
+object muons 
+  take Muon 
+  select Pt(Muon) [] 3.5 30
+  select abs(Eta(Muon)) < 2.4
+  select absIso(Muon) < 5 # charged PF candidates in R = 0.3
+  select absIso(Muon) / pT(Muon) < 0.5
+  select applyHM( muoneff( Pt(Muon), absEta(Muon)) == 1)
+
+
+
+object leptons : Union(electrons, muons)
+
+
+object jets
+  take Jet
+  select Pt(Jet) > 25
+  select abs(Eta(Jet)) < 2.4
+
+object bjets
+  take jets
+  select abs(flavor(jets)) == 5#######unutulmuştu
+  select applyHM( btagdeepCSVmedium( Pt(jets) ) == 1) # medium DeepCSV WP
+
+object SignalLeptonsMin: Union(electrons, muons)
+object SignalLeptonsMax: Union(electrons, muons)
+
+define lepAMin : SignalLeptonsMin[-3] #Min suffix is used to indicate this set will be used for min mass SFOS pair
+define lepBMin : SignalLeptonsMin[-3]
+define lepCMin : SignalLeptonsMin[-4]
+
+define lepAMax : SignalLeptonsMax[-5] #Max suffix is used to indicate this set will be used for max mass SFOS pair
+define lepBMax : SignalLeptonsMax[-5]
+define lepCMax : SignalLeptonsMax[-6]
+
+define SFOSMin : lepAMin lepBMin
+define SFOSMax : lepAMax lepBMax
+
+#to choose a SFOS (same flaviour opposite sign) pair with the smaller mass.
+define chi_sfos_min_mass = m(SFOSMin) + 10000000*abs(PDGID(lepAMin)+PDGID(lepBMin)) + 0*q(lepCMin)
+#to choose a SFOS (same flaviour opposite sign) pair with the bigger mass.
+define chi_sfos_max_mass = m(SFOSMax) + 10000000*abs(PDGID(lepAMax)+PDGID(lepBMax)) + 0*q(lepCMax)
+
+
+
+
+# EVENT VARIABLES
+
+define dilepton = leptons[0] leptons[1]
+define MTl1 = sqrt( 2*Pt(leptons[0]) * MET*(1-cos( Phi(METLV[0]) - Phi(leptons[0]) )))
+define MTl2 = sqrt( 2*Pt(leptons[1]) * MET*(1-cos( Phi(METLV[0]) - Phi(leptons[1]) )))
+define HT = fHT(jets)
+define mymuon = -muons[0] #due to syntax issues
+define mymuontwo = -muons[1]
+define METcorr = pT(METLV[0] + mymuon + mymuontwo)
+define mindR = dR(leptons[-1],leptons[-2]) #ΔR(l_i,l_j) > 0.3 for i,j in {1,2,3} and i!=j
+
+
+
+
+# EVENT SELECTION
+# Signal regions for 2 leptons EWK gaugino search
+region twolEwkLowMet
+  select ALL
+  counts ewk 61.6, 301.17, 13.44, 63.84 
+  select Size(leptons) == 2
+  counts ewk 57.82, 262.11, 13.36, 61.4 
+  select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts ewk 48.96, 260.56, 11.07, 57.87 
+  select m(dilepton) [] 4 50
+  counts ewk 21.34, 244.24, 0.39, 36.63 
+  select m(dilepton) ][ 9 10.5 # upsilon veto
+  counts ewk 20.52, 241.01, 0.39, 35.55 
+  select pT(dilepton) > 3
+  counts ewk 18.91, 239.52, 0.32, 35.01 
+  select Size(jets) >= 1
+  counts ewk 17.87, 229.75, 0.32, 34.01 
+  select MET / HT [] 2/3 1.4
+  counts ewk 13.95, 122.47, 0.24, 24.69 
+  select HT > 100
+  counts ewk 13.52, 116.46, 0.21, 24.26 
+  select pt(METLV_0) > 125 and pt(METcorr) [] 125 200 #raw p_T^{miss} > 125 GeV && 125 < p_T^{miss} < 200 GeV
+  counts ewk 5.07, 51.42, 0.03, 9.89 
+  weight trigEff 1.36/5.07   ###############################farklı mass pointler için farklı verimlilikler var
+  counts ewk 1.36, 24.93, 0.03, 4.74 
+  select q(leptons[0]) * q(leptons[1]) == -1
+  counts ewk 1.05, 23.32, 0.03, 4.63 
+  select pT(leptons[0]) [] 5 30
+  counts ewk 1.05, 15.59, 0.03, 4.28 
+  #Requirement that the 2 leptons selected pass the analysis lepton ID criteria.
+  #counts ewk 0.89, 12.51, 0.03, 3.42 
+  select Size(bjets) == 0
+  counts ewk 0.89, 11.53, 0.03, 3.28 
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  counts ewk 0.59, 10.66, 0.03, 2.74 
+  select MTl1 < 70 and MTl2 < 70
+  counts ewk 0.49, 4.05, 0.03, 2.26 
+  select Size(electrons) == 2 or Size(muons) == 2
+  counts ewk 0.49, 4.01, 0.03, 2.25 
+  select Size(muons) == 2
+  counts ewk 0.49, 4.01, 0.03, 2.25 
+  select pT(leptons[1]) [] 5 30 ######### in the readme file it says p_T(l_2) > 5 GeV
+  counts ewk 0.35, 3.5, 0.03, 1.35
+
+
+region twolEwkMedMet
+  select ALL
+  counts ewk 69.66, 340.56, 15.2, 72.2 
+  select Size(leptons) == 2
+  counts ewk 65.39, 296.39, 15.11, 69.43 
+  select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts ewk 55.37, 294.64, 12.52, 65.44 
+  select m(dilepton) ][ 9 10.5 # upsilon veto
+  counts ewk 54.44, 290.98, 12.51, 64.21 
+  select pT(dilepton) > 3
+  counts ewk 52.61, 289.3, 12.44, 63.61 
+  select Size(jets) >= 1
+  counts ewk 51.12, 276.51, 12.41, 61.45 
+  select MET / HT [] 2/3 1.4
+  counts ewk 39.36, 147.7, 9.31, 43.77 
+  select HT > 100
+  counts ewk 38.52, 140.38, 9.23, 42.8 
+  select pt(METcorr) [] 200 240
+  counts ewk 5.41, 20.12, 0.86, 6.11 
+  weight trigEff 4.98/5.41   ###############################farklı mass pointler için farklı verimlilikler var
+  counts ewk 4.98, 19.11, 0.86, 5.91 
+  select q(leptons[0]) * q(leptons[1]) == -1
+  counts ewk 4.48, 17.06, 0.86, 5.54 
+  #Requirement that the 2 leptons selected pass the analysis lepton ID criteria.
+  #counts ewk 3.79, 12.46, 0.68, 4.04 
+  select Size(bjets) == 0
+  counts ewk 3.69, 11.28, 0.68, 3.91 
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  counts ewk 3.25, 9.74, 0.68, 3.26 
+  select MTl1 < 70 and MTl2 < 70
+  counts ewk 2.88, 3.06, 0.64, 2.43 
+  select Size(electrons) == 2 or Size(muons) == 2
+  counts ewk 2.88, 2.95, 0.64, 2.38 
+  select m(dilepton) [] 1 50
+  counts ewk 2.72, 2.95, 0.57, 2.38 
+  reject m(dilepton) ][ 3 3.2 ###################  Reject events when the dimuon mass of any pair of leptons falls in the range [3, 3.2] GeV.
+  counts ewk 2.61, 2.95, 0.57, 2.34 
+  select pt(leptons[1]) < 30 #p_T(l_1) > 3.5 (5) GeV for l = μ (e) && p_T(l_1) < 30.0 GeV #notice the first criterion is satisfied above
+  counts ewk 2.53, 1.52, 0.57, 2.32 
+  select mindR ~= 0 #find the minimum combination of the indices to minimize this variable
+  counts ewk 2.53, 1.52, 0.57, 2.32
+  select mindR > 0.3
+  counts ewk 2.36, 1.52, 0.1, 1.92 
+
+
+region twolEwkHighMet
+  select ALL
+  counts ewk 69.66, 340.56, 15.2, 72.2 
+  select Size(leptons) == 2
+  counts ewk 65.39, 296.39, 15.11, 69.43 
+  select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts ewk 55.37, 294.64, 12.52, 65.44 
+  select m(dilepton) ][ 9 10.5 # upsilon veto
+  counts ewk 54.44, 290.98, 12.51, 64.21 
+  select pT(dilepton) > 3
+  counts ewk 52.61, 289.3, 12.44, 63.61 
+  select Size(jets) >= 1
+  counts ewk 51.12, 276.51, 12.41, 61.45 
+  select MET / HT [] 2/3 1.4
+  counts ewk 39.36, 147.7, 9.31, 43.77 
+  select HT > 100
+  counts ewk 38.52, 140.38, 9.23, 42.8 
+  select pt(METcorr) [] 240 290
+  counts ewk 4.49, 14.81, 0.93, 4.52 
+  weight trigEff 4.49/4.49   ###############################farklı mass pointler için farklı verimlilikler var
+  counts ewk 4.49, 14.59, 0.93, 4.52 
+  select q(leptons[0]) * q(leptons[1]) == -1
+  counts ewk 3.97, 13.83, 0.93, 4.42 
+  #Requirement that the 2 leptons selected pass the analysis lepton ID criteria.
+  #counts ewk 3.33, 9.6, 0.56, 3.17 
+  select Size(bjets) == 0
+  counts ewk 3.02, 9.21, 0.56, 2.91 
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  counts ewk 2.37, 7.97, 0.53, 2.5 
+  select MTl1 < 70 and MTl2 < 70
+  counts ewk 2.37, 2.48, 0.44, 1.87 
+  select Size(electrons) == 2 or Size(muons) == 2
+  counts ewk 2.24, 2.32, 0.44, 1.87 
+  select m(dilepton) [] 1 50
+  counts ewk 1.88, 2.32, 0.38, 1.87 
+  reject m(dilepton) ][ 3 3.2 ###################  Reject events when the dimuon mass of any pair of leptons falls in the range [3, 3.2] GeV.
+  counts ewk 1.55, 2.32, 0.38, 1.87 
+  select pt(leptons[1]) < 30 #p_T(l_1) > 3.5 (5) GeV for l = μ (e) && p_T(l_1) < 30.0 GeV #notice the first criterion is satisfied above
+  counts ewk 1.55, 0.56, 0.38, 1.86 
+  select mindR ~= 0 #find the minimum combination of the indices to minimize this variable
+  counts ewk 1.55, 0.56, 0.38, 1.86 
+  select mindR > 0.3
+  counts ewk 1.19, 0.56, 0.13, 1.48 
+
+
+region twolEwkUltraMet
+  select ALL
+  counts ewk 69.66, 340.56, 15.2, 72.2 
+  select Size(leptons) == 2
+  counts ewk 65.39, 296.39, 15.11, 69.43 
+  select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts ewk 55.37, 294.64, 12.52, 65.44 
+  select m(dilepton) ][ 9 10.5 # upsilon veto
+  counts ewk 54.44, 290.98, 12.51, 64.21 
+  select pT(dilepton) > 3
+  counts ewk 52.61, 289.3, 12.44, 63.61 
+  select Size(jets) >= 1
+  counts ewk 51.12, 276.51, 12.41, 61.45 
+  select MET / HT [] 2/3 1.4
+  counts ewk 39.36, 147.7, 9.31, 43.77 
+  select HT > 100
+  counts ewk 38.52, 140.38, 9.23, 42.8 
+  select pt(METcorr) > 290 
+  counts ewk 12.99, 25.01, 4.59, 11.31 
+  weight trigEff 12.99/12.99   ###############################farklı mass pointler için farklı verimlilikler var
+  counts ewk 12.99, 25.0, 4.55, 11.31 
+  select q(leptons[0]) * q(leptons[1]) == -1
+  counts ewk 11.22, 22.69, 4.48, 10.74 
+  #Requirement that the 2 leptons selected pass the analysis lepton ID criteria.
+  #counts ewk 8.58, 17.85, 3.1, 7.87 
+  select Size(bjets) == 0
+  counts ewk 8.44, 16.99, 2.74, 6.98 
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  counts ewk 7.16, 14.95, 2.54, 5.81 
+  select MTl1 < 70 and MTl2 < 70
+  counts ewk 6.08, 3.12, 2.24, 4.15 
+  select Size(electrons) == 2 or Size(muons) == 2
+  counts ewk 5.99, 2.96, 2.24, 4.1 
+  select m(dilepton) [] 1 50
+  counts ewk 5.59, 2.96, 1.56, 4.06 
+  reject m(dilepton) ][ 3 3.2 ###################  Reject events when the dimuon mass of any pair of leptons falls in the range [3, 3.2] GeV.
+  counts ewk 5.29, 2.96, 1.56, 4.0 
+  select pt(leptons[1]) < 30 #p_T(l_1) > 3.5 (5) GeV for l = μ (e) && p_T(l_1) < 30.0 GeV #notice the first criterion is satisfied above
+  counts ewk 5.29, 0.75, 1.56, 3.74 
+  select mindR ~= 0 #find the minimum combination of the indices to minimize this variable
+  counts ewk 5.29, 0.75, 1.56, 3.74 
+  select mindR > 0.3
+  counts ewk 4.44, 0.75, 0.64, 2.55
+
+
+
+# Signal regions for 3l EWK 
+region threelEwkLowMet #####no pt requirement for sfas pair? in cutflow
+  select ALL
+  counts ewk 60.8, 306.6, 0.0, 62.92 
+  select Size(leptons) == 3
+  counts ewk 3.44, 39.33, 0.0, 2.3 
+  select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts ewk 3.44, 39.33, 0.0, 2.27 
+  select abs(PDGID(leptons[2])) == 13 ? pt(leptons[2]) > 3.5 : pt(leptons[2]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts ewk 2.57, 39.05, 0.0, 2.03 
+  select m(dilepton) ][ 9 10.5 # upsilon veto
+  counts ewk 2.47, 38.29, 0.0, 1.97 
+  select HT > 100
+  counts ewk 2.3, 29.04, 0.0, 1.73 
+  select pt(METLV_0) > 125 and pt(METcorr) [] 125 200 #raw p_T^{miss} > 125 GeV && 125 < p_T^{miss} < 200 GeV
+  counts ewk 0.66, 12.19, 0.0, 0.59 
+  weight trigEff 1.62/1.85
+  counts ewk 0.59, 6.29, 0.0, 0.33 
+  select chi_sfos_min_mass ~= 0 #finding the minimum mass combination for sfos pair
+  counts ewk 0.59, 6.29, 0.0, 0.33 
+  select chi_sfos_min_mass < 10000 #equiavalent to "size(sfos) >= 1"
+  counts ewk 0.59, 6.29, 0.0, 0.33 
+  select chi_sfos_min_mass [] 4 50 # equivalent to "m(sfosll[0]) [] 4 50" because the other elements of the sum vanishes if sfos exists.
+  counts ewk 0.29, 6.21, 0.0, 0.22 
+  select pt(leptons[0]) [] 5 30 ####################5.0 < LepGood1_pt && LepGood1_pt < 30.0
+  counts ewk 0.29, 2.6, 0.0, 0.22 
+  #Requirement that the 2 leptons selected pass the analysis lepton ID criteria. (Since name is threeTigth I think this should be 3 leptons, not 2)
+  counts ewk 0.29, 1.77, 0.0, 0.11 
+  select Size(bjets) == 0
+  counts ewk 0.29, 1.66, 0.0, 0.11 
+  select pt(leptons[2]) > 5
+  counts ewk 0.11, 1.66, 0.0, 0.05 
+  select size(muons) == 2 #################Requirement for two muons.
+  counts ewk 0.11, 1.66, 0.0, 0.05 
+  select chi_sfos_max_mass ~= 10000  #finding the minimum mass combination for sfos pair
+  counts ewk 0.11, 1.66, 0.0, 0.05 
+  select chi_sfos_max_mass < 60 #both ensuring the the finding is actually a sfos pair and m(sfosll[0]) < 60
+  counts ewk 0.11, 1.66, 0, 0.05
+
+
+region threelEwkMedMet
+  select ALL
+  counts ewk 68.75, 346.7, 0.0, 71.14 
+  select Size(leptons) == 3
+  counts ewk 3.89, 44.47, 0.0, 2.6 
+  select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts ewk 3.89, 44.47, 0.0, 2.57 
+  select abs(PDGID(leptons[2])) == 13 ? pt(leptons[2]) > 3.5 : pt(leptons[2]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts ewk 2.91, 44.16, 0.0, 2.29 
+  select m(dilepton) ][ 9 10.5 # upsilon veto
+  counts ewk 2.8, 43.3, 0.0, 2.22 
+  select HT > 100
+  counts ewk 2.61, 32.84, 0.0, 1.96 
+  select pt(METcorr) [] 200 240
+  counts ewk 1.85, 15.68, 0.0, 1.06 
+  weight trigEff 1.62/1.85
+  counts ewk 1.62, 15.45, 0.0, 1.01 
+  select chi_sfos_min_mass ~= 0 #finding the minimum mass combination for sfos pair
+  counts ewk 1.62, 15.45, 0.0, 1.01 
+  select chi_sfos_min_mass < 10000 #equiavalent to "size(sfos) >= 1"
+  counts ewk 1.62, 15.24, 0.0, 1.01 
+  #Requirement that the 2 leptons selected pass the analysis lepton ID criteria. (Since name is threeTigth I think this should be 3 leptons, not 2)
+  #counts ewk 0.98, 8.91, 0.0, 0.7 
+  select Size(bjets) == 0
+  counts ewk 0.91, 8.56, 0.0, 0.67
+  select chi_sfos_min_mass [] 1 50
+  counts ewk 0.83, 8.56, 0.0, 0.67 
+  reject m(dilepton) ][ 3 3.2 ###################  Reject events when the dimuon mass of any pair of leptons falls in the range [3, 3.2] GeV.
+  counts ewk 0.83, 8.56, 0.0, 0.62 
+  select mindR ~= 0
+  counts ewk 0.83, 8.56, 0.0, 0.62 
+  select mindR > 0.3
+  counts ewk 0.67, 8.22, 0.0, 0.38 
+  select pt(leptons[1]) < 30 #p_T(l_1) > 3.5 (5) GeV for l = μ (e) && p_T(l_1) < 30.0 GeV #notice the first criterion is satisfied above
+  counts ewk 0.67, 2.07, 0.0, 0.33 
+
+
+
+# Signal regions for 2 leptons stop search
+region twolColLowMet
+  select ALL
+  counts col 30.74, 408.28, 72.16, 113.27 
+  select Size(leptons) == 2
+  counts col 30.2, 402.34, 71.62, 111.25 
+  select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts col 25.79, 399.48, 67.2, 108.94 
+  select m(dilepton) [] 4 50
+  counts col 24.97, 316.0, 65.12, 101.52 
+  select m(dilepton) ][ 9 10.5 # upsilon veto
+  counts col 21.01, 309.04, 60.89, 98.42 
+  select pT(dilepton) > 3
+  counts col 16.06, 304.69, 56.61, 95.38 
+  select Size(jets) >= 1
+  counts col 15.91, 294.21, 54.6, 94.13 
+  select MET / HT [] 2/3 1.4
+  counts col 11.33, 186.32, 40.54, 61.94 
+  select HT > 100
+  counts col 11.32, 183.94, 40.07, 61.21 
+  select pt(METLV_0) > 125 and pt(METcorr) [] 125 200 #raw p_T^{miss} > 125 GeV && 125 < p_T^{miss} < 200 GeV ###################couldnt find metlow_col cut
+  counts col 1.72, 54.69, 9.28, 14.96 
+  weight trigEff 1.72/1.72   ###############################farklı mass pointler için farklı verimlilikler var
+  counts col 1.72, 54.69, 9.28, 14.96 
+  select q(leptons[0]) * q(leptons[1]) == -1
+  counts col 1.72, 54.69, 9.25, 14.96 
+  select pT(leptons[0]) [] 5 30
+  counts col 1.68, 46.13, 9.22, 14.6 
+  #Requirement that the 2 leptons selected pass the analysis lepton ID criteria.
+  counts col 0.54, 30.38, 6.24, 9.71 
+  select Size(bjets) == 0
+  counts col 0.54, 26.88, 5.59, 7.24 
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  counts col 0.54, 25.03, 5.19, 6.45 
+  select Size(muons) == 2
+  counts col 0.37, 8.98, 2.21, 3.03 
+  select pT(leptons[1]) [] 5 30 ######### in the readme file it says p_T(l_2) > 5 GeV
+  counts col 0.28, 8.41, 1.51, 2.66 
+
+region twolColMedMet
+  select ALL
+  counts col 34.76, 461.68, 81.6, 128.08 
+  select Size(leptons) == 2
+  counts col 34.15, 454.97, 80.99, 125.8 
+  select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts col 29.16, 451.72, 75.98, 123.19 
+  select m(dilepton) ][ 9 10.5 # upsilon veto
+  counts col 24.69, 443.85, 71.2, 119.69 
+  select pT(dilepton) > 3
+  counts col 19.08, 437.98, 66.32, 116.19 
+  select Size(jets) >= 1
+  counts col 18.92, 423.67, 63.98, 114.49 
+  select MET / HT [] 2/3 1.4
+  counts col 13.47, 265.5, 47.55, 75.24 
+  select HT > 100
+  counts col 13.45, 261.63, 47.01, 74.27 
+  select pt(METcorr) [] 200 240 ###################couldnt find metmed_col cut
+  counts col 2.67, 75.13, 12.34, 18.03 
+  weight trigEff 2.67/2.67   ###############################farklı mass pointler için farklı verimlilikler var
+  counts col 2.67, 75.13, 12.34, 18.03 
+  select q(leptons[0]) * q(leptons[1]) == -1
+  counts col 2.67, 75.13, 12.31, 18.03 
+  #Requirement that the 2 leptons selected pass the analysis lepton ID criteria.
+  counts col 1.3, 50.7, 7.37, 11.72 
+  select Size(bjets) == 0
+  counts col 1.3, 42.78, 6.49, 8.71 
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  counts col 1.22, 40.18, 6.14, 7.86 
+  select m(dilepton) [] 1 50
+  counts col 1.17, 33.03, 6.11, 7.64 
+  reject m(dilepton) ][ 3 3.2 ###################  Reject events when the dimuon mass of any pair of leptons falls in the range [3, 3.2] GeV.
+  counts col 1.17, 33.03, 6.11, 7.64 
+  select pt(leptons[1]) < 30 #p_T(l_1) > 3.5 (5) GeV for l = μ (e) && p_T(l_1) < 30.0 GeV #notice the first criterion is satisfied above
+  counts col 1.17, 26.48, 6.11, 7.28 
+  select mindR ~= 0 #find the minimum combination of the indices to minimize this variable
+  counts col 1.17, 26.48, 6.11, 7.28 
+  select mindR > 0.3
+  counts col 1.17, 26.37, 6.11, 7.28 
+
+
+region twolColHighMet
+  select ALL
+  counts col 34.76, 461.68, 81.6, 128.08 
+  select Size(leptons) == 2
+  counts col 34.15, 454.97, 80.99, 125.8 
+  select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts col 29.16, 451.72, 75.98, 123.19 
+  select m(dilepton) ][ 9 10.5 # upsilon veto
+  counts col 24.69, 443.85, 71.2, 119.69 
+  select pT(dilepton) > 3
+  counts col 19.08, 437.98, 66.32, 116.19 
+  select Size(jets) >= 1
+  counts col 18.92, 423.67, 63.98, 114.49 
+  select MET / HT [] 2/3 1.4
+  counts col 13.47, 265.5, 47.55, 75.24 
+  select HT > 100
+  counts col 13.45, 261.63, 47.01, 74.27 
+  select pt(METcorr) [] 290 340
+  counts col 1.67, 28.65, 5.37, 8.06 
+  weight trigEff 4.49/4.49   ###############################farklı mass pointler için farklı verimlilikler var
+  counts col 1.67, 28.65, 5.37, 8.06 
+  select q(leptons[0]) * q(leptons[1]) == -1
+  counts col 1.67, 28.65, 5.37, 8.06 
+  #Requirement that the 2 leptons selected pass the analysis lepton ID criteria.
+  counts col 0.85, 18.32, 3.16, 5.32 
+  select Size(bjets) == 0
+  counts col 0.67, 15.42, 2.65, 4.5 
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  counts col 0.61, 15.02, 2.48, 4.46 
+  select m(dilepton) [] 1 50
+  counts col 0.61, 11.18, 2.48, 4.38 
+  reject m(dilepton) ][ 3 3.2 ###################  Reject events when the dimuon mass of any pair of leptons falls in the range [3, 3.2] GeV.
+  counts col 0.61, 11.18, 2.48, 4.38 
+  select pt(leptons[1]) < 30 #p_T(l_1) > 3.5 (5) GeV for l = μ (e) && p_T(l_1) < 30.0 GeV #notice the first criterion is satisfied above
+  counts col 0.61, 9.06, 2.48, 4.26 
+  select mindR ~= 0 #find the minimum combination of the indices to minimize this variable
+  counts col 0.61, 9.06, 2.48, 4.26 
+  select mindR > 0.3
+  counts col 0.61, 8.96, 2.42, 4.26 
+
+
+region twolColUltraMet
+  select ALL
+  counts col 34.76, 461.68, 81.6, 128.08 
+  select Size(leptons) == 2
+  counts col 34.15, 454.97, 80.99, 125.8 
+  select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
+  counts col 29.16, 451.72, 75.98, 123.19 
+  select m(dilepton) ][ 9 10.5 # upsilon veto
+  counts col 24.69, 443.85, 71.2, 119.69 
+  select pT(dilepton) > 3
+  counts col 19.08, 437.98, 66.32, 116.19 
+  select Size(jets) >= 1
+  counts col 18.92, 423.67, 63.98, 114.49 
+  select MET / HT [] 2/3 1.4
+  counts col 13.47, 265.5, 47.55, 75.24 
+  select HT > 100
+  counts col 13.45, 261.63, 47.01, 74.27 
+  select pt(METcorr) > 340
+  counts col 6.95, 68.99, 17.4, 27.34 
+  weight trigEff 12.99/12.99   ###############################farklı mass pointler için farklı verimlilikler var
+  counts col 6.95, 68.99, 17.4, 27.34 
+  select q(leptons[0]) * q(leptons[1]) == -1
+  counts col 6.83, 68.99, 17.4, 27.34 
+  #Requirement that the 2 leptons selected pass the analysis lepton ID criteria.
+  counts col 2.98, 41.83, 9.42, 16.31 
+  select Size(bjets) == 0
+  counts col 2.8, 33.55, 8.41, 11.36 
+  reject fMTauTau(leptons[0], leptons[1], METLV[0] ) [] 0 160
+  counts col 2.64, 32.81, 8.06, 11.21 
+  select m(dilepton) [] 1 50
+  counts col 2.54, 26.52, 8.06, 10.91 
+  reject m(dilepton) ][ 3 3.2 ###################  Reject events when the dimuon mass of any pair of leptons falls in the range [3, 3.2] GeV.
+  counts col 2.54, 26.52, 8.06, 10.91 
+  select pt(leptons[1]) < 30 #p_T(l_1) > 3.5 (5) GeV for l = μ (e) && p_T(l_1) < 30.0 GeV #notice the first criterion is satisfied above
+  counts col 2.54, 19.7, 7.97, 10.62 
+  select mindR ~= 0 #find the minimum combination of the indices to minimize this variable
+  counts col 2.54, 19.7, 7.92, 10.62 
+  select mindR > 0.3
+  counts col 2.54, 19.7, 7.92, 10.62 
