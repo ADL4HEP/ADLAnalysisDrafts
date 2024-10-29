@@ -1,0 +1,532 @@
+*******Working on gbb20001000
+
+ ====== Comparing SRGbbB :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper    Error
+                                                    all :  28627.00  28627.00  0.00
+                                        Derivation Skim :  80.90     80.90    -0.00
+                                     Size(leptons) == 0 :  80.80     80.00     1.00
+               size(jets) >=4 ? dphi4jmin4 >= 0.4 : ALL :  61.39     61.10     0.48
+               size(jets) ==3 ? dphi4jmin3 >= 0.4 : ALL :  60.86     61.10    -0.40
+               size(jets) ==2 ? dphi4jmin2 >= 0.4 : ALL :  60.84     61.10    -0.43
+               size(jets) ==1 ? dphi4jmin4 >= 0.4 : ALL :  60.84     61.10    -0.43
+              size(bjets) >=3 ? mtminbjets3 > 130 : ALL :  58.33     56.60     3.06
+              size(bjets) ==2 ? mtminbjets2 > 130 : ALL :  56.48     56.60    -0.21
+              size(bjets) ==1 ? mtminbjets1 > 130 : ALL :  55.76     56.60    -1.49
+                                             MET >= 550 :  32.21     35.69    -9.76
+                                          pT(jets) > 65 :  32.21     35.69    -9.76
+                                            meff > 2600 :  7.51      10.13    -25.85
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  28627.00  28627.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                     Size(leptons) == 0 :  99.88     98.89     1.00
+               size(jets) >=4 ? dphi4jmin4 >= 0.4 : ALL :  75.98     76.37    -0.52
+               size(jets) ==3 ? dphi4jmin3 >= 0.4 : ALL :  99.13     100.00   -0.87
+               size(jets) ==2 ? dphi4jmin2 >= 0.4 : ALL :  99.97     100.00   -0.03
+               size(jets) ==1 ? dphi4jmin4 >= 0.4 : ALL :  100.00    100.00    0.00
+              size(bjets) >=3 ? mtminbjets3 > 130 : ALL :  95.88     92.64     3.50
+              size(bjets) ==2 ? mtminbjets2 > 130 : ALL :  96.83     100.00   -3.17
+              size(bjets) ==1 ? mtminbjets1 > 130 : ALL :  98.71     100.00   -1.29
+                                             MET >= 550 :  57.76     63.06    -8.40
+                                          pT(jets) > 65 :  100.00    100.00    0.00
+                                            meff > 2600 :  23.32     28.38    -17.83
+
+ ====== Comparing SRGbbM :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper    Error
+                                                    all :  28627.00  28627.00  0.00
+                                        Derivation Skim :  80.90     80.90    -0.00
+                                     Size(leptons) == 0 :  80.80     80.00     1.00
+               size(jets) >=4 ? dphi4jmin4 >= 0.4 : ALL :  61.39     61.10     0.48
+               size(jets) ==3 ? dphi4jmin3 >= 0.4 : ALL :  60.86     61.10    -0.40
+               size(jets) ==2 ? dphi4jmin2 >= 0.4 : ALL :  60.84     61.10    -0.43
+               size(jets) ==1 ? dphi4jmin4 >= 0.4 : ALL :  60.84     61.10    -0.43
+              size(bjets) >=3 ? mtminbjets3 > 130 : ALL :  58.33     56.60     3.06
+              size(bjets) ==2 ? mtminbjets2 > 130 : ALL :  56.48     56.60    -0.21
+              size(bjets) ==1 ? mtminbjets1 > 130 : ALL :  55.76     56.60    -1.49
+                                             MET >= 550 :  32.21     35.69    -9.76
+                                            meff > 2000 :  23.91     28.30    -15.51
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  28627.00  28627.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                     Size(leptons) == 0 :  99.88     98.89     1.00
+               size(jets) >=4 ? dphi4jmin4 >= 0.4 : ALL :  75.98     76.37    -0.52
+               size(jets) ==3 ? dphi4jmin3 >= 0.4 : ALL :  99.13     100.00   -0.87
+               size(jets) ==2 ? dphi4jmin2 >= 0.4 : ALL :  99.97     100.00   -0.03
+               size(jets) ==1 ? dphi4jmin4 >= 0.4 : ALL :  100.00    100.00    0.00
+              size(bjets) >=3 ? mtminbjets3 > 130 : ALL :  95.88     92.64     3.50
+              size(bjets) ==2 ? mtminbjets2 > 130 : ALL :  96.83     100.00   -3.17
+              size(bjets) ==1 ? mtminbjets1 > 130 : ALL :  98.71     100.00   -1.29
+                                             MET >= 550 :  57.76     63.06    -8.40
+                                            meff > 2000 :  74.25     79.29    -6.37
+
+ ====== Comparing SRGbbC :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper      Error
+                                                    all :  28627.00  28627.00   0.00
+                                        Derivation Skim :  80.90     80.90     -0.00
+                                     Size(leptons) == 0 :  80.80     80.00      1.00
+               size(jets) >=4 ? dphi4jmin4 >= 0.4 : ALL :  61.39     61.10      0.48
+               size(jets) ==3 ? dphi4jmin3 >= 0.4 : ALL :  60.86     61.10     -0.40
+               size(jets) ==2 ? dphi4jmin2 >= 0.4 : ALL :  60.84     61.10     -0.43
+               size(jets) ==1 ? dphi4jmin4 >= 0.4 : ALL :  60.84     61.10     -0.43
+              size(bjets) >=3 ? mtminbjets3 > 130 : ALL :  58.33     56.60      3.06
+              size(bjets) ==2 ? mtminbjets2 > 130 : ALL :  56.48     56.60     -0.21
+              size(bjets) ==1 ? mtminbjets1 > 130 : ALL :  55.76     56.60     -1.49
+                                            meff > 1600 :  46.35     35.69      29.87
+                                             MET >= 550 :  30.94     34.71     -10.85
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  28627.00  28627.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                     Size(leptons) == 0 :  99.88     98.89     1.00
+               size(jets) >=4 ? dphi4jmin4 >= 0.4 : ALL :  75.98     76.37    -0.52
+               size(jets) ==3 ? dphi4jmin3 >= 0.4 : ALL :  99.13     100.00   -0.87
+               size(jets) ==2 ? dphi4jmin2 >= 0.4 : ALL :  99.97     100.00   -0.03
+               size(jets) ==1 ? dphi4jmin4 >= 0.4 : ALL :  100.00    100.00    0.00
+              size(bjets) >=3 ? mtminbjets3 > 130 : ALL :  95.88     92.64     3.50
+              size(bjets) ==2 ? mtminbjets2 > 130 : ALL :  96.83     100.00   -3.17
+              size(bjets) ==1 ? mtminbjets1 > 130 : ALL :  98.71     100.00   -1.29
+                                            meff > 1600 :  83.13     63.06     31.83
+                                             MET >= 550 :  66.76     97.25    -31.35
+
+*******Working on gtt24001000
+
+ ====== Comparing SRGtt0LB :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  11.32     11.32     0.00
+                                     Size(leptons) == 0 :  8.02      5.02      59.72
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  6.15      3.93      56.49
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  6.15      3.93      56.47
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  6.15      3.93      56.47
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  6.15      3.93      56.47
+                                        Size(jets) >= 5 :  6.11      3.92      55.83
+                                             MET >= 600 :  3.59      2.60      37.90
+                                           meff >= 2900 :  1.35      2.60     -48.03
+            size(bjets) >= 3 ? mtminbjets3 >= 120 : ALL :  1.31      1.07      21.99
+            size(bjets) == 2 ? mtminbjets2 >= 120 : ALL :  1.27      1.07      18.30
+            size(bjets) == 1 ? mtminbjets1 >= 120 : ALL :  1.25      1.07      17.00
+             size(largejets) >= 4 ? mjsum4 >= 300 : ALL :  1.24      1.00      24.01
+             size(largejets) == 3 ? mjsum3 >= 300 : ALL :  1.23      1.00      22.96
+             size(largejets) == 2 ? mjsum2 >= 300 : ALL :  1.22      1.00      22.65
+             size(largejets) == 1 ? mjsum1 >= 300 : ALL :  1.22      1.00      22.65
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                     Size(leptons) == 0 :  70.83     44.35     59.72
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  76.70     78.29    -2.02
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  99.99     100.00   -0.01
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  100.00    100.00    0.00
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  100.00    100.00    0.00
+                                        Size(jets) >= 5 :  99.34     99.75    -0.41
+                                             MET >= 600 :  58.69     66.33    -11.51
+                                           meff >= 2900 :  37.69     100.00   -62.31
+            size(bjets) >= 3 ? mtminbjets3 >= 120 : ALL :  96.59     41.15     134.71
+            size(bjets) == 2 ? mtminbjets2 >= 120 : ALL :  96.98     100.00   -3.02
+            size(bjets) == 1 ? mtminbjets1 >= 120 : ALL :  98.90     100.00   -1.10
+             size(largejets) >= 4 ? mjsum4 >= 300 : ALL :  98.76     93.18     5.99
+             size(largejets) == 3 ? mjsum3 >= 300 : ALL :  99.15     100.00   -0.85
+             size(largejets) == 2 ? mjsum2 >= 300 : ALL :  99.75     100.00   -0.25
+             size(largejets) == 1 ? mjsum1 >= 300 : ALL :  100.00    100.00    0.00
+
+ ====== Comparing SRGtt0LM1 :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  11.32     11.32     0.00
+                                     Size(leptons) == 0 :  8.02      5.02      59.72
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  6.15      3.93      56.49
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  6.15      3.93      56.47
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  6.15      3.93      56.47
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  6.15      3.93      56.47
+                   Size(jets) >= 9 and size(bjets) >= 3 :  1.51      2.34     -35.29
+                                             MET >= 600 :  0.87      1.53     -43.27
+                                           meff >= 1700 :  0.86      1.53     -43.47
+                                     mtminbjets3 >= 120 :  0.78      1.36     -42.98
+             size(largejets) >= 4 ? mjsum4 >= 300 : ALL :  0.74      1.17     -36.83
+             size(largejets) == 3 ? mjsum3 >= 300 : ALL :  0.72      1.17     -38.65
+             size(largejets) == 2 ? mjsum2 >= 300 : ALL :  0.71      1.17     -39.17
+             size(largejets) == 1 ? mjsum1 >= 300 : ALL :  0.71      1.17     -39.24
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL     Paper     Error
+                                                    all :  29252.00   29252.00  0.00
+                                        Derivation Skim :  100.00     100.00    0.00
+                                     Size(leptons) == 0 :  70.83      44.35     59.72
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  76.70      78.29    -2.02
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  99.99      100.00   -0.01
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  100.00     100.00    0.00
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  100.00     100.00    0.00
+                   Size(jets) >= 9 and size(bjets) >= 3 :  24.63      59.54    -58.64
+                                             MET >= 600 :  57.32      65.38    -12.33
+                                           meff >= 1700 :  99.64      100.00   -0.36
+                                     mtminbjets3 >= 120 :  89.66      88.89     0.87
+             size(largejets) >= 4 ? mjsum4 >= 300 : ALL :  95.31      86.03     10.79
+             size(largejets) == 3 ? mjsum3 >= 300 : ALL :  97.12      100.00   -2.88
+             size(largejets) == 2 ? mjsum2 >= 300 : ALL :  99.14      100.00   -0.86
+             size(largejets) == 1 ? mjsum1 >= 300 : ALL :  99.89      100.00   -0.11
+
+ ====== Comparing SRGtt0LM2 :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  11.32     11.32     0.00
+                                     Size(leptons) == 0 :  8.02      5.02      59.72
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  6.15      3.93      56.49
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  6.15      3.93      56.47
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  6.15      3.93      56.47
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  6.15      3.93      56.47
+                  Size(jets) >= 10 and size(bjets) >= 3 :  1.00      1.49     -32.91
+                                             MET >= 500 :  0.67      1.13     -40.65
+                                           meff >= 1100 :  0.67      1.13     -40.65
+                                     mtminbjets3 >= 120 :  0.60      0.99     -39.88
+             size(largejets) >= 4 ? mjsum4 >= 200 : ALL :  0.59      0.97     -39.15
+             size(largejets) == 3 ? mjsum3 >= 200 : ALL :  0.59      0.97     -39.35
+             size(largejets) == 2 ? mjsum2 >= 200 : ALL :  0.59      0.97     -39.47
+             size(largejets) == 1 ? mjsum1 >= 200 : ALL :  0.59      0.97     -39.51
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                     Size(leptons) == 0 :  70.83     44.35     59.72
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  76.70     78.29    -2.02
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  99.99     100.00   -0.01
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  100.00    100.00    0.00
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  100.00    100.00    0.00
+                  Size(jets) >= 10 and size(bjets) >= 3 :  16.26     37.91    -57.12
+                                             MET >= 500 :  67.09     75.84    -11.53
+                                           meff >= 1100 :  100.00    100.00    0.00
+                                     mtminbjets3 >= 120 :  88.75     87.61     1.30
+             size(largejets) >= 4 ? mjsum4 >= 200 : ALL :  99.48     98.28     1.22
+             size(largejets) == 3 ? mjsum3 >= 200 : ALL :  99.67     100.00   -0.33
+             size(largejets) == 2 ? mjsum2 >= 200 : ALL :  99.80     100.00   -0.20
+             size(largejets) == 1 ? mjsum1 >= 200 : ALL :  99.93     100.00   -0.07
+
+ ====== Comparing SRGtt0LC :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  11.32     11.32     0.00
+                                     Size(leptons) == 0 :  8.02      5.02      59.72
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  6.15      3.93      56.49
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  6.15      3.93      56.47
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  6.15      3.93      56.47
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  6.15      3.93      56.47
+                                       Size(jets) >= 10 :  2.00      1.49      34.27
+                                       Size(bjets) >= 4 :  0.47      0.72     -35.25
+                                             MET >= 400 :  0.36      0.64     -43.53
+                                            meff >= 800 :  0.36      0.64     -43.53
+                                     mtminbjets3 >= 180 :  0.30      0.53     -42.10
+             size(largejets) >= 4 ? mjsum4 >= 100 : ALL :  0.30      0.53     -42.10
+             size(largejets) == 3 ? mjsum3 >= 100 : ALL :  0.30      0.53     -42.10
+             size(largejets) == 2 ? mjsum2 >= 100 : ALL :  0.30      0.53     -42.10
+             size(largejets) == 1 ? mjsum1 >= 100 : ALL :  0.30      0.53     -42.10
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                     Size(leptons) == 0 :  70.83     44.35     59.72
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  76.70     78.29    -2.02
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  99.99     100.00   -0.01
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  100.00    100.00    0.00
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  100.00    100.00    0.00
+                                       Size(jets) >= 10 :  32.54     37.91    -14.18
+                                       Size(bjets) >= 4 :  23.37     48.46    -51.78
+                                             MET >= 400 :  77.07     88.37    -12.78
+                                            meff >= 800 :  100.00    100.00    0.00
+                                     mtminbjets3 >= 180 :  84.53     82.45     2.53
+             size(largejets) >= 4 ? mjsum4 >= 100 : ALL :  100.00    100.00    0.00
+             size(largejets) == 3 ? mjsum3 >= 100 : ALL :  100.00    100.00    0.00
+             size(largejets) == 2 ? mjsum2 >= 100 : ALL :  100.00    100.00    0.00
+             size(largejets) == 1 ? mjsum1 >= 100 : ALL :  100.00    100.00    0.00
+
+
+ ====== Comparing SRGtt1LB :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  11.32     11.32     0.00
+                                     Size(leptons) >= 1 :  3.30      6.30     -47.59
+                   Size(jets) >= 4 and size(bjets) >= 3 :  1.16      4.34     -73.29
+                                             MET >= 600 :  0.57      2.55     -77.74
+                                           meff >= 2300 :  0.40      1.98     -79.93
+                                              mt >= 150 :  0.33      1.73     -80.92
+                                     mtminbjets3 >= 120 :  0.29      1.47     -80.60
+             size(largejets) >= 4 ? mjsum4 >= 200 : ALL :  0.28      1.36     -79.06
+             size(largejets) == 3 ? mjsum3 >= 200 : ALL :  0.28      1.36     -79.06
+             size(largejets) == 2 ? mjsum2 >= 200 : ALL :  0.28      1.36     -79.06
+             size(largejets) == 1 ? mjsum1 >= 200 : ALL :  0.28      1.36     -79.06
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  100.00    100.00      0.00
+                                     Size(leptons) >= 1 :  29.17     55.65    -47.59
+                   Size(jets) >= 4 and size(bjets) >= 3 :  35.11     68.89    -49.03
+                                             MET >= 600 :  48.97     58.76    -16.66
+                                           meff >= 2300 :  70.01     77.65    -9.84
+                                              mt >= 150 :  83.06     87.37    -4.94
+                                     mtminbjets3 >= 120 :  86.40     84.97     1.68
+             size(largejets) >= 4 ? mjsum4 >= 200 : ALL :  99.86     92.52     7.94
+             size(largejets) == 3 ? mjsum3 >= 200 : ALL :  100.00    100.00    0.00
+             size(largejets) == 2 ? mjsum2 >= 200 : ALL :  100.00    100.00    0.00
+             size(largejets) == 1 ? mjsum1 >= 200 : ALL :  100.00    100.00    0.00
+  
+ ====== Comparing SRGtt1LM1 :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  11.32     11.32     0.00
+                                     Size(leptons) >= 1 :  3.30      6.30     -47.59
+                   Size(jets) >= 5 and size(bjets) >= 3 :  1.15      4.26     -73.07
+                                             MET >= 600 :  0.56      2.51     -77.66
+                                           meff >= 2000 :  0.50      2.32     -78.43
+                                              mt >= 200 :  0.37      1.93     -80.65
+                                     mtminbjets3 >= 120 :  0.33      1.65     -80.23
+             size(largejets) >= 4 ? mjsum4 >= 200 : ALL :  0.32      1.47     -77.97
+             size(largejets) == 3 ? mjsum3 >= 200 : ALL :  0.32      1.47     -78.02
+             size(largejets) == 2 ? mjsum2 >= 200 : ALL :  0.32      1.47     -78.12
+             size(largejets) == 1 ? mjsum1 >= 200 : ALL :  0.32      1.47     -78.12
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                     Size(leptons) >= 1 :  29.17     55.65    -47.59
+                   Size(jets) >= 5 and size(bjets) >= 3 :  34.75     67.62    -48.61
+                                             MET >= 600 :  48.87     58.92    -17.06
+                                           meff >= 2000 :  89.23     92.43    -3.46
+                                              mt >= 200 :  74.63     83.19    -10.29
+                                     mtminbjets3 >= 120 :  87.36     85.49     2.18
+             size(largejets) >= 4 ? mjsum4 >= 200 : ALL :  99.29     89.09     11.45
+             size(largejets) == 3 ? mjsum3 >= 200 : ALL :  99.76     100.00   -0.24
+             size(largejets) == 2 ? mjsum2 >= 200 : ALL :  99.52     100.00   -0.48
+             size(largejets) == 1 ? mjsum1 >= 200 : ALL :  100.00    100.00    0.00
+
+ ====== Comparing SRGtt1LM2 :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  11.32     11.32     0.00
+                                     Size(leptons) >= 1 :  3.30      6.30     -47.59
+                   Size(jets) >= 8 and size(bjets) >= 3 :  0.69      2.34     -70.68
+                                             MET >= 500 :  0.41      1.67     -75.60
+                                           meff >= 1100 :  0.41      1.67     -75.60
+                                              mt >= 200 :  0.29      1.37     -78.48
+                                     mtminbjets3 >= 120 :  0.25      1.15     -78.16
+             size(largejets) >= 4 ? mjsum4 >= 100 : ALL :  0.25      1.14     -78.00
+             size(largejets) == 3 ? mjsum3 >= 100 : ALL :  0.25      1.14     -78.00
+             size(largejets) == 2 ? mjsum2 >= 100 : ALL :  0.25      1.14     -78.00
+             size(largejets) == 1 ? mjsum1 >= 100 : ALL :  0.25      1.14     -78.00
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                     Size(leptons) >= 1 :  29.17     55.65    -47.59
+                   Size(jets) >= 8 and size(bjets) >= 3 :  20.78     37.14    -44.06
+                                             MET >= 500 :  59.39     71.37    -16.78
+                                           meff >= 1100 :  100.00    100.00    0.00
+                                              mt >= 200 :  72.36     82.04    -11.79
+                                     mtminbjets3 >= 120 :  85.17     83.94     1.46
+             size(largejets) >= 4 ? mjsum4 >= 100 : ALL :  99.85     99.13     0.72
+             size(largejets) == 3 ? mjsum3 >= 100 : ALL :  100.00    100.00    0.00
+             size(largejets) == 2 ? mjsum2 >= 100 : ALL :  100.00    100.00    0.00
+             size(largejets) == 1 ? mjsum1 >= 100 : ALL :  100.00    100.00    0.00
+
+ ====== Comparing SRGtt1LC :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper    Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  11.32     11.32     0.00
+                                     Size(leptons) >= 1 :  3.30      6.30     -47.59
+                   Size(jets) >= 9 and size(bjets) >= 3 :  0.42      1.44     -70.63
+                                             MET >= 300 :  0.35      1.32     -73.73
+                                            meff >= 800 :  0.35      1.32     -73.73
+                                              mt >= 150 :  0.27      1.13     -75.86
+                                     mtminbjets3 >= 120 :  0.23      0.91     -75.10
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                     Size(leptons) >= 1 :  29.17     55.65    -47.59
+                   Size(jets) >= 9 and size(bjets) >= 3 :  12.81     22.86    -43.96
+                                             MET >= 300 :  81.98     91.67    -10.57
+                                            meff >= 800 :  100.00    100.00    0.00
+                                              mt >= 150 :  78.68     85.61    -8.09
+                                     mtminbjets3 >= 120 :  82.70     80.18     3.14
+
+*******Working on gtb2200600
+
+ ====== Comparing SRGtbB :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  27.72     27.72     0.00
+                                              MET > 200 :  25.97     27.57    -5.79
+                                     Size(leptons) == 0 :  18.45     15.93     15.83
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  14.33     12.08     18.59
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  14.32     12.08     18.58
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  14.32     12.08     18.58
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  14.32     12.08     18.58
+            size(bjets) >= 3 ? mtminbjets3 >= 130 : ALL :  13.49     10.95     23.23
+            size(bjets) == 2 ? mtminbjets2 >= 130 : ALL :  12.94     10.95     18.20
+            size(bjets) == 1 ? mtminbjets1 >= 130 : ALL :  12.74     10.95     16.31
+                                            meff > 2500 :  6.66      7.96     -16.39
+                                              MET > 550 :  5.74      6.81     -15.72
+             size(largejets) >= 4 ? mjsum4 >= 200 : ALL :  5.73      6.13     -6.52
+             size(largejets) == 3 ? mjsum3 >= 200 : ALL :  5.72      6.13     -6.66
+             size(largejets) == 2 ? mjsum2 >= 200 : ALL :  5.72      6.13     -6.71
+             size(largejets) == 1 ? mjsum1 >= 200 : ALL :  5.72      6.13     -6.71
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                              MET > 200 :  93.70     99.46    -5.79
+                                     Size(leptons) == 0 :  71.04     57.78     22.95
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  77.64     75.83     2.38
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  99.99     100.00   -0.01
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  100.00    100.00    0.00
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  100.00    100.00    0.00
+            size(bjets) >= 3 ? mtminbjets3 >= 130 : ALL :  94.20     90.65     3.93
+            size(bjets) == 2 ? mtminbjets2 >= 130 : ALL :  95.91     100.00   -4.09
+            size(bjets) == 1 ? mtminbjets1 >= 130 : ALL :  98.40     100.00   -1.60
+                                            meff > 2500 :  52.25     72.69    -28.12
+                                              MET > 550 :  86.25     85.55     0.81
+             size(largejets) >= 4 ? mjsum4 >= 200 : ALL :  99.83     90.01     10.91
+             size(largejets) == 3 ? mjsum3 >= 200 : ALL :  99.85     100.00   -0.15
+             size(largejets) == 2 ? mjsum2 >= 200 : ALL :  99.95     100.00   -0.05
+             size(largejets) == 1 ? mjsum1 >= 200 : ALL :  100.00    100.00    0.00
+
+ ====== Comparing SRGtbM :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  27.72     27.72     0.00
+                                              MET > 200 :  25.97     27.57    -5.79
+                                     Size(leptons) == 0 :  18.45     15.93     15.83
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  14.33     12.08     18.59
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  14.32     12.08     18.58
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  14.32     12.08     18.58
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  14.32     12.08     18.58
+            size(bjets) >= 3 ? mtminbjets3 >= 130 : ALL :  13.49     10.95     23.23
+            size(bjets) == 2 ? mtminbjets2 >= 130 : ALL :  12.94     10.95     18.20
+            size(bjets) == 1 ? mtminbjets1 >= 130 : ALL :  12.74     10.95     16.31
+                                        Size(jets) >= 6 :  12.25     9.54      28.45
+                                       Size(bjets) >= 4 :  1.99      3.82     -47.81
+                                            meff > 2000 :  1.66      3.52     -52.91
+                                              MET > 550 :  1.28      2.76     -53.58
+             size(largejets) >= 4 ? mjsum4 >= 200 : ALL :  1.28      2.50     -48.94
+             size(largejets) == 3 ? mjsum3 >= 200 : ALL :  1.28      2.50     -48.94
+             size(largejets) == 2 ? mjsum2 >= 200 : ALL :  1.28      2.50     -48.98
+             size(largejets) == 1 ? mjsum1 >= 200 : ALL :  1.28      2.50     -48.98
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                              MET > 200 :  93.70     99.46    -5.79
+                                     Size(leptons) == 0 :  71.04     57.78     22.95
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  77.64     75.83     2.38
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  99.99     100.00   -0.01
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  100.00    100.00    0.00
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  100.00    100.00    0.00
+            size(bjets) >= 3 ? mtminbjets3 >= 130 : ALL :  94.20     90.65     3.93
+            size(bjets) == 2 ? mtminbjets2 >= 130 : ALL :  95.91     100.00   -4.09
+            size(bjets) == 1 ? mtminbjets1 >= 130 : ALL :  98.40     100.00   -1.60
+                                        Size(jets) >= 6 :  96.21     87.12     10.43
+                                       Size(bjets) >= 4 :  16.27     40.04    -59.37
+                                            meff > 2000 :  83.13     92.15    -9.79
+                                              MET > 550 :  77.30     78.41    -1.41
+             size(largejets) >= 4 ? mjsum4 >= 200 : ALL :  99.63     90.58     9.99
+             size(largejets) == 3 ? mjsum3 >= 200 : ALL :  100.00    100.00    0.00
+             size(largejets) == 2 ? mjsum2 >= 200 : ALL :  99.93     100.00   -0.07
+             size(largejets) == 1 ? mjsum1 >= 200 : ALL :  100.00    100.00    0.00
+
+ ====== Comparing SRGtbC :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  27.72     27.72     0.00
+                                              MET > 200 :  25.97     27.57    -5.79
+                                     Size(leptons) == 0 :  18.45     15.93     15.83
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  14.33     12.08     18.59
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  14.32     12.08     18.58
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  14.32     12.08     18.58
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  14.32     12.08     18.58
+            size(bjets) >= 3 ? mtminbjets3 >= 130 : ALL :  13.49     10.95     23.23
+            size(bjets) == 2 ? mtminbjets2 >= 130 : ALL :  12.94     10.95     18.20
+            size(bjets) == 1 ? mtminbjets1 >= 130 : ALL :  12.74     10.95     16.31
+                                        Size(jets) >= 7 :  11.14     7.55      47.60
+                                       Size(bjets) >= 4 :  1.92      3.18     -39.48
+                                            meff > 1300 :  1.91      3.17     -39.70
+                                              MET > 500 :  1.46      2.52     -42.16
+              size(largejets) >= 4 ? mjsum4 >= 50 : ALL :  1.46      2.52     -42.16
+              size(largejets) == 3 ? mjsum3 >= 50 : ALL :  1.46      2.52     -42.16
+              size(largejets) == 2 ? mjsum2 >= 50 : ALL :  1.46      2.52     -42.16
+              size(largejets) == 1 ? mjsum1 >= 50 : ALL :  1.46      2.52     -42.16
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL    Paper     Error
+                                                    all :  29252.00  29252.00  0.00
+                                        Derivation Skim :  100.00    100.00    0.00
+                                              MET > 200 :  93.70     99.46    -5.79
+                                     Size(leptons) == 0 :  71.04     57.78     22.95
+              size(jets) >= 4 ? dphi4jmin4 >= 0.4 : ALL :  77.64     75.83     2.38
+              size(jets) == 3 ? dphi4jmin3 >= 0.4 : ALL :  99.99     100.00   -0.01
+              size(jets) == 2 ? dphi4jmin2 >= 0.4 : ALL :  100.00    100.00    0.00
+              size(jets) == 1 ? dphi4jmin1 >= 0.4 : ALL :  100.00    100.00    0.00
+            size(bjets) >= 3 ? mtminbjets3 >= 130 : ALL :  94.20     90.65     3.93
+            size(bjets) == 2 ? mtminbjets2 >= 130 : ALL :  95.91     100.00   -4.09
+            size(bjets) == 1 ? mtminbjets1 >= 130 : ALL :  98.40     100.00   -1.60
+                                        Size(jets) >= 7 :  87.50     68.95     26.90
+                                       Size(bjets) >= 4 :  17.27     42.12    -59.00
+                                            meff > 1300 :  99.31     99.69    -0.38
+                                              MET > 500 :  76.25     79.50    -4.08
+              size(largejets) >= 4 ? mjsum4 >= 50 : ALL :  100.00    100.00    0.00
+              size(largejets) == 3 ? mjsum3 >= 50 : ALL :  100.00    100.00    0.00
+              size(largejets) == 2 ? mjsum2 >= 50 : ALL :  100.00    100.00    0.00
+              size(largejets) == 1 ? mjsum1 >= 50 : ALL :  100.00    100.00    0.00
+
+
