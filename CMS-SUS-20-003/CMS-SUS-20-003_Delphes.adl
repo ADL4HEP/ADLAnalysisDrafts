@@ -1,0 +1,211 @@
+table deepCSVmedium
+  tabletype efficiency
+  nvars 1
+  errors true
+  # value    err-     err+     xmin     xmax
+  0.5790   0.0016   0.0016    -10.4     30.0
+  0.6314   0.0013   0.0013     30.0     35.0
+  0.6442   0.0011   0.0011     35.0     40.0
+  0.6596   0.0007   0.0007     40.0     50.0
+  0.6727   0.0007   0.0007     50.0     60.0
+  0.6812   0.0008   0.0008     60.0     70.0
+  0.6855   0.0008   0.0008     70.0     80.0
+  0.6873   0.0009   0.0009     80.0     90.0
+  0.6881   0.0010   0.0010     90.0    100.0
+  0.6880   0.0008   0.0008    100.0    125.0
+  0.6867   0.0011   0.0011    125.0    150.0
+  0.6826   0.0015   0.0015    150.0    175.0
+  0.6734   0.0020   0.0020    175.0    200.0
+  0.6624   0.0026   0.0026    200.0    225.0
+  0.6494   0.0034   0.0034    225.0    250.0
+  0.6419   0.0044   0.0044    250.0    275.0
+  0.6301   0.0054   0.0054    275.0    300.0
+  0.6202   0.0051   0.0051    300.0    350.0
+  0.6006   0.0073   0.0073    350.0    400.0
+  0.5889   0.0098   0.0098    400.0    450.0
+  0.5798   0.0126   0.0126    450.0    500.0
+  0.5547   0.0118   0.0118    500.0    600.0
+  0.5412   0.0172   0.0172    600.0    700.0
+  0.5197   0.0234   0.0234    700.0    800.0
+  0.4959   0.0243   0.0243    800.0   7000.0
+
+table Htageff
+  # shape taken from CMS-JME-18-002, Fig 16d (last bins simplified) and range scaled to 0.6-0.8 as mentioned in the analysis paper sec 4.
+  tabletype efficiency
+  nvars 1
+  errors true
+# value    err-   err+    min   max  
+  0.62    0.02  0.02    250  400
+  0.65    0.02  0.02    400  500
+  0.80    0.02  0.02    500  2000
+
+
+# OBJECT DEFINITIONS
+
+object selectedEles
+  take ELE
+  select Pt(ELE) > 30.0
+  select AbsEta(ELE) < 1.442 # requires electrons to be in the barrel
+  select miniiso(ELE) < 0.1 
+  # they also require scalar sum in dR = 0.3 < 5 GeV, but let's first try without this
+
+object selectedMuos
+  take MUO
+  select Pt(MUO) > 25.0
+  select AbsEta(MUO) < 2.1
+  select miniiso(MUO) < 0.1 
+  # they also require scalar sum in dR = 0.3 < 5 GeV, but let's first try without this
+
+object selectedLepts : Union(selectedEles, selectedMuos)
+ 
+object vetoEles
+  take ELE
+  # unselected electrons
+  select Pt(ELE) <= 30.0
+  select AbsEta(ELE) >= 1.442
+  select miniiso(ELE) >= 0.1 
+
+  # actual veto electrons 
+  select Pt(ELE) > 5.0
+  select AbsEta(ELE) < 2.4
+  select miniiso(ELE) < 0.2 
+
+# OK
+object vetoMuos
+  take MUO
+  # unselected muons 
+  select Pt(MUO) <= 25.0
+  select AbsEta(MUO) >= 2.1
+  select miniiso(MUO) >= 0.1 
+
+  # actual veto muons
+  select Pt(MUO) > 5.0
+  select AbsEta(MUO) < 2.4
+  select miniiso(MUO) < 0.2
+
+object vetoLepts : Union(vetoEles, vetoMuos)
+
+object vetoTaus
+  take TAU
+  select Pt(TAU) > 10 # Delphes may have 20 GeV as minimum ...
+  select AbsEta(TAU) < 2.4
+
+object AK4Jets
+  take JET
+  select Pt(JET)                > 30.0
+  select AbsEta(JET)            < 2.4
+  #select tightID               == 1
+  select dR(JET, selectedLepts) > 0.4 
+  select dR(JET, vetoLepts)     > 0.4
+
+#object bJets
+#  take AK4Jets
+#  select abs(flavor(AK4Jets)) == 5
+# select btag(AK4Jets) == 1
+
+object bJets
+  take AK4Jets
+  select Abs(Flavor(AK4Jets)) == 5
+  select applyHM( deepCSVmedium( Pt(AK4Jets) ) == 1)
+
+object nonbJets
+  take AK4Jets
+  select abs(flavor(AK4Jets)) != 5
+  select btag(AK4Jets) == 0
+
+object AK8Jets 
+  take FatJet
+  select Pt(FatJet) > 250.0
+  select AbsEta(FatJet) < 2.4
+  # add the isolation
+  select dR(JET, selectedLepts) > 0.8
+
+object genH
+  take GEN
+  select pdgID(GEN) == 25
+
+object genb
+  take GEN
+  select pdgID(GEN) == 5
+
+object boostedH
+  take AK8Jets
+  select dR(AK8Jets, genH) < 0.8
+  select dR(AK8Jets, genb) < 0.8
+  select applyHM( Htageff(pT(AK8Jets)) == 1)
+
+# EVENT SELECTION
+
+define mT = Sqrt( 2*pT(selectedLepts[0]) * MET *(1- cos( dPhi( selectedLepts[0], METLV[0]) ) ))
+define mCT = Sqrt(2 * pT(bJets[0]) * pT(bJets[1]) * (1 + cos( dPhi( bJets[0], bJets[1] ))))
+define mbb = m(bJets[0] bJets[1])
+
+# Initialization of user-defined particle groups 
+region init
+  select ALL
+  
+  select Size(selectedEles)   >= 0
+  select Size(selectedMuos)   >= 0
+  
+  select Size(selectedLepts)  >= 0
+  sort   Pt(selectedLepts)  descend
+  
+  select Size(vetoEles)       >= 0
+  select Size(vetoMuos)       >= 0
+  select Size(vetoLepts)      >= 0
+  select Size(vetoTaus)       >= 0
+
+  select Size(AK4Jets)        >= 0
+  sort Pt(AK4Jets) descend
+  select Size(bJets)          >= 0
+  sort Pt(bJets) descend
+  select Size(nonbJets) >= 0
+  sort Pt(nonbJets) descend
+
+  select Size(genb) >= 0
+  select Size(genH) >= 0 
+  select Size(boostedH) >= 0 
+
+  histo hist_n_jets_init, "Number of jets; N_{jets}; Events / bin", 5, 1, 6, Size(AK4Jets)
+  histo hist_n_bjets_init, "Number of b-tagged jets; N_{b-tagged jets}; Events / bin", 5, 1, 6, Size(bJets)
+
+region baseline
+  init
+  select Size(selectedLepts) == 1 
+  select Size(vetoLepts) == 0
+  select Size(vetoTaus) == 0
+  select Size(AK4Jets) [] 2 3
+  select Size(bJets) == 2
+  #select Size(nonbJets) == 1
+  #select size(nonbJets) > 0 ? pT(nonbJets[0]) < 300 : ALL
+  
+  histo hist_pt_miss_baseline_pre , "Distribution of p_{T}^{miss}; p_{T}^{miss} [GeV]; Events / bin",  32, 100, 500, MET
+  histo hist_mbb_baseline_pre     , "Distribution of m_{bb}; m_{bb} [GeV]; Events / bin",      28, 80, 500, mbb
+  histo hist_mct_baseline_pre     , "Distribution of m_{CT}; m_{CT} [GeV]; Events / bin",   50, 0, 500, mCT
+  histo hist_mt_baseline_pre      , "Distribution of m_{T}; m_{T} [GeV]; Events / bin",     12, 0, 300, mT
+
+  select MET  > 125.0
+  select mbb [] 90.0  150.0
+  select mT   > 150.0
+  select mCT  > 200.0
+
+  histo hist_pt_miss_baseline , "Distribution of p_{T}^{miss}; p_{T}^{miss} [GeV]; Events / bin",  32, 100, 500, MET
+  histo hist_mbb_baseline     , "Distribution of m_{bb}; m_{bb} [GeV]; Events / bin",  28, 80, 500, mbb
+  histo hist_mct_baseline     , "Distribution of m_{CT}; m_{CT} [GeV]; Events / bin",  50, 0, 500, mCT
+  histo hist_mt_baseline      , "Distribution of m_{T}; m_{T} [GeV]; Events / bin",  12, 0, 300, mT
+
+region signalbins
+  baseline
+  bin size(AK4Jets) == 2 and size(boostedH) == 0 and MET [] 125 200
+  bin size(AK4Jets) == 2 and size(boostedH) == 0 and MET [] 200 300
+  bin size(AK4Jets) == 2 and size(boostedH) == 0 and MET [] 300 400
+  bin size(AK4Jets) == 2 and size(boostedH) == 0 and MET > 400
+  bin size(AK4Jets) == 2 and size(boostedH) == 1 and MET [] 125 300
+  bin size(AK4Jets) == 2 and size(boostedH) == 1 and MET > 300
+  bin size(AK4Jets) == 3 and size(boostedH) == 0 and MET [] 125 200
+  bin size(AK4Jets) == 3 and size(boostedH) == 0 and MET [] 200 300
+  bin size(AK4Jets) == 3 and size(boostedH) == 0 and MET [] 300 400
+  bin size(AK4Jets) == 3 and size(boostedH) == 0 and MET > 400
+  bin size(AK4Jets) == 3 and size(boostedH) == 1 and MET [] 125 300
+  bin size(AK4Jets) == 3 and size(boostedH) == 1 and MET > 300
+
