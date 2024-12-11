@@ -1,0 +1,67 @@
+*******Working on WZ15050
+
+ ====== Comparing ATLAS-SUSY-2019-22-WZ-gen "C1N2 WZ 150 50" WZhigh :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    ALL :  100.00  100.00  0.00
+                                     size(sigJETS) >= 1 :  65.12  49.09  32.66
+                                  size(genleptons) >= 2 :  60.41  34.69  74.15
+               q(genleptons[0]) * q(genleptons[1]) == 1 :  14.83  15.71  -5.58
+                                  size(genleptons) == 2 :  4.16  0.24  1646.52
+    pt(genleptons[0]) >= 25 AND pt(genleptons[1]) >= 25 :  3.18  0.22  1322.64
+                                        size(bjet) == 0 :  3.12  0.22  1298.30
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  2.99  0.22  1254.62
+                                             MT2 >= 100 :  0.23  0.01  1987.65
+                                           MTmin >= 100 :  0.23  0.01  1987.65
+                                             MET >= 100 :  0.08  0.01  1046.11
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                                    ALL :  1.00  1.00  0.00
+                                     size(sigJETS) >= 1 :  65.12  49.09  32.66
+                                  size(genleptons) >= 2 :  92.77  70.67  31.27
+               q(genleptons[0]) * q(genleptons[1]) == 1 :  24.56  45.29  -45.78
+                                  size(genleptons) == 2 :  28.02  1.51  1749.81
+    pt(genleptons[0]) >= 25 AND pt(genleptons[1]) >= 25 :  76.54  93.97  -18.54
+                                        size(bjet) == 0 :  97.92  99.63  -1.71
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  96.02  99.12  -3.12
+                                             MT2 >= 100 :  7.73  5.02  54.11
+                                           MTmin >= 100 :  100.00  100.00  0.00
+                                             MET >= 100 :  35.71  65.05  -45.10
+
+ ====== Comparing ATLAS-SUSY-2019-22-WZ-gen "C1N2 WZ 150 50" WZlow :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    ALL :  100.00  100.00  0.00
+                                     size(sigJETS) >= 1 :  65.12  49.09  32.66
+                                  size(genleptons) >= 2 :  60.41  34.69  74.15
+               q(genleptons[0]) * q(genleptons[1]) == 1 :  14.83  15.71  -5.58
+                                  size(genleptons) == 2 :  4.16  0.24  1646.52
+    pt(genleptons[0]) >= 25 AND pt(genleptons[1]) >= 25 :  3.18  0.22  1322.64
+                                        size(bjet) == 0 :  3.12  0.22  1298.30
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  2.99  0.22  1254.62
+                                             MT2 <= 100 :  2.76  0.21  1215.88
+                                           MTmin >= 130 :  0.17  0.02  695.70
+                                             MET >= 140 :  0.02  0.00  269.81
+                                            Meff <= 600 :  0.01  0.00  274.81
+                  dR(genleptons[0], genleptons[1]) <= 3 :  0.01  0.00  274.81
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                                    ALL :  1.00  1.00  0.00
+                                     size(sigJETS) >= 1 :  65.12  49.09  32.66
+                                  size(genleptons) >= 2 :  92.77  70.67  31.27
+               q(genleptons[0]) * q(genleptons[1]) == 1 :  24.56  45.29  -45.78
+                                  size(genleptons) == 2 :  28.02  1.51  1749.81
+    pt(genleptons[0]) >= 25 AND pt(genleptons[1]) >= 25 :  76.54  93.97  -18.54
+                                        size(bjet) == 0 :  97.92  99.63  -1.71
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  96.02  99.12  -3.12
+                                             MT2 <= 100 :  92.27  94.98  -2.86
+                                           MTmin >= 130 :  6.29  10.40  -39.53
+                                             MET >= 140 :  9.52  20.49  -53.52
+                                            Meff <= 600 :  50.00  49.33  1.35
+                  dR(genleptons[0], genleptons[1]) <= 3 :  100.00  100.00  0.00
