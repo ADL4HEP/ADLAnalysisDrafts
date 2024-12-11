@@ -1,0 +1,127 @@
+info analysis
+  title "Search for direct production of winos and higgsinos in events with two same-charge leptons or #three leptons in p p collision data at 13 TeV with the ATLAS detector"
+  #experiment "ATLAS"
+  #id "CERN-EP-2023-063"
+  #publication
+ # sqrtS "13"
+  #lumi "139"
+  #arXiv "2305.09322"
+ # hepdata
+ # doi https://doi.org/10.48550/arXiv.2305.09322
+
+#info adl
+#adlauthor Feyza Baspehlivan
+
+countsformat WZ15050
+  process WZ15050, "C1N2 WZ 150 50", stat
+ 
+ 
+ 
+ 
+###Object Definitions
+
+#object sigELE
+ # take Ele
+ # select pt(Ele) > 10
+ # select abs(eta(Ele)) < 2.0
+  #reject abs(eta(Ele)) [] 1.37 1.52
+ 
+
+#object sigMUO
+ # take Muo
+  #select abs(eta(Muo)) < 2.5
+  #select pt(Muo) > 10   
+  #select abs(z0sin(tetha)) < 0.5
+
+ 
+#object baselineJETS
+ # take Jet
+  #select pt(Jet) > 20
+  #select abs(eta(Jet)) < 4.5
+ 
+object sigJETS
+  take Jet
+  select pt(Jet) >= 25
+  select abs(eta(Jet)) < 2.8
+ 
+object bjet
+  take sigJETS
+  select BTag(sigJETS) == 1
+  select abs(eta(sigJETS)) < 2.5
+ 
+#object sigLEP : Union(sigELE,sigMUO)
+
+object genleptons
+  take gen
+  select abs(pdgID(gen)) == 11 OR abs(pdgID(gen)) == 13
+  select abs(pdgID(gen)) == 11 ? abs(eta(gen)) < 2.0 : abs(eta(gen)) < 2.5
+  select pT(gen) > 10
+
+define MTL0 : sqrt( 2*pT(genleptons[0]) * MET*(1-cos(Phi(METLV[0]) - Phi(genleptons[0]) )))
+define MTL1 : sqrt( 2*pT(genleptons[1]) * MET*(1-cos(Phi(METLV[0]) - Phi(genleptons[1]) )))
+define MTmin : min(MTL0,MTL1)
+define MT2 : fMT2(genleptons[0],genleptons[1],METLV[0])
+define Meff : sum(pT(genleptons)) + sum(pT(genleptons)) + MET  
+define SUMPTR : sum(pt(bjet)) / sum(pt(sigJETS))
+define SUMPTjet : sum(pt(sigJETS))
+
+
+###Signal Regions
+
+
+region WZhigh
+  #weight eventweight 33.93
+  sort pT(genleptons) descend
+  select ALL
+  counts WZ15050 16781.65 +- 53.75
+  select size(sigJETS) >= 1
+  counts WZ15050 8237.5 +- 38.94
+  select size(genleptons) >= 2
+  counts WZ15050 5821.18 +- 32.7
+  select q(genleptons[0]) * q(genleptons[1]) == 1
+  counts WZ15050 2636.52 +- 22.31
+  select size(genleptons) == 2
+  counts WZ15050 39.94 +- 2.84
+  select pt(genleptons[0]) >= 25 AND pt(genleptons[1]) >= 25  #after this cut there is a cut of size of jets with pt>25 but because it is the same cut with line 87 it is not written
+  counts WZ15050 37.53 +- 2.76
+  select size(bjet) == 0
+  counts WZ15050 37.39 +- 2.76
+  select size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL
+  counts WZ15050 37.06 +- 2.75
+  select MT2 >= 100
+  counts WZ15050 1.86 +- 0.62
+  select MTmin >= 100
+  counts WZ15050 1.86 +- 0.62
+  select MET >= 100
+  counts WZ15050 1.21 +- 0.49
+
+region WZlow
+  #weight eventweight 33.93
+  sort pT(genleptons) descend
+  select ALL
+  counts WZ15050 16781.65 +- 53.75
+  select size(sigJETS) >= 1
+  counts WZ15050 8237.5 +- 38.94
+  select size(genleptons) >= 2
+  counts WZ15050 5821.18 +- 32.7
+  #sort pT(genleptons) descend
+  select q(genleptons[0]) * q(genleptons[1]) == 1
+  counts WZ15050 2636.52 +- 22.31
+  select size(genleptons) == 2
+  counts WZ15050 39.94 +- 2.84
+  select pt(genleptons[0]) >= 25 AND pt(genleptons[1]) >= 25  #after this cut there is a cut of size of jets with pt>25 but because it is the same cut with line 87 it is not written
+  counts WZ15050 37.53 +- 2.76
+  select size(bjet) == 0
+  counts WZ15050 37.39 +- 2.76
+  select size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL
+  counts WZ15050 37.06 +- 2.75
+  select MT2 <= 100
+  counts WZ15050 35.20 +- 2.68
+  select MTmin >= 130
+  counts WZ15050 3.66 +- 0.89
+  select MET >= 140
+  counts WZ15050 0.75 +- 0.38
+  select Meff <= 600  
+  counts WZ15050 0.37 +- 0.27     	 
+  select dR(genleptons[0], genleptons[1]) <= 3
+  counts WZ15050 0.37 +- 0.27
