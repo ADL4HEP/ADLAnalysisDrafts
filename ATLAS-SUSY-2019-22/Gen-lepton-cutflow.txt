@@ -1,3 +1,6 @@
+#The same sample was used as input for Delphes, the ATLAS card (delphes_ATLAS.tcl) was altered by making electron and muon detection efficiencies 1 for this cutflow. adl file name is written in the explanation line. 
+
+
 *******Working on WZ15050
 
  ====== Comparing ATLAS-SUSY-2019-22-WZ-gen "C1N2 WZ 150 50" WZhigh :
