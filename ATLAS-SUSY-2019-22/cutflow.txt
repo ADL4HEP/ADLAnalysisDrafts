@@ -1,0 +1,69 @@
+#The same sample was used as input for Delphes, the ATLAS card (delphes_ATLAS.tcl) was as its original version for this cutflow. adl file name is written in the explanation line. 
+
+*******Working on WZ15050
+
+ ====== Comparing ATLAS-SUSY-2019-22-WZ "C1N2 WZ 150 50" WZhigh :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    ALL :  100.00  100.00  0.00
+                                     size(sigJETS) >= 1 :  65.12  49.09  32.66
+                                      size(sigLEP) >= 2 :  36.99  34.69  6.63
+                       q(sigLEP[0]) * q(sigLEP[1]) == 1 :  11.55  15.71  -26.47
+                                      size(sigLEP) == 2 :  8.13  0.24  3316.65
+            pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25 :  5.98  0.22  2575.31
+                                        size(bjet) == 0 :  5.83  0.22  2505.10
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  5.52  0.22  2399.68
+                                             MT2 >= 100 :  0.02  0.01  49.12
+                                           MTmin >= 100 :  0.02  0.01  49.12
+                                             MET >= 100 :  0.02  0.01  129.22
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                                    ALL :  1.00  1.00  0.00
+                                     size(sigJETS) >= 1 :  65.12  49.09  32.66
+                                      size(sigLEP) >= 2 :  56.80  70.67  -19.62
+                       q(sigLEP[0]) * q(sigLEP[1]) == 1 :  31.23  45.29  -31.04
+                                      size(sigLEP) == 2 :  70.39  1.51  4546.34
+            pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25 :  73.58  93.97  -21.70
+                                        size(bjet) == 0 :  97.38  100.00  -2.62
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  94.75  98.75  -4.05
+                                             MT2 >= 100 :  0.30  5.02  -94.03
+                                           MTmin >= 100 :  100.00  100.00  0.00
+                                             MET >= 100 :  100.00  65.05  53.72
+
+ ====== Comparing ATLAS-SUSY-2019-22-WZ "C1N2 WZ 150 50" WZlow :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    ALL :  100.00  100.00  0.00
+                                     size(sigJETS) >= 1 :  65.12  49.09  32.66
+                                      size(sigLEP) >= 2 :  36.99  34.69  6.63
+                       q(sigLEP[0]) * q(sigLEP[1]) == 1 :  11.55  15.71  -26.47
+                                      size(sigLEP) == 2 :  8.13  0.24  3316.65
+            pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25 :  5.98  0.22  2575.31
+                                        size(bjet) == 0 :  5.83  0.22  2505.10
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  5.52  0.22  2399.68
+                                             MT2 <= 100 :  5.50  0.21  2523.89
+                                           MTmin >= 130 :  0.03  0.02  51.56
+                                             MET >= 140 :  0.01  0.00  84.91
+                                            Meff <= 600 :  0.00  0.00  -100.00
+                          dR(sigLEP[0], sigLEP[1]) <= 3 :  0.00  0.00  -100.00
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                                    ALL :  1.00  1.00  0.00
+                                     size(sigJETS) >= 1 :  65.12  49.09  32.66
+                                      size(sigLEP) >= 2 :  56.80  70.67  -19.62
+                       q(sigLEP[0]) * q(sigLEP[1]) == 1 :  31.23  45.29  -31.04
+                                      size(sigLEP) == 2 :  70.39  1.51  4546.34
+            pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25 :  73.58  93.97  -21.70
+                                        size(bjet) == 0 :  97.38  100.00  -2.62
+size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL :  94.75  98.75  -4.05
+                                             MT2 <= 100 :  99.70  94.98  4.97
+                                           MTmin >= 130 :  0.60  10.40  -94.22
+                                             MET >= 140 :  25.00  20.49  22.00
+                                            Meff <= 600 :  0.00  49.33  -100.00
+                          dR(sigLEP[0], sigLEP[1]) <= 3 :  0.00  100.00  -100.00
