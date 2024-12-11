@@ -15,25 +15,22 @@ info analysis
 
 countsformat WZ15050
   process WZ15050, "C1N2 WZ 150 50", stat
- 
-countsformat WhSS300100
-  process WhSS300100, "C1N2 WHSS 300 100", stat
- 
+  
  
 ###Object Definitions
 
 object sigELE
   take Ele
   select pt(Ele) > 10
-  select abs(eta(Ele)) < 2.47
-  reject abs(eta(Ele)) [] 1.37 1.52
- 
+  select abs(eta(Ele)) < 2.0
+  #select dR(Ele , IDTrack) == min( 0.2 , 10/pt(Ele) )
 
 object sigMUO
   take Muo
   select abs(eta(Muo)) < 2.5
   select pt(Muo) > 10  
   #select abs(z0sin(tetha)) < 0.5
+  #select dR(Ele , IDTrack) == min( 0.3 , 10/pt(Muo) )
 
  
 #object baselineJETS
@@ -64,83 +61,24 @@ define SUMPTjet : sum(pt(sigJETS))
 
 
 ###Signal Regions
-
-region preselection1
-  take ALL
-  counts WHSS300100 53770 +- 230
-  select size(sigJETS) >= 1
-  counts WHSS300100 828 +- 19
-  select size(sigLEP) >= 2
-  counts WHSS300100 458 +- 14
-  select pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25
-  counts WHSS300100 382 +- 8
-  select size(sigLEP) == 2
-  counts WHSS300100 306 +- 7
-  select q(sigLEP[0]) * q(sigLEP[1]) == 1
-  counts WHSS300100 105 +- 4
-  select size(bjet) == 0
-  counts WHSS300100 101 +- 4
-  select MET >= 50
-  counts WHSS300100 87 +- 4
-  select size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL
-  counts WHSS300100 84 +- 4
-#  histo hlepton, "signalleptons (GeV)", 40, 0, 1000, size(sigLEP)
- 
- 
-
-region preselection2
-  take ALL
-  counts WZ15050 16781.65 +- 53.75
-#  weight eventweight 33.93
- # print size(sigLEP)
- 
-  #histo hsiglep, "signalleptons size", 40, 0, 5, size(sigLEP)
-
-  select size(sigJETS) >= 1
-  counts WZ15050 8237.50 +- 38.94
- # histo hjetcut, "signalleptons size", 40, 0, 5, size(sigLEP)
-
-  select size(sigLEP) >= 2
-  counts WZ15050 5821.18 +- 32.7
-#  histo hleptoncut, "signalleptons size ", 40, 0, 5, size(sigLEP)
-
-  select q(sigLEP[0]) * q(sigLEP[1]) == 1
-  counts WZ15050 2636.52 +- 22.31
- 
-  select size(sigLEP) == 2
-  counts WZ15050 39.94 +- 2.84
- 
-  select pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25  #after this cut there is a cut of size of jets with pt>25 but because it is the same cut with line 87 it is not written
-  counts WZ15050 37.53 +- 2.76
-
-  select size(bjet) == 0
-  counts WZ15050 37.53 +- 2.76
-
-  select size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL
-  counts WZ15050 37.06 +- 2.75
-
-region WHhigh
-  preselection1
-  #print MTL0 MTL1
-  select MT2 >= 80  
-  counts WHSS300100 31.7 +- 2.2
-  #select METSig >= 7
-  #counts WHSS300100 28.1 +- 2.0
-  select MET >= 75
-  counts WHSS300100 28.1 +- 2.0
- 
-region WHlow
-  preselection1
-  select MT2 < 80
-  counts WHSS300100 52.0 +- 2.8
-  select MTmin >= 100
-  counts WHSS300100 9.0 +- 1.2
-  #select METSig >= 6
-  #counts WHSS300100 7.0 +- 1.0
  
 region WZhigh
-  preselection2
-  print MTL0 MTL1
+  select ALL
+  counts WZ15050 16781.65 +- 53.75
+  select size(sigJETS) >= 1
+  counts WZ15050 8237.50 +- 38.94
+  select size(sigLEP) >= 2
+  counts WZ15050 5821.18 +- 32.7
+  select q(sigLEP[0]) * q(sigLEP[1]) == 1
+  counts WZ15050 2636.52 +- 22.31
+  select size(sigLEP) == 2
+  counts WZ15050 39.94 +- 2.84
+  select pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25  #after this cut there is a cut of size of jets with pt>25 but because it is the same cut with line 87 it is not written
+  counts WZ15050 37.53 +- 2.76
+  select size(bjet) == 0
+  counts WZ15050 37.53 +- 2.76
+  select size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL
+  counts WZ15050 37.06 +- 2.75
   select MT2 >= 100
   counts WZ15050 1.86 +- 0.62
   select MTmin >= 100
@@ -149,7 +87,22 @@ region WZhigh
   counts WZ15050 1.21 +- 0.49
 
 region WZlow
-  preselection2
+  select ALL
+  counts WZ15050 16781.65 +- 53.75
+  select size(sigJETS) >= 1
+  counts WZ15050 8237.50 +- 38.94
+  select size(sigLEP) >= 2
+  counts WZ15050 5821.18 +- 32.7
+  select q(sigLEP[0]) * q(sigLEP[1]) == 1
+  counts WZ15050 2636.52 +- 22.31
+  select size(sigLEP) == 2
+  counts WZ15050 39.94 +- 2.84
+  select pt(sigLEP[0]) >= 25 AND pt(sigLEP[1]) >= 25  #after this cut there is a cut of size of jets with pt>25 but because it is the same cut with line 87 it is not written
+  counts WZ15050 37.53 +- 2.76
+  select size(bjet) == 0
+  counts WZ15050 37.53 +- 2.76
+  select size(sigJETS) >= 2 ? m(sigJETS[0] + sigJETS[1]) < 350 : ALL
+  counts WZ15050 37.06 +- 2.75
   select MT2 <= 100
   counts WZ15050 35.20 +- 2.68
   select MTmin >= 130
@@ -160,110 +113,3 @@ region WZlow
   counts WZ15050 0.37 +- 0.27          
   select dR(sigLEP[0], sigLEP[1]) <= 3
   counts WZ15050 0.37 +- 0.27
-
-region bRPV2l
-  select size(sigJETS) >= 1
-  select size(sigLEP) >= 2
-  select q(sigLEP[0])*q(sigLEP[1]) == 1
-  select pt(sigLEP[0]) >= 20 AND pt(sigLEP[1]) >= 20  
-  select size(sigLEP) == 2
-  select MT2 >= 60
-  select MET >= 100
-  select size(bjet) == 0
-  select size(sigJETS) >= 4
-  select pt(sigJETS[3]) > 40   #last two lines for the n_jets( pt > 40 GeV ) >= 4 cut
-
-region bRPV3l
-  select size(sigJETS) >= 1
-  select size(sigLEP) >= 3 # according to the ATL note size(sigLEP)>=2 idi 3 yaptım aşağıda 3 leptona cut konmuş. atl notta nasıl cut konmuş tekrar bakmam lazım!!
-  select q(sigLEP[0])*q(sigLEP[1]) == 1
-  select pt(sigLEP[0]) >= 20 AND pt(sigLEP[1]) >= 20 AND pt(sigLEP[2]) >= 10
-  select size(sigLEP) == 3
-  select MT2 >= 80
-  select MET >= 120
-  select Meff >= 350  
-  reject m(sigELE[0] sigELE[1]) [] 81 101 AND m(sigMUO[0] sigMUO[1]) [] 81 101  
-
-region RPV
-  select size(sigJETS) >= 1
-  select size(sigLEP) >= 2
-  select q(sigLEP[0])*q(sigLEP[1]) == 1
-  select size(sigLEP) == 2
-  select pt(sigLEP[1]) > 25
-
-region RPV2l1bLow
-  RPV
-  select size(bjet) == 1
-  select sum(pt(sigLEP)) >= 100
-  select MET >= 100
-  select size(sigJETS) <= 2
-  select SUMPTR >= 0.7
-  select SUMPTjet >= 120
-  select min(dR(sigLEP[0], sigJETS[0:])) <= 1.2
-  select dR(sigLEP[0], sigLEP[1]) >= 2.0
-
-region RPV2l1bMed
-  RPV
-  select size(bjet) == 1
-  select sum(pt(sigLEP)) >= 100
-  select MET >= 100
-  select size(sigJETS) == 2 OR size(sigJETS) == 3
-  select SUMPTR >= 0.45
-  select SUMPTjet >= 400
-  select min(dR(sigLEP[0] , sigJETS) ) <= 1.0
-  select dR(sigLEP[0] , sigLEP[1]) >= 2.5
-
-region RPV2l2bLow
-  RPV
-  select size(bjet) == 2
-  select MET >= 80
-  select size(sigJETS) <= 3
-  select SUMPTR >= 0.9
-  select SUMPTjet >= 300
-  select min(dR(sigLEP[0] , sigJETS) ) <= 1.0
-  select dR(sigLEP[0] , sigLEP[1]) >= 2.5
-
-region RPV2l2bMed
-  RPV
-  select size(bjet) == 2
-  select MET >= 80
-  select size(sigJETS) == 3 OR size(sigJETS) == 4
-  select SUMPTR >= 0.75
-  select SUMPTjet >= 420
-  select min(dR(sigLEP[0] , sigJETS) ) <= 1.0
-  select dR(sigLEP[0] , sigLEP[1]) >= 2.5
-
-region RPV2l2bHigh
-  RPV
-  select size(bjet) == 2
-  select MET >= 80
-  select size(sigJETS) >= 5 AND size(sigJETS) <= 6
-  select SUMPTjet >= 420
-  select min(dR(sigLEP[0] , sigJETS) ) <= 1.0
-  select dR(sigLEP[0] , sigLEP[1]) >= 2.0
-
-region RPV2l3bLow
-  RPV
-  select size(bjet) >= 3
-  select MET >= 20
-  select size(sigJETS) <= 3
-  select SUMPTR >= 0.8
-  select min(dR(sigLEP[0] , sigJETS) ) <= 1.5
-  select dR(sigLEP[0] , sigLEP[1]) >= 2.0
-
-region RPV2l3bMed
-  RPV
-  select size(bjet) >= 3
-  select MET >= 20
-  select size(sigJETS) <= 3
-  select SUMPTR >= 0.8
-
-region RPV2l3bHigh
-  RPV
-  select size(bjet) >= 3
-  select MET >= 20
-  select size(sigJETS) <= 6
-  select SUMPTR >= 0.5
-  select SUMPTjet >= 350
-  select min(dR(sigLEP[0] , sigJETS) ) <= 1.0
-  select dR(sigLEP[0] , sigLEP[1]) >= 2.0
