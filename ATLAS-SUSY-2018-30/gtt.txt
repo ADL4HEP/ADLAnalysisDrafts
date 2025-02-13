@@ -1,0 +1,62 @@
+====== Comparing SRGtt21001 :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                   
+                                        Derivation skim :  11.39  11.39  -0.00
+((size(leptons) == 0 AND dphi4jmin > 0.4) OR (size(leptons) >= 1)) :  9.57  7.66  24.92
+                                             NN1Cut > 2 :  0.00  2.63  -100.00
+*** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  100.00  100.00  -0.00
+((size(leptons) == 0 AND dphi4jmin > 0.4) OR (size(leptons) >= 1)) :  84.01  67.25  24.92
+                                             NN1Cut > 2 :  0.00  34.33  -100.00
+====== Comparing SRGtt18001 :
+*** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  11.39  11.39  -0.00
+((size(leptons) == 0 AND dphi4jmin > 0.4) OR (size(leptons) >= 1)) :  9.57  7.66  24.92
+                                       NN2Cut >= 0.9997 :  3.02  2.80  7.79
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  100.00  100.00  -0.00
+((size(leptons) == 0 AND dphi4jmin > 0.4) OR (size(leptons) >= 1)) :  84.01  67.25  24.92
+                                       NN2Cut >= 0.9997 :  31.54  36.55  -13.71
+====== Comparing SRGtt23001200 :
+*** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  11.39  11.39  -0.00
+((size(leptons) == 0 AND dphi4jmin > 0.4) OR (size(leptons) >= 1)) :  9.57  7.66  24.92
+                                       NN3Cut >= 0.9993 :  3.61  2.95  22.53
+*** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  100.00  100.00  -0.00
+((size(leptons) == 0 AND dphi4jmin > 0.4) OR (size(leptons) >= 1)) :  84.01  67.25  24.92
+                                       NN3Cut >= 0.9993 :  37.78  38.51  -1.91
+
+ ====== Comparing SRGtt19001400 :
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  11.39  11.39  -0.00
+((size(leptons) == 0 AND dphi4jmin > 0.4) OR (size(leptons) >= 1)) :  9.57  7.66  24.92
+                                       NN4Cut >= 0.9987 :  0.25  0.19  33.37
+*** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                        Derivation Skim :  0.11  100.00  -99.89
+((size(leptons) == 0 AND dphi4jmin > 0.4) OR (size(leptons) >= 1)) :  84.01  67.25  24.92
+                                       NN4Cut >= 0.9987 :  2.65  2.48  6.77
+
+                                       -----
+                                       -----
+                                       -----

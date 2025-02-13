@@ -1,0 +1,81 @@
+*******Working on gbb20001000
+
+ ====== Comparing SRGbb28001400 :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  80.90  80.90  -0.00
+                                     size(leptons) == 0 :  80.84  80.00  1.05
+                                       dphi4jmin >= 0.6 :  54.25  52.50  3.33
+                                        NN5Cut >= 0.999 :  16.77  21.70  -22.73
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  100.00  100.00  -0.00
+                                     size(leptons) == 0 :  99.93  98.89  1.05
+                                       dphi4jmin >= 0.6 :  67.11  65.62  2.26
+                                        NN5Cut >= 0.999 :  30.91  41.33  -25.23
+
+ ====== Comparing SRGbb23001000 :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  80.90  80.90  -0.00
+                                     size(leptons) == 0 :  80.84  80.00  1.05
+                                       dphi4jmin >= 0.6 :  54.25  52.50  3.33
+                                       NN6Cut >= 0.9994 :  16.75  21.30  -21.38
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  100.00  100.00  -0.00
+                                     size(leptons) == 0 :  99.93  98.89  1.05
+                                       dphi4jmin >= 0.6 :  67.11  65.62  2.26
+                                       NN6Cut >= 0.9994 :  30.87  40.57  -23.91
+
+====== Comparing SRGbb21001600 :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  80.90  80.90  -0.00
+                                     size(leptons) == 0 :  80.84  80.00  1.05
+                                       dphi4jmin >= 0.4 :  62.99  61.10  3.09
+                                       NN7Cut >= 0.9993 :  7.77  6.20  25.36
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                        
+                                        Derivation Skim :  100.00  100.00  -0.00
+                                     size(leptons) == 0 :  99.93  98.89  1.05
+                                       dphi4jmin >= 0.4 :  77.92  76.37  2.02
+                                       NN7Cut >= 0.9993 :  12.34  10.15  21.60
+
+ ====== Comparing SRGbb20001800 :
+
+ *** Cumulative comparison - DF:
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  80.90  80.90  -0.00
+                                     size(leptons) == 0 :  80.84  80.00  1.05
+                                       dphi4jmin >= 0.4 :  62.99  61.10  3.09
+                                        NN8Cut >= 0.997 :  0.64  0.19  230.97
+
+ *** Relative comparison:
+(In the first line no comparison is done.)
+                                              Selection :      CL   Paper   Error
+                                                    
+                                        Derivation Skim :  100.00  100.00  -0.00
+                                     size(leptons) == 0 :  99.93  98.89  1.05
+                                       dphi4jmin >= 0.4 :  77.92  76.37  2.02
+                                        NN8Cut >= 0.997 :  1.01  0.31  221.04
+
+                                        -----
+                                        -----
+                                        -----
