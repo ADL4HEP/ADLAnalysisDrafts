@@ -57,6 +57,4 @@
 ((size(leptons) == 0 AND dphi4jmin > 0.4) OR (size(leptons) >= 1)) :  84.01  67.25  24.92
                                        NN4Cut >= 0.9987 :  2.65  2.48  6.77
 
-                                       -----
-                                       -----
-                                       -----
+                                    
