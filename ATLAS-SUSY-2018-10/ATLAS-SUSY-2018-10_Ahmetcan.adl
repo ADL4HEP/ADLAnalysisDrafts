@@ -62,6 +62,22 @@ table EleRecoandIDeff
   0.98	60.0	80.0
   0.98	80.0	2000.0
 
+# b-tagging efficiency
+table ATLASBtageff
+  tabletype efficiency
+  nvars 1
+  errors false
+# val	Ptmin	Ptmax
+  0.56	0.0	30.0
+  0.65	30.0	40.0
+  0.70	40.0	60.0
+  0.75	60.0	85.0
+  0.76	85.0	110.0
+  0.76	110.0	140.0
+  0.77	140.0	175.0
+  0.74	175.0	250.0
+  0.72	250.0	9999.0
+
 object baselineele 
   take ELE
   select Pt(ELE) > 7
@@ -106,7 +122,7 @@ object signaljet
 
 object signalbjet
   take signaljet
-  select bTag(signaljet) == 1
+  select applyHM(ATLASBtageff(Pt(signaljet)) == 1)
 
 object signallep : Union(signalele,signalmuo)
 object defaultlep : Union(ELE,MUO)
@@ -397,7 +413,7 @@ region SR6JBV
   select Size(signaljet) >= 6
   counts signals6JBV 25.3 +- 0.4, 62.1 +- 1.5
   select Size(signalbjet) == 0
-  counts signals6JBv 16.43 +- 0.29, 43.9 +- 1.2
+  counts signals6JBV 16.43 +- 0.29, 43.9 +- 1.2
   select AnaAplanarity > 0.01
   counts signals6JBV 16.32 +- 0.29, 42.5 +- 1.2
   select meff > 700
