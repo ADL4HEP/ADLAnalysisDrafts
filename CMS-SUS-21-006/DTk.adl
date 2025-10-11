@@ -1,0 +1,809 @@
+countsformat dt 
+  process dt , "Disappearing track"
+
+table btagdeepCSVmedium
+  tabletype efficiency
+  nvars 1
+  errors true
+  # eff    err-     err+     pTmin     pTmax
+  0.5790   0.0016   0.0016    -10.4     30.0
+  0.6314   0.0013   0.0013     30.0     35.0
+  0.6442   0.0011   0.0011     35.0     40.0
+  0.6596   0.0007   0.0007     40.0     50.0
+  0.6727   0.0007   0.0007     50.0     60.0
+  0.6812   0.0008   0.0008     60.0     70.0
+  0.6855   0.0008   0.0008     70.0     80.0
+  0.6873   0.0009   0.0009     80.0     90.0
+  0.6881   0.0010   0.0010     90.0    100.0
+  0.6880   0.0008   0.0008    100.0    125.0
+  0.6867   0.0011   0.0011    125.0    150.0
+  0.6826   0.0015   0.0015    150.0    175.0
+  0.6734   0.0020   0.0020    175.0    200.0
+  0.6624   0.0026   0.0026    200.0    225.0
+  0.6494   0.0034   0.0034    225.0    250.0
+  0.6419   0.0044   0.0044    250.0    275.0
+  0.6301   0.0054   0.0054    275.0    300.0
+  0.6202   0.0051   0.0051    300.0    350.0
+  0.6006   0.0073   0.0073    350.0    400.0
+  0.5889   0.0098   0.0098    400.0    450.0
+  0.5798   0.0126   0.0126    450.0    500.0
+  0.5547   0.0118   0.0118    500.0    600.0
+  0.5412   0.0172   0.0172    600.0    700.0
+  0.5197   0.0234   0.0234    700.0    800.0
+  0.4959   0.0243   0.0243    800.0   7000.0
+
+table DTkshtageff
+  tabletype efficiency
+  nvars 1
+  errors true
+  # eff        err-         err+         Tdispmin        Tdispmax
+  0.000000     0.0000       0.0000       0.000           27.174         
+  0.007569     0.0000       0.0000       27.174          81.522         
+  0.275460     0.0000       0.0000       81.522          135.870        
+  0.421580     0.0000       0.0000       135.870         190.220        
+  0.307020     0.0000       0.0000       190.220         244.570        
+  0.022964     0.0000       0.0000       244.570         298.910        
+  0.008888     0.0000       0.0000       298.910         353.260        
+  0.006091     0.0000       0.0000       353.260         407.610        
+  0.004338     0.0000       0.0000       407.610         461.960        
+  0.004155     0.0000       0.0000       461.960         516.300        
+  0.004147     0.0000       0.0000       516.300         570.650        
+  0.003776     0.0000       0.0000       570.650         625.000        
+  0.004044     0.0000       0.0000       625.000         679.350        
+  0.003265     0.0000       0.0000       679.350         733.700        
+  0.002679     0.0000       0.0000       733.700         788.040        
+  0.002215     0.0000       0.0000       788.040         842.390        
+  0.001997     0.0000       0.0000       842.390         896.740        
+  0.001448     0.0000       0.0000       896.740         951.090        
+  0.001011     0.0000       0.0000       951.090         1005.400       
+  0.000658     0.0000       0.0000       1005.400        1059.800       
+  0.000643     0.0000       0.0000       1059.800        1114.100       
+  0.000454     0.0000       0.0000       1114.100        1168.500       
+  0.000231     0.0000       0.0000       1168.500        1822.800       
+
+table DTklgtageff
+  tabletype efficiency
+  nvars 1
+  errors true
+  # eff        err-         err+         Tdispmin        Tdispmax
+  0.000001     0.0000       0.0000       0.000           27.174         
+  0.000052     0.0000       0.0000       27.174          81.522         
+  0.000898     0.0000       0.0000       81.522          135.870        
+  0.001431     0.0000       0.0000       135.870         190.220        
+  0.112850     0.0000       0.0000       190.220         244.570        
+  0.419450     0.0000       0.0000       244.570         298.910        
+  0.478030     0.0000       0.0000       298.910         353.260        
+  0.505780     0.0000       0.0000       353.260         407.610        
+  0.507370     0.0000       0.0000       407.610         461.960        
+  0.494970     0.0000       0.0000       461.960         516.300        
+  0.498580     0.0000       0.0000       516.300         570.650        
+  0.512510     0.0000       0.0000       570.650         625.000        
+  0.534450     0.0000       0.0000       625.000         679.350        
+  0.557220     0.0000       0.0000       679.350         733.700        
+  0.538260     0.0000       0.0000       733.700         788.040        
+  0.518120     0.0000       0.0000       788.040         842.390        
+  0.465910     0.0000       0.0000       842.390         896.740        
+  0.325570     0.0000       0.0000       896.740         951.090        
+  0.053839     0.0000       0.0000       951.090         1005.400       
+  0.038047     0.0000       0.0000       1005.400        1059.800       
+  0.031581     0.0000       0.0000       1059.800        1114.100       
+  0.032227     0.0000       0.0000       1114.100        1168.500       
+  0.006356     0.0000       0.0000       1168.500        1822.800       
+
+
+object electrons
+  take Electron
+  select pT(Electron) > 40
+  select abs(Eta(Electron)) < 2.4
+  select miniiso(Electron) < 0.1
+
+object muons
+  take Muon
+  select pT(Muon) > 40
+  select abs(Eta(Muon)) < 2.4
+  select miniiso(Muon) < 0.2
+
+object leptons : Union(electrons,muons)
+  
+object jets
+  take Jet
+  select pT(Jet) > 30
+  select abs(Eta(Jet)) < 2.4
+
+object bjets
+  take jets
+  select abs(flavor(jets)) == 5
+  select applyHM(btagdeepCSVmedium( pT(jets) ) == 1)
+
+object jetsHardMET
+  take Jet
+  select pT(Jet) > 30
+  select abs(Eta(Jet)) < 5
+
+object genChargino : GEN
+  select abs(PDGID(GEN)) == 1000024
+  select abs(Eta(Gen)) < 2.0 
+  select constituents(GEN) == 2
+
+
+object DTksh
+  take genChargino
+  select Pt(genChargino) > 25
+  select applyHM(DTkshtageff(sqrt(daughterX(genChargino)^2+daughterY(genChargino)^2)) == 1)
+
+object DTklg
+  take genChargino
+  select Pt(genChargino) > 40
+  select applyHM(DTklgtageff(sqrt(daughterX(genChargino)^2+daughterY(genChargino)^2)) == 1)
+
+
+define HT = fHT(jets) 
+define mTele = sqrt(2*pT(electrons[0]) * hardMET * (1 - cos(phi(electrons[0])-hardMETphi)))
+define mTmu = sqrt(2*pT(muons[0]) * hardMET * (1 - cos(phi(muons[0])-hardMETphi)))
+define mTDTksh = sqrt(2*pT(DTksh[0]) * hardMET * (1 - cos(phi(DTksh[0])-hardMETphi)))
+define mTDTklg = sqrt(2*pT(DTklg[0]) * hardMET * (1 - cos(phi(DTklg[0])-hardMETphi)))
+define dedxsh = 2.684 * (m(DTksh[0])^2 / (pt(DTksh[0])^2+pz(DTksh[0])^2)) + 3.375
+define dedxlg = 2.684 * (m(DTklg[0])^2 / (pt(DTklg[0])^2+pz(DTklg[0])^2)) + 3.375
+
+
+# EVENT SELECTION
+
+# Baseline selections
+region baselineHad
+  select ALL
+  counts dt 40000
+  select size(DTksh)+size(DTklg) >= 1
+  counts dt 2759
+  select size(jets) >= 1
+  counts dt 0.38532
+  select hardMET > 30
+  counts dt 0.38233
+  select pt(DTksh[0])>pt(DTklg[0]) ? mTDTksh > 20 : mTDTklg > 20
+  counts dt 0.37411
+  select size(electrons) == 0
+  counts dt 0.24314
+  select size(muons) == 0
+  counts dt 0.24314
+ 
+  
+region baselineMu
+  select ALL
+  counts dt 40000
+  select size(DTksh)+size(DTklg) >= 1
+  counts dt 2759
+  select size(jets) >= 1
+  counts dt 0.38532
+  select hardMET > 30
+  counts dt 0.38233
+  select pt(DTksh[0])>pt(DTklg[0]) ? mTDTksh > 20 : mTDTklg > 20
+  counts dt 0.37411
+  select size(muons) >= 1
+  counts dt 0.067345
+  select size(electrons) == 0
+  counts dt 0.067345
+  select pt(DTksh[0])>pt(DTklg[0]) ? m(DTksh[0] + muons[0]) > 120 : m(DTklg[0] + muons[0]) > 120
+  counts dt 0.061851
+  select mTmu > 110
+  counts dt 0.046437
+
+
+region baselineEle
+  select ALL
+  counts dt 40000
+  select size(DTksh)+size(DTklg) >= 1
+  counts dt 2759
+  select size(jets) >= 1
+  counts dt 0.38532
+  select hardMET > 30
+  counts dt 0.38233
+  select pt(DTksh[0])>pt(DTklg[0]) ? mTDTksh > 20 : mTDTklg > 20
+  counts dt 0.37411
+  select size(electrons) >= 1
+  counts dt 0.063626
+  select size(muons) == 0
+  counts dt 0.063626
+  select pt(DTksh[0])>pt(DTklg[0]) ? m(DTksh[0] + electrons[0]) > 120 : m(DTklg[0] + electrons[0]) > 120
+  counts dt 0.060353
+  select mTele > 110
+  counts dt 0.046472
+
+# Signal regions
+region SR1
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699
+  select size(bjets) == 0
+  counts dt 0.0012582
+  select size(jets) [] 1 3
+  counts dt 0.00001
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001
+  select dedxlg <= 4
+  counts dt 0.00001
+  
+region SR2
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699 
+  select size(bjets) == 0
+  counts dt 0.0012582
+  select size(jets) [] 1 3
+  counts dt 0.00001
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR3
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699 
+  select size(bjets) == 0
+  counts dt 0.0012582 
+  select size(jets) [] 1 3
+  counts dt 0.00001
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001
+  select dedxsh <= 4
+  counts dt 0.00001
+
+region SR4
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699
+  select size(bjets) == 0
+  counts dt 0.0012582
+  select size(jets) [] 1 3
+  counts dt 0.00001
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001
+  select dedxsh > 4
+  counts dt 0.00001
+
+region SR5 
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699 
+  select size(bjets) == 0
+  counts dt 0.0012582
+  select size(jets) >= 3
+  counts dt 0.0012582 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00036727
+  select dedxlg <= 4
+  counts dt 0.00036727
+
+region SR6 
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699
+  select size(bjets) == 0
+  counts dt 0.0012582 
+  select size(jets) >= 3
+  counts dt 0.0012582 
+  select size(DTksh) == 0 and size(DTklg) == 1 
+  counts dt 0.00036727
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR7 
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699 
+  select size(bjets) == 0
+  counts dt 0.0012582
+  select size(jets) >= 3
+  counts dt 0.0012582
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.0008909 
+  select dedxsh <= 4
+  counts dt 0.00025252
+
+region SR8
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699
+  select size(bjets) == 0
+  counts dt 0.0012582
+  select size(jets) >= 3
+  counts dt 0.0012582 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.0008909
+  select dedxsh > 4
+  counts dt 0.00063838
+
+region SR9
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699 
+  select size(bjets) >= 1
+  counts dt 0.09144 
+  select size(jets) [] 1 3
+  counts dt 0.00031609 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg <= 4
+  counts dt 0.00001
+
+region SR10
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699
+  select size(bjets) >= 1
+  counts dt 0.09144 
+  select size(jets) [] 1 3
+  counts dt 0.00031609 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR11
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699 
+  select size(bjets) >= 1
+  counts dt 0.09144 
+  select size(jets) [] 1 3
+  counts dt 0.00031609 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00031475 
+  select dedxsh <= 4
+  counts dt 0.00001
+
+region SR12
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699 
+  select size(bjets) >= 1
+  counts dt 0.09144 
+  select size(jets) [] 1 3
+  counts dt 0.00031609 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00031475 
+  select dedxsh > 4
+  counts dt 0.00031475
+
+region SR13
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699 
+  select size(bjets) >= 1
+  counts dt 0.09144
+  select size(jets) >= 3
+  counts dt 0.091124 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.017305
+  select dedxlg <= 4
+  counts dt 0.017305
+
+region SR14
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699 
+  select size(bjets) >= 1
+  counts dt 0.09144
+  select size(jets) >= 3
+  counts dt 0.091124
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.017305 
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR15
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699 
+  select size(bjets) >= 1
+  counts dt 0.09144
+  select size(jets) >= 3
+  counts dt 0.091124
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.072874 
+  select dedxsh <= 4
+  counts dt 0.022158
+
+region SR16 
+  baselineHad
+  select hardMET [] 150 300
+  counts dt 0.092699
+  select size(bjets) >= 1
+  counts dt 0.09144
+  select size(jets) >= 3
+  counts dt 0.091124
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.072874
+  select dedxsh > 4
+  counts dt 0.050716
+
+region SR17 
+  baselineHad
+  select hardMET > 300
+  counts dt 0.10574 
+  select size(jets) [] 1 3
+  counts dt 0.00001
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001
+  select dedxlg <= 4
+  counts dt 0.00001
+
+region SR18 
+  baselineHad
+  select hardMET > 300
+  counts dt 0.10574 
+  select size(jets) [] 1 3
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR19 
+  baselineHad
+  select hardMET > 300
+  counts dt 0.10574
+  select size(jets) [] 1 3
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh <= 4
+  counts dt 0.00001
+
+region SR20 
+  baselineHad
+  select hardMET > 300
+  counts dt 0.10574
+  select size(jets) [] 1 3
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh > 4
+  counts dt 0.00001
+
+region SR21
+  baselineHad
+  select hardMET > 300
+  counts dt 0.10574 
+  select size(jets) >= 3
+  counts dt 0.10574 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.02824 
+  select dedxlg <= 4
+  counts dt 0.02824
+
+region SR22
+  baselineHad
+  select hardMET > 300
+  counts dt 0.10574 
+  select size(jets) >= 3
+  counts dt 0.10574 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.02824 
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR23
+  baselineHad
+  select hardMET > 300
+  counts dt 0.10574 
+  select size(jets) >= 3
+  counts dt 0.10574
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.075967
+  select dedxsh <= 4
+  counts dt 0.029772
+
+region SR24
+  baselineHad
+  select hardMET > 300
+  counts dt 0.10574 
+  select size(jets) >= 3
+  counts dt 0.10574
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.075967
+  select dedxsh > 4
+  counts dt 0.046195
+
+region SR25
+  baselineMu
+  select hardMET [] 30 150
+  counts dt 0.0024156 
+  select size(bjets) == 0
+  counts dt 0.00001 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg <= 4
+  counts dt 0.00001
+
+region SR26
+  baselineMu
+  select hardMET [] 30 150
+  counts dt 0.0024156 
+  select size(bjets) == 0
+  counts dt 0.00001 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR27
+  baselineMu
+  select hardMET [] 30 150
+  counts dt 0.0024156 
+  select size(bjets) == 0
+  counts dt 0.00001 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh <= 4
+  counts dt 0.00001
+
+region SR28
+  baselineMu
+  select hardMET [] 30 150
+  counts dt 0.0024156 
+  select size(bjets) == 0
+  counts dt 0.00001 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh > 4
+  counts dt 0.00001
+
+region SR29
+  baselineMu
+  select hardMET [] 30 150
+  counts dt 0.0024156 
+  select size(bjets) >= 1
+  counts dt 0.0024156 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg <= 4
+  counts dt 0.00001
+
+region SR30
+  baselineMu
+  select hardMET [] 30 150
+  counts dt 0.0024156 
+  select size(bjets) >= 1
+  counts dt 0.0024156 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR31
+  baselineMu
+  select hardMET [] 30 150
+  counts dt 0.0024156 
+  select size(bjets) >= 1
+  counts dt 0.0024156 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh <= 4
+  counts dt 0.00001
+
+region SR32
+  baselineMu
+  select hardMET [] 30 150
+  counts dt 0.0024156 
+  select size(bjets) >= 1
+  counts dt 0.0024156 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh > 4
+  counts dt 0.00001
+
+region SR33
+  baselineMu
+  select hardMET > 150
+  counts dt 0.044021 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg <= 4
+  counts dt 0.00001
+
+region SR34
+  baselineMu
+  select hardMET > 150
+  counts dt 0.044021 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR35
+  baselineMu
+  select hardMET > 150
+  counts dt 0.044021 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh <= 4
+  counts dt 0.00001
+
+region SR36
+  baselineMu
+  select hardMET > 150
+  counts dt 0.044021 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh > 4
+  counts dt 0.00001
+
+region SR37
+  baselineEle
+  select hardMET [] 30 150
+  counts dt 0.0013287 
+  select size(bjets) == 0
+  counts dt 0.00001 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg <= 4
+  counts dt 0.00001
+
+region SR38
+  baselineEle
+  select hardMET [] 30 150
+  counts dt 0.0013287 
+  select size(bjets) == 0
+  counts dt 0.00001 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR39
+  baselineEle
+  select hardMET [] 30 150
+  counts dt 0.0013287 
+  select size(bjets) == 0
+  counts dt 0.00001 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh <= 4
+  counts dt 0.00001
+
+region SR40
+  baselineEle
+  select hardMET [] 30 150
+  counts dt 0.0013287 
+  select size(bjets) == 0
+  counts dt 0.00001 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh > 4
+  counts dt 0.00001
+
+region SR41
+  baselineEle
+  select hardMET [] 30 150
+  counts dt 0.0013287 
+  select size(bjets) >= 1
+  counts dt 0.0013287 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg <= 4
+  counts dt 0.00001
+
+region SR42
+  baselineEle
+  select hardMET [] 30 150
+  counts dt 0.0013287 
+  select size(bjets) >= 1
+  counts dt 0.0013287 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR43
+  baselineEle
+  select hardMET [] 30 150
+  counts dt 0.0013287 
+  select size(bjets) >= 1
+  counts dt 0.0013287 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh <= 4
+  counts dt 0.00001
+
+region SR44
+  baselineEle
+  select hardMET [] 30 150
+  counts dt 0.0013287 
+  select size(bjets) >= 1
+  counts dt 0.0013287 
+  select size(jets) >= 1
+  counts dt 0.00001 
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh > 4
+  counts dt 0.00001
+
+region SR45
+  baselineEle
+  select hardMET > 150
+  counts dt 0.045143 
+  select size(jets) >= 1 
+  counts dt 0.00001
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg <= 4
+  counts dt 0.00001
+
+region SR46
+  baselineEle
+  select hardMET > 150
+  counts dt 0.045143 
+  select size(jets) >= 1 
+  counts dt 0.00001
+  select size(DTksh) == 0 and size(DTklg) == 1
+  counts dt 0.00001 
+  select dedxlg > 4
+  counts dt 0.00001
+
+region SR47
+  baselineEle
+  select hardMET > 150
+  counts dt 0.045143 
+  select size(jets) >= 1 
+  counts dt 0.00001
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh <= 4
+  counts dt 0.00001
+
+region SR48
+  baselineEle
+  select hardMET > 150
+  counts dt 0.045143 
+  select size(jets) >= 1 
+  counts dt 0.00001
+  select size(DTksh) == 1 and size(DTklg) == 0
+  counts dt 0.00001 
+  select dedxsh > 4
+  counts dt 0.00001
+
+region SR49
+  baselineHad
+  select size(DTksh) + size(DTklg) >= 2
+  counts dt 0.0030787  
+  
+  
+  
