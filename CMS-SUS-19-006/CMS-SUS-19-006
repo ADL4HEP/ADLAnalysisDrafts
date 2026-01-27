@@ -1,0 +1,636 @@
+# ADL file for the CMS Razor Boost Run 2 analysis based on NanoAODv9
+# Analysis code repository: https://github.com/ssekmen/BoostAnalyzer17/tree/master
+
+#info analysis
+#  title Inclusive search for SUSY in final states with boosted objects using razor variables with the CMS Run2 data
+#  experiment CMS
+#  id SUS-23-014
+#  sqrtS 13.0
+#  lumi 138.0
+#
+#info adl
+#  inputformat NanoAODv9 # https://cms-nanoaod-integration.web.cern.ch/autoDoc/NanoAODv9/2017UL/docTTToSemiLeptonicTuneCP513TeV-powheg-pythia8RunIISummer20UL17NanoAODv9-106Xmc2017realisticv9-v1.html
+#  adlauthor Demircan Demirbag, Changgi Huh, Sezen Sekmen
+
+
+countsformat mycount
+  process T5bbbbZH, "T5bbbbZH"
+  process R2bbqqlv, "TR2bbqqlv"
+  process R5ttbl, "R5ttbl"
+  process T5qqqqWH, "T5qqqqWH"
+  process T5ttcc, "T5ttcc"
+  process T6ttZH, "T6ttZH"
+
+table HadHTaggingEff
+	tabletype efficiency
+	nvars 1
+	errors true
+	#val     err-    err+    pTmin  pTmax
+	0.0000  0.0000  0.0145     200     300
+	0.1785  0.0396  0.0492     300     400
+	0.1530  0.0409  0.0544     400     500
+	0.1198  0.0415  0.0628     500     600
+	0.0973  0.0414  0.0737     600     800
+	0.0175  0.0108  0.1340     800    2000
+  0.0000  0.0000  0.5000    2000   10000 ###written by me 
+
+table HadTopTaggingEff
+	tabletype efficiency
+	nvars 1
+	errors true
+	#val     err-    err+    pTmin  pTmax
+	0.0000  -0.0000  0.0001     200     300
+	0.2808  0.0040  0.0040     300     400
+	0.5127  0.0042  0.0042     400     500
+	0.6576  0.0046  0.0045     500     600
+	0.7312  0.0053  0.0053     600     800
+	0.7720  0.0107  0.0103     800    2000
+	0.0000  0.0000  0.5000    2000   10000
+
+table HadWTaggingEff
+	tabletype efficiency
+	nvars 1
+	errors true
+	#val     err-    err+    pTmin  pTmax
+	0.2937  0.0042  0.0042     200     300
+	0.2154  0.0033  0.0034     300     400
+	0.1660  0.0029  0.0029     400     500
+	0.1314  0.0029  0.0030     500     600
+	0.1034  0.0033  0.0034     600     800
+	0.0956  0.0064  0.0068     800    2000
+	0.0000  0.0000  0.4444    2000   10000
+
+table HadZTaggingEff
+	tabletype efficiency
+	nvars 1
+	errors true
+	#val     err-    err+    pTmin  pTmax
+	0.1425  0.0037  0.0038     200     300
+	0.2408  0.0036  0.0036     300     400
+	0.2244  0.0042  0.0042     400     500
+	0.1853  0.0051  0.0052     500     600
+	0.1750  0.0070  0.0072     600     800
+	0.1591  0.0131  0.0141     800    2000
+	0.0000  0.0000  0.5000    2000   10000
+
+table btagdeepCSVmedium
+	tabletype efficiency
+	nvars 1
+	errors true
+	# val    err-     err+     pTmin     pTmax
+	0.5790   0.0016   0.0016    -10.4     30.0
+	0.6314   0.0013   0.0013     30.0     35.0
+	0.6442   0.0011   0.0011     35.0     40.0
+	0.6596   0.0007   0.0007     40.0     50.0
+	0.6727   0.0007   0.0007     50.0     60.0
+	0.6812   0.0008   0.0008     60.0     70.0
+	0.6855   0.0008   0.0008     70.0     80.0
+	0.6873   0.0009   0.0009     80.0     90.0
+	0.6881   0.0010   0.0010     90.0    100.0
+	0.6880   0.0008   0.0008    100.0    125.0
+	0.6867   0.0011   0.0011    125.0    150.0
+	0.6826   0.0015   0.0015    150.0    175.0
+	0.6734   0.0020   0.0020    175.0    200.0
+	0.6624   0.0026   0.0026    200.0    225.0
+	0.6494   0.0034   0.0034    225.0    250.0
+	0.6419   0.0044   0.0044    250.0    275.0
+	0.6301   0.0054   0.0054    275.0    300.0
+	0.6202   0.0051   0.0051    300.0    350.0
+	0.6006   0.0073   0.0073    350.0    400.0
+	0.5889   0.0098   0.0098    400.0    450.0
+	0.5798   0.0126   0.0126    450.0    500.0
+	0.5547   0.0118   0.0118    500.0    600.0
+	0.5412   0.0172   0.0172    600.0    700.0
+	0.5197   0.0234   0.0234    700.0    800.0
+	0.4959   0.0243   0.0243    800.0   7000.0
+
+# OBJECT SELECTION
+
+# AK4 jets
+object JetAK4
+  take Jet
+  select pt(Jet)  > 30
+  select abseta(Jet) < 2.4
+
+
+# b-tagged jets - medium
+object MediumBTag
+  take JetAK4
+  select abs(flavor(JetAK4)) == 5
+  select applyHM(btagdeepCSVmedium(Pt(JetAK4)) == 1)
+
+
+# AK8 jets
+object JetAK8
+  take FatJet
+  select pt(FatJet) > 200
+  select abseta(FatJet) < 2.4
+
+object GenTop
+  take gen
+  select abs(pdgid(gen)) == 6
+  
+object GenW
+  take gen
+  select abs(pdgid(gen)) == 24
+
+object GenZ
+  take gen
+  select abs(pdgid(gen)) == 23
+
+object GenH
+  take gen
+  select abs(pdgid(gen)) == 25
+
+# hadronic top jets - top-tagged
+object HadTop # using TopparticleNet1 tagger
+  take JetAK8
+  select pt(JetAK8) > 400
+  select dR(JetAK8,GenTop) < 0.8
+  select applyHM(HadTopTaggingEff(Pt(JetAK8)) == 1)
+
+# hadronic Ws: W-tagged
+object HadW # using WparticleNet2 tagger
+  take JetAK8
+  select dR(JetAK8,GenW) < 0.8
+  select pt(JetAK8) > 200
+
+  select applyHM(HadWTaggingEff(Pt(JetAK8)) == 1)
+
+# hadronic Zs: Z-tagged
+object HadZ # using ZparticleNet2 tagger
+  take JetAK8 
+  select pt(JetAK8) > 200
+  select dR(JetAK8,GenZ) < 0.8
+  select applyHM(HadZTaggingEff(Pt(JetAK8)) == 1)
+
+# hadronic Vs, i.e. Ws and Zs - W or Z-tagged
+object HadV : union(HadW, HadZ)
+
+# hadronic Higgses: H-tagged
+object HadH # using HparticleNet1 tagger
+  take JetAK8 
+  select pt(JetAK8) > 300
+  select dR(JetAK8,GenH) < 0.81
+  select applyHM(HadHTaggingEff(Pt(JetAK8)) == 1)
+
+object MediumIsoBTag
+  take MediumBTag
+  select dR(MediumBTag, HadW) > 0.8 and dR(MediumBTag, HadH) > 0.8 and dR(MediumBTag, HadZ) > 0.8
+
+# muons - veto
+object MuonIso
+  take Muon
+  #select softId(Muon) == 1
+  select pt(Muon) >= 5
+  select abseta(Muon) < 2.4
+  select abs(d0(Muon)) < 0.2
+  select abs(dz(Muon)) < 0.5
+  select miniIso(Muon) < 0.4
+
+
+# muons - select
+object MuonSelect
+  take Muon
+  #select mediumPromptId(Muon) == 1
+### muon identification kriteri.  Efficiency ile uygulamak gerekecek.
+  select pt(Muon) >= 10
+  select abs(eta(Muon)) < 2.4
+  select miniIso(Muon) < 0.2
+  select abs(d0(Muon)) < 0.05
+  select abs(dz(Muon)) < 0.1
+
+# muons - non-isolated
+object MuonNonIso
+  take Muon
+  #select softId(Muon) == 1 ###can be implemented
+  select pt(Muon) >= 30
+  select abs(eta(Muon)) < 2.4
+  select abs(d0(Muon)) < 0.05
+  select abs(dz(Muon)) < 0.1
+  #select sip3d(Muon) < 4 ###can be implemented
+  select min(dR(Muon, JetAK4)) > 0.4 or Cross(Muon,JetAK4)/pt(JetAK4) > 15
+
+
+# electrons - veto
+object ElectronIso
+  take Electron
+  #select mvaFall17V2noIsoWPL(Electron) == 1
+### electron identification method. Need to be done with efficency
+  select pt(Electron) > 5
+  select abseta(Electron) < 2.5
+  select abs(d0(Electron)) < 0.05
+  select abs(dz(Electron)) < 0.1
+  select miniIso(Electron) < 0.4
+
+
+# electrons - select
+object ElectronSelect #iso ###control et
+  take Electron
+  #select mvaFall17V2noIsoWP90(Electron) == 1
+  select pt(Electron) >= 10
+  select abs(eta(Electron)) < 2.5
+  select abs(eta(Electron)) ][ 1.442 1.556
+  select miniIso(Electron) < 0.1 ###approximation for miniPFRelIsoall(Electron)
+  select abs(d0(Electron)) < 0.05
+  select abs(dz(Electron)) < 0.1
+
+# electrons - non-isolated
+object ElectronNonIso
+  take Electron
+  #select mvaFall17V2noIsoWPL(Electron) == 1
+  select pt(Electron) > 30
+  select abs(eta(Electron)) < 2.5
+  select abs(eta(Electron)) ][ 1.442 1.556
+  select abs(d0(Electron)) < 0.05
+  select abs(dz(Electron)) < 0.1
+  select min(dR(Electron, JetAK4)) > 0.4 or Cross(Electron,JetAK4)/pt(JetAK4) > 15 #dR(Electron, jetDRmin) > 0.4 or pTrellepton = |vec(plepton) x vec(pjet)| / |vec(pjet)| > 15
+
+
+
+object IsoTracks #Since we do not apply cuts discriminating electron, muon and hadron; this is short and 1 block
+  take Trk
+  select abs(eta(Trk)) < 2.4
+  select pt(Trk) > 5
+  select (ptcone(Trk) / pt(Trk)) < 0.2
+  select sqrt( 2*pT(Trk) *MET*(1-cos( Phi(METLV[0]) - Phi(Trk) ))) < 100
+
+
+# leptons - veto
+object LeptonIso : union(ElectronIso, MuonIso)
+
+# leptons - select
+object LeptonSelect : union(ElectronSelect, MuonSelect)
+
+## leptons - non-isolated
+object LeptonNonIso : union(ElectronNonIso, MuonNonIso)
+
+
+
+# Leptonic jets and tops
+object LepJet
+  take FatJet
+  select dR(FatJet, LeptonNonIso) < 0.8
+  select pt(FatJet) >= 300
+  select abs(eta(FatJet)) < 2.4
+  select m(FatJet) >= 50
+
+
+
+# Megajets are 4-vectors, each consisting of multiple jet.
+# Each event with njets > 0 is partitioned into 2 megajets.
+object megajets
+  take JetAK4
+  select fmegajets(JetAK4) == 1
+
+## EVENT VARIABLES
+
+define MRmegajets = fMR(megajets) 
+define Rsq = sqrt(fMTR(megajets, METLV[0]) / MRmegajets)
+#define MTlepIso = fMT(LeptonIso[0], METLV[0])
+define MTLepNonIso = sqrt( 2 * pT(LeptonNonIso[0]) * MET * ( 1 - cos( dPhi(METLV[0],LeptonNonIso[0])) ) ) #### cutflow bouluyor
+define Wlep = LeptonNonIso[0] + METLV[0]
+# EVENT SELECTION
+
+# Preselection regions:
+region Pre
+  select ALL
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(JetAK4) >= 0
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(LeptonNonIso) >= 0
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(GenH) >= 0
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(GenW) >= 0
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(GenZ) >= 0
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(GenTop) >= 0
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(HadH) >= 0
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(HadZ) >= 0
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(HadW) >= 0
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(megajets) >= 2 ###added to comply wiht syntax. #######etkisiz eleman
+  counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  #good primary vertices > 0
+  #counts mycount 8.33654308319092, 1846.92150878906, 249.692947387695, 5.02357721328735, 8.53005790710449, 27.7106552124023 #NoCuts
+  select size(JetAK8) >=1
+  counts mycount 8.00194358825684, 1685.62414550781, 213.71955871582, 4.80234384536743, 8.17674541473389, 26.0980224609375 #Pre_1JetAK8
+  select size(JetAK4) >= 2
+  counts mycount 7.6107382774353, 1685.62414550781, 213.700668334961, 4.61948204040527, 8.17644214630127, 26.0932445526123 #Pre_NJetPre
+  select MRmegajets > 800
+  counts mycount 7.235520362854, 1622.58471679688, 213.700668334961, 4.50791072845459, 8.16322231292725, 23.7142543792725 #Pre_MR
+  select Rsq > 0.08
+  counts mycount 6.7724723815918, 534.840759277344, 48.3127746582031, 4.19930934906006, 7.26602458953857, 19.9663352966309 #Pre_sf_4
+
+region PreHad #isolated select, isolated veto, nonisolated 
+  Pre
+  select size(LeptonSelect) == 0
+  counts mycount 4.56343364715576, 222.038391113281, 0.0948862805962563, 2.96627283096313, 4.02170848846436, 8.7882251739502 #Pre_Had_0IsoMu
+  select size(IsoTracks) == 0
+  counts mycount 4.56343364715576, 222.038391113281, 0.0948862805962563, 2.96627283096313, 4.02170848846436, 8.7882251739502 #Pre_Had_0IsoTrack
+  select size(LepJet) == 0
+  counts mycount 4.46404361724854, 220.028228759766, 0.0948862805962563, 2.89119553565979, 3.95417046546936, 8.68062973022461 #Pre_Had_0LepJet
+  select dPhi(megajets[0], megajets[1]) < 2.8
+  counts mycount 4.0678129196167, 114.071464538574, 0.0563814006745815, 2.60357093811035, 3.31608819961548, 6.88512659072876 #Pre_Had_sf_4
+
+region PreLep
+  Pre
+  select size(LeptonSelect) == 1
+  counts mycount 0.759218394756317, 251.442657470703, 5.39167022705078, 0.94170331954956, 2.29943013191223, 6.23489475250244 #Pre_Lep_1Lep
+  select size(IsoTracks) == 0
+  counts mycount 0.759218394756317, 251.442657470703, 5.39167022705078, 0.94170331954956, 2.29943013191223, 6.23489475250244 #Pre_Lep_0IsoTrack
+  select size(LepJet) == 0
+  counts mycount 0.479937523603439, 163.281433105469, 3.01689314842224, 0.695271134376526, 1.50615811347961, 4.17338275909424 #Pre_Lep_0LepJet
+  select MTLepNonIso > 120
+  counts mycount 0.387916564941406, 134.947128295898, 2.80542087554932, 0.656855881214142, 1.24026489257813, 3.1696515083313 #Pre_Lep_sf_3
+
+region PrelepJet
+  Pre
+  select size(LeptonNonIso) >= 1
+  counts mycount 1.02664279937744, 252.053344726562, 44.7689895629883, 1.07931196689606, 2.22518086433411, 7.55704593658447 #Pre_NonIso_1Lep
+  select size(IsoTracks) == 0
+  counts mycount 1.02664279937744, 252.053344726562, 44.7689895629883, 1.07931196689606, 2.22518086433411, 7.55704593658447 #Pre_NonIso_0IsoTrack
+  select MTLepNonIso > 140
+  counts mycount 0.977086186408997, 216.852874755859, 43.0994567871094, 1.01935660839081, 1.92381191253662, 6.41434764862061 #Pre_NonIso_MT
+  select dphi(JetAK8[0], Wlep) >= 0.8
+  counts mycount 0.932870447635651, 193.347671508789, 39.2421798706055, 0.999168694019318, 1.76614475250244, 6.07429695129395 #Pre_NonIso_dPhiJet
+
+# Fully hadronic signal regions
+region SRHad1htop
+  PreHad
+  select size(HadTop) == 1
+  counts mycount 0.821376979351044, 15.5831985473633, 0.0362889692187309, 0.496975392103195, 1.20342040061951, 2.84648466110229 #SR_Had_1htop_1HadTop
+  #select size(MediumBTag) ####### tabloda yok
+  select size(JetAK4) >= 5
+  counts mycount 0.228056162595749, 14.800931930542, 0.0362889692187309, 0.120965555310249, 1.12232673168182, 2.72690343856812 #SR_Had_1htop_NJet
+  select size(HadH) == 0
+  counts mycount 0.194478034973145, 18.3395881652832, 0.0393491387367249, 0.119457051157951, 1.13548338413239, 2.59276914596558 #SR_Had_1htop_sf_6
+
+region SRHad2htop
+  PreHad
+  select size(HadTop) >= 2
+  counts mycount 0.0420090407133102, 0.441291660070419, 0, 0.0213916506618261, 0.321222901344299, 0.657446920871735 #SR_Had_2htop_2HadTop
+  select size(JetAK4) >= 2
+  counts mycount 0.0298970676958561, 0.441291660070419, 0, 0.0200263168662787, 0.320607483386993, 0.657446920871735 #SR_Had_2htop_NJet
+  select size(HadH) == 0
+  counts mycount 0.0355263315141201, 0.668329775333405, 0, 0.0263285860419273, 0.357290983200073, 0.775425732135773 #SR_Had_2htop_sf_5
+
+region SRHadVb45j
+  PreHad
+  select size(HadV) >= 1
+  counts mycount 0.940478265285492, 10.13170337677, 0.0195324365049601, 0.8624467253685, 0.496044397354126, 1.9160338640213 #SR_Had_V_b_45j_1HadV
+  select size(MediumBTag) >= 1
+  counts mycount 0.587282478809357, 9.23299026489258, 0.0195324365049601, 0.283267974853516, 0.428580731153488, 1.77814602851868 #SR_Had_V_b_45j_1b
+  select size(JetAK4) [] 4 5
+  counts mycount 0.261399745941162, 1.51333892345428, 0, 0.132394880056381, 0.035781167447567, 0.0931236669421196 #SR_Had_V_b_45j_NJet
+  select size(HadTop) == 0
+  counts mycount 0.219572618603706, 1.28909945487976, 0, 0.109719596803188, 0.0228477027267218, 0.0641188025474548 #SR_Had_V_b_45j_0HadTop
+  select size(HadH) == 0
+  counts mycount 0.166871294379234, 1.298184633255, 0, 0.0994112715125084, 0.0198885425925255, 0.0548670329153538 #SR_Had_V_b_45j_sf_6
+
+region SRHadVb6j
+  PreHad
+  select size(HadV) >= 1
+  counts mycount 0.940478265285492, 10.13170337677, 0.0195324365049601, 0.8624467253685, 0.496044397354126, 1.9160338640213 #SR_Had_V_b_6j_1HadV
+  select size(MediumBTag) >= 1
+  counts mycount 0.587282478809357, 9.23299026489258, 0.0195324365049601, 0.283267974853516, 0.428580731153488, 1.77814602851868 #SR_Had_V_b_6j_1b
+  select size(JetAK4) >= 6
+  counts mycount 0.0822898671030998, 7.71965217590332, 0.0195324365049601, 0.0445724949240685, 0.392194271087646, 1.67882585525513 #SR_Had_V_b_6j_NJet
+  select size(HadTop) == 0
+  counts mycount 0.0698942244052887, 7.24388122558594, 0.0195324365049601, 0.0348693542182446, 0.262719511985779, 0.971029281616211 #SR_Had_V_b_6j_0HadTop
+  select size(HadH) == 0 
+  counts mycount 0.0463445335626602, 6.98706722259522, 0.0170322619378567, 0.0309263914823532, 0.235574930906296, 0.793262124061585 #SR_Had_V_b_6j_sf_6
+
+region SRHad1V0b34j
+  PreHad
+  select size(HadV) == 1
+  counts mycount 0.889835059642792, 9.3879280090332, 0.0195324365049601, 0.766431212425232, 0.466072648763657, 1.68742597103119 #SR_Had_1V_0b_34j_1HadV
+  select size(MediumIsoBTag) == 0
+  counts mycount 0.206761002540588, 0.608193099498749, 0, 0.314545929431915, 0.0108109917491674, 0.0343138724565506 #SR_Had_1V_0b_34j_0isob
+  select size(JetAK4) [] 3 4
+  counts mycount 0.103425167500973, 0.112044140696526, 0, 0.181703418493271, 0.000597606529481709, 0 #SR_Had_1V_0b_34j_NJet
+  select size(HadTop) == 0
+  counts mycount 0.103425167500973, 0.112044140696526, 0, 0.174241051077843, 0.000597606529481709, 0 #SR_Had_1V_0b_34j_0HadTop
+  select size(HadH) == 0
+  counts mycount 0.0428406409919262, 0.0876544862985611, 0, 0.0931830927729607, 0.000552180921658874, 0 #SR_Had_1V_0b_34j_sf_6
+
+region SRHad1V0b5j
+  PreHad
+  select size(HadV) == 1
+  counts mycount 0.889835059642792, 9.3879280090332, 0.0195324365049601, 0.766431212425232, 0.466072648763657, 1.68742597103119 #SR_Had_1V_0b_5j_1HadV
+  select size(MediumIsoBTag) == 0
+  counts mycount 0.206761002540588, 0.608193099498749, 0, 0.314545929431915, 0.0108109917491674, 0.0343138724565506 #SR_Had_1V_0b_5j_0isob
+  select size(JetAK4) >= 5
+  counts mycount 0.0225256867706776, 0.496148973703384, 0, 0.0683274269104004, 0.0102133853361011, 0.0343138724565506 #SR_Had_1V_0b_5j_NJet
+  select size(HadTop) == 0
+  counts mycount 0.0225256867706776, 0.496148973703384, 0, 0.0653927102684975, 0.00883245002478361, 0.029022105038166 #SR_Had_1V_0b_5j_0HadTop
+  select size(HadH) == 0
+  counts mycount 0.0225256867706776, 0.496148973703384, 0, 0.0653927102684975, 0.00883245002478361, 0.029022105038166 #SR_Had_1V_0b_5j_0HadTop
+
+region SRHad2V0b24j
+  PreHad
+  select size(HadV) >= 2
+  counts mycount 0.0506426729261875, 0.743775725364685, 0, 0.0960353389382363, 0.0299714952707291, 0.228606671094894 #SR_Had_2V_0b_24j_2HadV
+  select size(MediumIsoBTag) == 0
+  counts mycount 0.0299303997308016, 0.11211970448494, 0, 0.0760644301772118, 0.00244367937557399, 0.0238474458456039 #SR_Had_2V_0b_24j_0isob
+  select size(JetAK4) [] 2 4
+  counts mycount 0.0228694565594196, 0, 0, 0.0611675158143044, 0.000392412883229554, 0 #SR_Had_2V_0b_24j_NJet
+  select size(HadTop) == 0
+  counts mycount 0.0228694565594196, 0, 0, 0.0611675158143044, 0.000392412883229554, 0 #SR_Had_2V_0b_24j_0HadTop
+  select size(HadH) == 0
+  counts mycount 0.0184019654989243, 0, 0, 0.0506629161536694, 0.000318467005854473, 0 #SR_Had_2V_0b_24j_sf_6
+
+region SRHad2V0b5j
+  PreHad
+  select size(HadV) >= 2
+  counts mycount 0.0506426729261875, 0.743775725364685, 0, 0.0960353389382363, 0.0299714952707291, 0.228606671094894 #SR_Had_2V_0b_5j_2HadV
+  select size(MediumIsoBTag) == 0
+  counts mycount 0.0299303997308016, 0.11211970448494, 0, 0.0760644301772118, 0.00244367937557399, 0.0238474458456039 #SR_Had_2V_0b_5j_0isob
+  select size(JetAK4) >= 5
+  counts mycount 0.0070609450340271, 0.11211970448494, 0, 0.0148971667513251, 0.00205126660875976, 0.0238474458456039 #SR_Had_2V_0b_5j_NJet
+  select size(HadTop) == 0
+  counts mycount 0.0070609450340271, 0.11211970448494, 0, 0.0148971667513251, 0.00184613990131766, 0.0211912430822849 #SR_Had_2V_0b_5j_0HadTop
+  select size(HadH) == 0
+  counts mycount 0.0052736084908247, 0.0860073789954186, 0, 0.0110849617049098, 0.00157668523024768, 0.0134348971769214 #SR_Had_2V_0b_5j_sf_6
+
+region SRHadHb45j
+  PreHad
+  select size(HadH) >= 1
+  counts mycount 1.1621880531311, 2.9869019985199, 0, 0.609753549098969, 0.11613667011261, 0.878347158432007 #SR_Had_H_b_45j_1HadH
+  select size(MediumBTag) >= 1
+  counts mycount 1.14815509319305, 2.9869019985199, 0, 0.597532570362091, 0.115524783730507, 0.878347158432007 #SR_Had_H_b_45j_1b
+  select size(JetAK4) [] 4 5
+  counts mycount 0.423756927251816, 1.6435489654541, 0, 0.269695341587067, 0.01474504545331, 0.0443120151758194 #SR_Had_H_b_45j_sf_6
+
+region SRHadHb6j
+  PreHad
+  select size(HadH) >= 1
+  counts mycount 1.1621880531311, 2.9869019985199, 0, 0.609753549098969, 0.11613667011261, 0.878347158432007 #SR_Had_H_b_6j_1HadH
+  select size(HadV) == 0
+  counts mycount 0.979665756225586, 2.91202116012573, 0, 0.479847282171249, 0.105729170143604, 0.664806604385376 #SR_Had_H_b_6j_0HadV
+  select size(MediumBTag) >= 1
+  counts mycount 0.970949411392212, 2.91202116012573, 0, 0.47174796462059, 0.105117276310921, 0.664806604385376 #SR_Had_H_b_6j_1b
+  select size(JetAK4) >= 6
+  counts mycount 0.131992310285568, 1.31348562240601, 0, 0.0660689845681191, 0.0970962047576905, 0.654561161994934 #SR_Had_H_b_6j_sf_6
+
+region SRHadHVb6j
+  PreHad
+  select size(HadH) == 1
+  counts mycount 1.08438110351563, 2.9869019985199, 0, 0.56368625164032, 0.114507056772709, 0.838936448097229 #SR_Had_HV_b_6j_1HadH
+  select size(HadV) == 1
+  counts mycount 0.182525485754013, 0.0748808309435844, 0, 0.129169806838036, 0.0104073975235224, 0.194957137107849 #SR_Had_HV_b_6j_1HadV
+  select size(MediumBTag) >= 1
+  counts mycount 0.177208498120308, 0.0748808309435844, 0, 0.125045120716095, 0.0104073975235224, 0.194957137107849 #SR_Had_HV_b_6j_1b
+  select size(JetAK4) >= 6
+  counts mycount 0.0198082439601421, 0.0796649903059006, 0, 0.0126199461519718, 0.00863378588110209, 0.184833079576492 #SR_Had_HV_b_6j_sf_6
+
+region SRHad1H0b34j
+  PreHad
+  select size(HadH) >= 1
+  counts mycount 1.1621880531311, 2.9869019985199, 0, 0.609753549098969, 0.11613667011261, 0.878347158432007 #SR_Had_H_0b_34j_1HadH
+  select size(HadV) == 0 #### ama tabloda >= 1
+  counts mycount 0.979665756225586, 2.91202116012573, 0, 0.479847282171249, 0.105729170143604, 0.664806604385376 #SR_Had_H_0b_34j_0HadV
+  select size(MediumIsoBTag) == 0
+  counts mycount 0.225819766521454, 1.28567576408386, 0, 0.183497354388237, 0.00415501184761524, 0.0172519665211439 #SR_Had_H_0b_34j_0isob
+  select size(JetAK4) [] 3 4
+  counts mycount 0.114833623170853, 0.613232970237732, 0, 0.0958432704210282, 0.000447708065621555, 0 #SR_Had_H_0b_34j_sf_6
+
+region SRHad1H0b5j
+  PreHad
+  select size(HadH) >= 1
+  counts mycount 1.1621880531311, 2.9869019985199, 0, 0.609753549098969, 0.11613667011261, 0.878347158432007 #SR_Had_H_0b_5j_1HadH
+  select size(HadV) == 0
+  counts mycount 0.979665756225586, 2.91202116012573, 0, 0.479847282171249, 0.105729170143604, 0.664806604385376 #SR_Had_H_0b_5j_0HadV
+  select size(MediumIsoBTag) == 0
+  counts mycount 0.225819766521454, 1.28567576408386, 0, 0.183497354388237, 0.00415501184761524, 0.0172519665211439 #SR_Had_H_0b_5j_0isob
+  select size(JetAK4) >= 5
+  counts mycount 0.0167722757905722, 0.602348029613495, 0, 0.0382235944271088, 0.00377433467656374, 0.0159995462745428 #SR_Had_H_0b_5j_sf_6
+
+region SRHadHV0b24j
+  PreHad
+  select size(HadH) >= 1
+  counts mycount 1.1621880531311, 2.9869019985199, 0, 0.609753549098969, 0.11613667011261, 0.878347158432007 #SR_Had_HV_0b_24j_1HadH
+  select size(HadV) >= 1
+  counts mycount 0.182525485754013, 0.0748808309435844, 0, 0.129928410053253, 0.0104073975235224, 0.213539063930511 #SR_Had_HV_0b_24j_1HadV
+  select size(MediumIsoBTag) == 0
+  counts mycount 0.108523190021515, 0.0748808309435844, 0, 0.106729164719582, 0.00197704066522419, 0.0198528785258532 #SR_Had_HV_0b_24j_0isob
+  select size(JetAK4) [] 2 4
+  counts mycount 0.0845739766955376, 0, 0, 0.0739119350910187, 0, 0 #SR_Had_HV_0b_24j_sf_6
+
+region SRHadHV0b5j
+  PreHad
+  select size(HadH) >= 1
+  counts mycount 0.0845739766955376, 0, 0, 0.0739119350910187, 0, 0 #SR_Had_HV_0b_24j_sf_6
+  select size(HadV) >= 1
+  counts mycount 0.182525485754013, 0.0748808309435844, 0, 0.129928410053253, 0.0104073975235224, 0.213539063930511 #SR_Had_HV_0b_5j_1HadV
+  select size(MediumIsoBTag) == 0
+  counts mycount 0.108523190021515, 0.0748808309435844, 0, 0.106729164719582, 0.00197704066522419, 0.0198528785258532 #SR_Had_HV_0b_5j_0isob
+  select size(JetAK4) >= 5
+  counts mycount 0.0103266499936581, 0.0663542672991753, 0, 0.018152529373765, 0.00182514102198184, 0.0200930405408144 #SR_Had_HV_0b_5j_sf_6
+
+
+
+# Isolated lepton signal regions
+region SRLep1htop
+  PreLep
+  select size(HadTop) == 1
+  counts mycount 0.0650277212262154, 20.4883480072021, 1.8731552362442, 0.0755380019545555, 0.354235082864761, 1.18888032436371 #SR_Lep_1htop_1HadTop
+  select size(HadH) == 0
+  counts mycount 0.0643581971526146, 26.0664691925049, 2.00582551956177, 0.08624766767025, 0.386766225099564, 1.25063264369965 #SR_Lep_1htop_sf_5
+
+region SRLepVb
+  PreLep
+  select size(HadV) >= 1
+  counts mycount 0.068519338965416, 16.9550457000732, 0.382306784391403, 0.133790045976639, 0.15050944685936, 0.849985837936401 #SR_Lep_V_b_1HadV
+  select size(MediumBTag) >= 1
+  counts mycount 0.0492322333157063, 14.4379892349243, 0.382306784391403, 0.0180702637881041, 0.12953208386898, 0.77917742729187 #SR_Lep_V_b_1b
+  select size(JetAK4) >= 4
+  counts mycount 0.0283681564033031, 14.3260231018066, 0.382306784391403, 0.00972506124526262, 0.128186658024788, 0.766131520271301 #SR_Lep_V_b_NJet
+  select size(HadTop) == 0
+  counts mycount 0.0256314147263765, 12.4626083374023, 0.131532907485962, 0.00841466709971428, 0.0977418050169945, 0.492970764636993 #SR_Lep_V_b_sf_6
+
+region SRLepV0b
+  PreLep
+  select size(HadV) >= 1
+  counts mycount 0.068519338965416, 16.9550457000732, 0.382306784391403, 0.133790045976639, 0.15050944685936, 0.849985837936401 #SR_Lep_V_0b_1HadV
+  select size(MediumIsoBTag) == 0
+  counts mycount 0.010451034642756, 1.06547224521637, 0, 0.0891299545764923, 0.00513362186029553, 0.0337092950940132 #SR_Lep_V_0b_0isob
+  select size(JetAK4) >= 2
+  counts mycount 0.00708693265914917, 1.06547224521637, 0, 0.0541714429855347, 0.00513362186029553, 0.0337092950940132 #SR_Lep_V_0b_NJet
+  select size(HadTop) == 0
+  counts mycount 0.00610451586544514, 0.93805205821991, 0, 0.0455667302012444, 0.00487549556419253, 0.0292117334902287 #SR_Lep_V_0b_sf_6
+
+region SRLepHb3j
+  PreLep
+  select size(HadH) >= 1
+  counts mycount 0.1014039888978, 2.56203722953796, 0.0886219292879105, 0.0935635715723038, 0.0302001424133778, 0.388812750577927 #SR_Lep_H_b_1HadH
+  select size(MediumBTag) >= 1
+  counts mycount 0.0584358796477318, 1.01685869693756, 0.0794272273778915, 0.0103682093322277, 0.0222932994365692, 0.350416332483292 #SR_Lep_H_b_1b
+  select size(JetAK4) >= 3
+  counts mycount 0.0484268255531788, 1.07910990715027, 0.0840038806200028, 0.00882010348141193, 0.0230029653757811, 0.36211833357811 #SR_Lep_H_b_sf_6
+
+region SRLepH0b2j
+  PreLep
+  select size(HadH) >= 1
+  counts mycount 0.1014039888978, 2.56203722953796, 0.0886219292879105, 0.0935635715723038, 0.0302001424133778, 0.388812750577927 #SR_Lep_H_0b_1HadH
+  select size(MediumIsoBTag) == 0
+  counts mycount 0.0272592324763536, 1.08925127983093, 0, 0.0623381286859512, 0.00205935747362673, 0.0176545232534409 #SR_Lep_H_0b_sf_6
+
+# Non-isolated lepton signal regions
+region SRLeptop1htop
+  PrelepJet
+  select size(JetAK4) >= 3
+  counts mycount 0.656913697719574, 193.236267089844, 39.1532554626465, 0.7145094871521, 1.75383639335632, 6.05390739440918 #SR_Lepjet_1htop_NJet
+  select size(LepJet) >= 1
+  counts mycount 0.0411287024617195, 12.2992486953735, 9.90030956268311, 0.0242809243500233, 0.240107476711273, 0.973642706871033 #SR_Lepjet_1htop_sf_5
+  select size(HadTop) >= 1
+  counts mycount 0.0411287024617195, 12.2992486953735, 9.90030956268311, 0.0242809243500233, 0.240107476711273, 0.973642706871033 #SR_Lepjet_1htop_sf_5
+
+region SRLepjet0V24j
+  PrelepJet
+  select size(LepJet) >= 1
+  counts mycount 0.631008684635162, 79.3071365356445, 24.4925575256348, 0.3676598072052, 0.889172494411469, 3.37478995323181 #SR_Lepjet_0V_24j_1LepJet
+  select size(HadV) == 0
+  counts mycount 0.548044741153717, 72.6861114501953, 22.6850318908691, 0.312974810600281, 0.825994908809662, 2.67878532409668 #SR_Lepjet_0V_24j_0HadV
+  select size(JetAK4) [] 2 4
+  counts mycount 0.43978825211525, 4.11508417129517, 3.66855144500732, 0.232113122940063, 0.147638291120529, 0.330206722021103 #SR_Lepjet_0V_24j_NJet
+  select size(HadTop) == 0
+  counts mycount 0.418261498212814, 3.17615485191345, 3.02791595458984, 0.21606707572937, 0.118789598345757, 0.298920571804047 #SR_Lepjet_0V_24j_sf_5
+
+region SRLepjet0V5j
+  PrelepJet
+  select size(LepJet) >= 1
+  counts mycount 0.631008684635162, 79.3071365356445, 24.4925575256348, 0.3676598072052, 0.889172494411469, 3.37478995323181 #SR_Lepjet_0V_5j_1LepJet
+  select size(HadV) == 0
+  counts mycount 0.548044741153717, 72.6861114501953, 22.6850318908691, 0.312974810600281, 0.825994908809662, 2.67878532409668 #SR_Lepjet_0V_5j_0HadV
+  select size(JetAK4) >= 5
+  counts mycount 0.108256034553051, 68.5709838867188, 19.0164241790771, 0.080858089029789, 0.678366303443909, 2.34858560562134 #SR_Lepjet_0V_5j_NJet
+  select size(HadTop) == 0
+  counts mycount 0.0986635610461235, 55.7622489929199, 11.6076631546021, 0.0682563185691834, 0.484005212783814, 1.62601959705353 #SR_Lepjet_0V_5j_sf_5
+
+region SRLepjet1V24j
+  PrelepJet
+  select size(LepJet) >= 1
+  counts mycount 0.631008684635162, 79.3071365356445, 24.4925575256348, 0.3676598072052, 0.889172494411469, 3.37478995323181 #SR_Lepjet_1V_24j_1LepJet
+  select size(HadV) == 1
+  counts mycount 0.082963339984417, 6.39674711227417, 1.78798151016235, 0.0545969754457474, 0.0609436146914959, 0.664334714412689 #SR_Lepjet_1V_24j_1HadV
+  select size(JetAK4) [] 2 4
+  counts mycount 0.0695784017443657, 0.223238468170166, 0.136575520038605, 0.0393324196338654, 0.00624612346291542, 0.0561699271202088 #SR_Lepjet_1V_24j_NJet
+  select size(HadTop) == 0
+  counts mycount 0.0676584988832474, 0.195509448647499, 0.142954260110855, 0.0369414314627647, 0.00539003219455481, 0.0503713823854923 #SR_Lepjet_1V_24j_sf_5
+
+region SRLepjet1V5j
+  PrelepJet
+  select size(LepJet) >= 1
+  counts mycount 0.631008684635162, 79.3071365356445, 24.4925575256348, 0.3676598072052, 0.889172494411469, 3.37478995323181 #SR_Lepjet_1V_5j_1LepJet
+  select size(HadV) == 1
+  counts mycount 0.082963339984417, 6.39674711227417, 1.78798151016235, 0.0545969754457474, 0.0609436146914959, 0.664334714412689 #SR_Lepjet_1V_5j_1HadV
+  select size(JetAK4) >= 5
+  counts mycount 0.013384941034019, 6.17350912094116, 1.65140628814697, 0.0152647225186229, 0.0546975173056126, 0.608164489269257 #SR_Lepjet_1V_5j_NJet
+  select size(HadTop) == 0
+  counts mycount 0.0116552263498306, 5.35196828842163, 1.34851932525635, 0.0135927926748991, 0.0457685366272926, 0.495726853609085 #SR_Lepjet_1V_5j_sf_5
