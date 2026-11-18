@@ -149,7 +149,7 @@ define MTl2 = sqrt( 2*Pt(leptons[1]) * MET*(1-cos( Phi(METLV[0]) - Phi(leptons[1
 define HT = fHT(jets)
 define mymuon = -muons[0] #due to syntax issues
 define mymuontwo = -muons[1]
-define METcorr = pT(METLV[0] + mymuon + mymuontwo)
+define METcorr = METLV[0] + mymuon + mymuontwo
 define mindR = dR(leptons[-1],leptons[-2]) #ΔR(l_i,l_j) > 0.3 for i,j in {1,2,3} and i!=j
 
 
