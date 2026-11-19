@@ -341,7 +341,9 @@ region threelEwkLowMet #####no pt requirement for sfas pair? in cutflow
   select ALL
   counts ewk 60.8, 306.6, 0.0, 62.92 
   select Size(leptons) == 3
-  counts ewk 3.44, 39.33, 0.0, 2.3 
+  counts ewk 3.44, 39.33, 0.0, 2.3
+  select Size(SignalLeptonsMin) == 3 # same as leptons, makes CutLang build the objects used in the combinatorics below
+  select Size(SignalLeptonsMax) == 3
   select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
   counts ewk 3.44, 39.33, 0.0, 2.27 
   select abs(PDGID(leptons[2])) == 13 ? pt(leptons[2]) > 3.5 : pt(leptons[2]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
@@ -380,7 +382,9 @@ region threelEwkMedMet
   select ALL
   counts ewk 68.75, 346.7, 0.0, 71.14 
   select Size(leptons) == 3
-  counts ewk 3.89, 44.47, 0.0, 2.6 
+  counts ewk 3.89, 44.47, 0.0, 2.6
+  select Size(SignalLeptonsMin) == 3 # same as leptons; makes CutLang build the objects used in the combinatorics below
+  select Size(SignalLeptonsMax) == 3
   select abs(PDGID(leptons[1])) == 13 ? pt(leptons[1]) > 3.5 : pt(leptons[1]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
   counts ewk 3.89, 44.47, 0.0, 2.57 
   select abs(PDGID(leptons[2])) == 13 ? pt(leptons[2]) > 3.5 : pt(leptons[2]) > 5 #if lepton is muon pt > 3.5 if ele pt>5
